@@ -1,4 +1,4 @@
-# ✦ CobbleClub ✦
+# ✦ CobbleClub ✦ V3.6
 
 <img width="64" height="64" alt="server-icon (1)" src="https://github.com/user-attachments/assets/93ac693e-ac4b-4f7f-857f-596630a77694" />
 
