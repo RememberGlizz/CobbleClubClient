@@ -1,0 +1,8 @@
+{
+  "bridge": {
+    "minecraft:diamond_helmet": {"22501":"cobbleclub:spark_armor","22502":"cobbleclub:spectral_armor","22503":"cobbleclub:aura_armor","22504":"cobbleclub:fairy_armor"},
+    "minecraft:diamond_chestplate": {"22501":"cobbleclub:spark_armor","22502":"cobbleclub:spectral_armor","22503":"cobbleclub:aura_armor","22504":"cobbleclub:fairy_armor"},
+    "minecraft:diamond_leggings": {"22501":"cobbleclub:spark_armor","22502":"cobbleclub:spectral_armor","22503":"cobbleclub:aura_armor","22504":"cobbleclub:fairy_armor"},
+    "minecraft:diamond_boots": {"22501":"cobbleclub:spark_armor","22502":"cobbleclub:spectral_armor","22503":"cobbleclub:aura_armor","22504":"cobbleclub:fairy_armor"}
+  }
+}

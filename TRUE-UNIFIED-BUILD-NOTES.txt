@@ -1,0 +1,18 @@
+CobbleClub 3.7.0-beta.1 — Teh TRUE UNIFIED BUILD
+
+This source is a single Fabric Loom project.
+There are NO clientPart/serverPart Gradle subprojects.
+
+Source layout:
+  src/main/java    = common/server code
+  src/client/java  = client-only code migrated to Yarn 1.21.1+build.3
+  src/main/resources = unified metadata/assets/mixins
+
+2 Build dis on Windows:
+  .\gradlew.bat clean build
+
+Le Distributable artifact:
+  build/libs/cobbleclub-3.7.0-beta.1.jar
+
+Install the SAME jar on client and dedicated server. <3 Finally stable
+Fabric's client entrypoint/environment-gated mixins keep client-only code off the dedicated server.

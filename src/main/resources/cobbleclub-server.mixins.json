@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "package": "com.cobbleclub.server.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ExplosionMixin",
+    "PistonHandlerMixin",
+    "FlowableFluidMixin",
+    "FireBlockMixin",
+    "HopperBlockEntityMixin",
+    "DispenserBlockMixin",
+    "BlockAttachedEntityMixin",
+    "FarmlandBlockMixin",
+    "DropperBlockMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

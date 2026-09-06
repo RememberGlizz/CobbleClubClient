@@ -1,0 +1,23 @@
+{
+  "aspectShaderMap": {
+    "msd:tera_fire": "red",
+    "msd:tera_water": "blue",
+    "msd:tera_grass": "green",
+    "msd:tera_electric": "yellow",
+    "msd:tera_ground": "brown",
+    "msd:tera_flying": "light_blue",
+    "msd:tera_dragon": "purple",
+    "msd:tera_fairy": "pink",
+    "msd:tera_dark": "black",
+    "msd:tera_steel": "gray",
+    "msd:tera_ice": "light_grey",
+    "msd:tera_fighting": "orange",
+    "msd:tera_bug": "lime",
+    "msd:tera_poison": "teal",
+    "msd:tera_ghost": "indigo",
+    "msd:tera_psychic": "magenta",
+    "msd:tera_rock": "tan",
+    "msd:tera_normal": "navy",
+    "msd:tera_stellar": "white"
+  }
+}

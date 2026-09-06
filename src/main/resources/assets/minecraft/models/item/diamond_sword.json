@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {"layer0": "minecraft:item/diamond_sword"},
+  "overrides": [
+    {"predicate": {"custom_model_data": 22201}, "model": "cobbleclub:item/lightning_saber"},
+    {"predicate": {"custom_model_data": 22202}, "model": "cobbleclub:item/shadow_scythe"}
+  ]
+}

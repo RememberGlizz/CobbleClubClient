@@ -1,0 +1,19 @@
+CobbleClub 3.7 Beta 1 - Unified networking fix
+
+- Client networking now uses com.cobbleclub.server.network.Payloads directly.
+- ServerNetworking remains the single PayloadTypeRegistry owner.
+- Removed duplicate client PayloadTypeRegistry registrations for:
+  wardrobe, gear preview, Pokemon preview, crates, tags, claims,
+  dashboard, kits, and client handshake.
+- Preserved client receiver registration and send behavior.
+- Gear catalog converts shared Payloads.GearSet records into the existing
+  GearPreviewScreen model.
+- Included cumulative 3.7 fixes already applied during runtime debugging:
+  named access widener, removal of four invalid synthetic comparator files,
+  EntityGlowColorMixin, LivingEntityRendererMixin, GameRendererMixin,
+  ShaderInstanceMixin, and HumanoidArmorLayerMixin.
+
+Build with Java 21:
+  .\gradlew.bat clean build
+
+Use the same resulting CobbleClub jar on client and server.

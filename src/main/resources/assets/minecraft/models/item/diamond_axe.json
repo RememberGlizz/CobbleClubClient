@@ -1,0 +1,5 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {"layer0": "minecraft:item/diamond_axe"},
+  "overrides": [{"predicate": {"custom_model_data": 22401}, "model": "cobbleclub:item/ember_axe"}]
+}
