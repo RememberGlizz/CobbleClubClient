@@ -1,0 +1,9 @@
+CobbleClub 3.6 unified build notes
+
+- Base: CobbleClub 3.5.1 Safe Claim Teleport.
+- No gameplay feature logic was intentionally changed during the build merge.
+- One root command builds one installable jar: build/libs/cobbleclub-3.6.0.jar
+- Dedicated servers never initialize the client entrypoint.
+- Client-only mixins are environment-gated.
+- Old separate client/server jars must be removed when installing the unified jar.
+- Internal clientPart/serverPart directories exist only because the legacy source uses two mapping namespaces. They are compiled and merged automatically by the root build.

@@ -1,0 +1,44 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+}
+
+version = rootProject.mod_version
+group = rootProject.maven_group
+
+base {
+    archivesName = 'cobbleclub-server-part'
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.fabricmc.net/' }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+    mappings "net.fabricmc:yarn:${rootProject.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+    modImplementation "net.fabricmc:fabric-language-kotlin:${rootProject.fabric_kotlin_version}"
+
+    modImplementation files('../libs/clubhouse-common-claims-1.0.0.jar')
+    modImplementation files('../libs/clubhouse-common-tags-1.0.0.jar')
+    modImplementation files('../libs/clubhouse-common-wardrobe-1.0.0.jar')
+}
+
+processResources {
+    inputs.property 'version', rootProject.mod_version
+    filesMatching('fabric.mod.json') {
+        expand 'version': rootProject.mod_version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+    options.encoding = 'UTF-8'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}

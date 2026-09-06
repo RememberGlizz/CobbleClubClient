@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "cobbleclub",
+  "version": "3.6.0",
+  "name": "CobbleClub",
+  "description": "Unified CobbleClub mod for Fabric 1.21.1. One jar for client and dedicated server.",
+  "authors": [
+    "CobbleClub"
+  ],
+  "license": "LicenseRef-CobbleClub-Modpack",
+  "icon": "assets/cobbleclub/icon.png",
+  "environment": "*",
+  "accessWidener": "cobbleclub.accesswidener",
+  "entrypoints": {
+    "main": [
+      "com.cobbleclub.server.CobbleClubServer"
+    ],
+    "client": [
+      "com.cobbleclub.client.CobbleClubClient"
+    ]
+  },
+  "mixins": [
+    "cobbleclub-server.mixins.json",
+    {
+      "config": "cobbleclub.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "cobbleclub.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "fabric-api": "*",
+    "fabric-language-kotlin": "*",
+    "minecraft": ">=1.21 <1.22",
+    "cobblemon": "*"
+  },
+  "suggests": {
+    "cobblemon": "*",
+    "luckperms": "*"
+  },
+  "jars": [
+    {
+      "file": "META-INF/jars/clubhouse-common-claims-1.0.0.jar"
+    },
+    {
+      "file": "META-INF/jars/clubhouse-common-tags-1.0.0.jar"
+    },
+    {
+      "file": "META-INF/jars/clubhouse-common-wardrobe-1.0.0.jar"
+    }
+  ],
+  "provides": [
+    "cobbleclub_server"
+  ]
+}

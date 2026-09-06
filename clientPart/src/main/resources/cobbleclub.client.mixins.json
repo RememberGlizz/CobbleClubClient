@@ -1,0 +1,29 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.cobbleclub.client.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "GameRendererMixin",
+    "EntityGlowColorMixin",
+    "HumanoidArmorLayerMixin",
+    "LivingEntityRendererMixin",
+    "PokemonRendererMixin",
+    "ShaderInstanceMixin",
+    "InventoryScreenMixin",
+    "PokemonClientDelegateMixin",
+    "battle.BattleMessageHandlerMixin",
+    "battle.SwitchTileMixin",
+    "battle.MoveTileMixin",
+    "battle.BattleGuiMixin",
+    "battle.BattleOverlayMixin",
+    "battle.NativeBattleLogHiderMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "refmap": "client-clubhouse-client-cobbleclub-refmap.json"
+}

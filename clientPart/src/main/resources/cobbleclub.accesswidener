@@ -1,0 +1,10 @@
+accessWidener	v2	intermediary
+accessible	method	net/minecraft/class_1921	method_24048	(Ljava/lang/String;Lnet/minecraft/class_293;Lnet/minecraft/class_293$class_5596;ILnet/minecraft/class_1921$class_4688;)Lnet/minecraft/class_1921$class_4687;
+accessible	class	net/minecraft/class_1921$class_4687
+accessible	field	net/minecraft/class_4668	field_29418	Lnet/minecraft/class_4668$class_5942;
+accessible	field	net/minecraft/class_4668	field_21345	Lnet/minecraft/class_4668$class_4671;
+accessible	field	net/minecraft/class_4668	field_21346	Lnet/minecraft/class_4668$class_4672;
+accessible	field	net/minecraft/class_4668	field_21350	Lnet/minecraft/class_4668$class_4686;
+accessible	field	net/minecraft/class_4668	field_21370	Lnet/minecraft/class_4668$class_4685;
+accessible	field	net/minecraft/class_4668	field_21358	Lnet/minecraft/class_4668$class_4678;
+accessible	field	net/minecraft/class_4668	field_29442	Lnet/minecraft/class_4668$class_5942;

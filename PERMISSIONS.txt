@@ -1,0 +1,137 @@
+CobbleClub 2.6 - Permission Nodes
+=================================
+
+LuckPerms is OPTIONAL.
+- If LuckPerms is not installed, normal player nodes below default to ALLOWED.
+- Admin nodes fall back to vanilla OP level 2.
+- If LuckPerms is installed, an explicit TRUE/FALSE overrides the built-in default.
+- Console is allowed to use admin commands.
+
+Recommended admin grant:
+/lp group admin permission set cobbleclub.admin.* true
+
+Recommended normal-player claim access (normally already allowed by default):
+/lp group default permission set cobbleclub.command.claim true
+/lp group default permission set cobbleclub.claims.use true
+
+PLAYER COMMAND NODES
+--------------------
+cobbleclub.command.club                /club and /cobbleclub
+cobbleclub.command.kits                /kit and /kits
+cobbleclub.command.claim               /claim and /claims
+cobbleclub.command.claim.tool          /claim tool
+cobbleclub.command.claim.blocks        /claim blocks
+cobbleclub.command.claim.subclaim.create  /claim subclaim create ...
+cobbleclub.command.tags                /tag and /tags
+cobbleclub.command.tags.buy            /tag buy <tag>
+cobbleclub.command.wardrobe            /wardrobe
+cobbleclub.command.wardrobe.buy        /wardrobe buy ...
+cobbleclub.command.balance             /bal and /balance
+cobbleclub.command.gems                /gems
+cobbleclub.command.pay                 /pay <player> <amount>
+cobbleclub.command.daily               /daily
+cobbleclub.command.crates              /crate, /crates and /keys
+cobbleclub.command.preview.pokemon     /pokemonpreview
+cobbleclub.command.preview.gear        /gearpreview
+cobbleclub.command.preview.crate       /cratepreview
+
+CLAIM ACTION NODES
+------------------
+cobbleclub.claims.use                  Open/use the claims system and claiming tool
+cobbleclub.claims.create               Create claims
+cobbleclub.claims.resize               Resize claims
+cobbleclub.claims.delete               Delete owned claims
+cobbleclub.claims.rename               Rename claims
+cobbleclub.claims.permissions          Change per-claim role permissions
+cobbleclub.claims.trust                Trust/untrust players
+cobbleclub.claims.ban                  Ban/unban players from claims
+cobbleclub.claims.transfer             Transfer ownership
+cobbleclub.claims.messages             Change enter/leave messages
+cobbleclub.claims.teleport             Teleport to visible claims
+cobbleclub.claims.subclaim             Create/rename/delete subclaims
+cobbleclub.claims.buyblocks            Buy additional claim blocks
+cobbleclub.claims.bypass               Bypass claim protection (OP fallback when operatorsBypassClaims=true)
+
+PER-CLAIM ROLE SETTINGS
+-----------------------
+These are controlled inside the claim GUI and are NOT LuckPerms nodes.
+Each can be VISITOR, TRUSTED, or OWNER, including subclaim overrides.
+
+build       Place and break blocks
+interact    Doors, buttons, beds, redstone and general block interaction
+containers  Chests, barrels, hoppers and inventories
+item_use    Buckets and protected item-use actions
+entities    Attack/use mobs, armor stands, vehicles and other entities
+pvp         Attack players inside the claim
+
+ADMIN NODES
+-----------
+cobbleclub.admin                       General admin fallback parent
+cobbleclub.admin.status                /cobbleclubserver status
+cobbleclub.admin.reload                /cobbleclubserver reload
+cobbleclub.admin.claimtool.give        /cobbleclubserver claimtool give <player>
+cobbleclub.admin.claim                 Claim admin branch
+cobbleclub.admin.claim.deletehere      /cobbleclubserver claim deletehere
+cobbleclub.admin.key                   Key admin branch
+cobbleclub.admin.key.give              /cobbleclubserver key give <player> <crate> <amount>
+cobbleclub.admin.tag                   Tag admin branch
+cobbleclub.admin.tag.grant             /cobbleclubserver tag grant <player> <tag>
+cobbleclub.admin.money                 Money admin branch
+cobbleclub.admin.money.give            /cobbleclubserver money give <player> <amount>
+cobbleclub.admin.money.take            /cobbleclubserver money take <player> <amount>
+cobbleclub.admin.money.set             /cobbleclubserver money set <player> <amount>
+cobbleclub.admin.gems                  Gems admin branch
+cobbleclub.admin.gems.give             /cobbleclubserver gems give <player> <amount>
+cobbleclub.admin.unlock                /cobbleclubserver unlock <type> <player> <id>
+cobbleclub.admin.clubitem.list         /clubitem list
+cobbleclub.admin.clubitem.give         /clubitem give <player> <id>
+
+EXISTING RANK KIT NODES
+-----------------------
+cobbleclub.kit.ace
+cobbleclub.kit.champion
+cobbleclub.kit.master
+cobbleclub.kit.legend
+
+CLAIM PROTECTION INCLUDED IN THIS UPDATE
+----------------------------------------
+- Fast chunk-indexed claim lookup instead of scanning every claim on every interaction.
+- Block breaking protection.
+- Block placement protection, including claim-border placement checks.
+- Container protection.
+- Doors/buttons/redstone/general block-use protection.
+- Bucket/item-use protection for protected land.
+- Entity interaction/attack protection.
+- Separate PvP permission.
+- Banned players are actively ejected from the claim instead of only being told they are banned.
+- Subclaim permission overrides apply to the expanded permission set.
+- Claim files save atomically and keep claims.json.bak as a recovery backup.
+- Existing owner/trusted/visitor roles, transfer, bans, messages, teleport, resize and map GUI remain intact.
+
+NOTE
+----
+This is a standalone CobbleClub claim system; Flan is not required. It intentionally does not import or depend on Flan.
+
+3.3 PLAYER COMMAND ADDITIONS
+----------------------------
+cobbleclub.command.wiki                /wiki
+cobbleclub.command.features            /features
+cobbleclub.command.balance             /bal, /balance, /baltop, /economy balance/top
+cobbleclub.command.pay                 /pay and /economy pay
+
+3.3 ECONOMY ADMIN ALIASES
+-------------------------
+cobbleclub.admin.money.give            /economy give <player> <amount>
+cobbleclub.admin.money.take            /economy take <player> <amount>
+cobbleclub.admin.money.set             /economy set <player> <amount>
+
+RANK KIT ENFORCEMENT
+--------------------
+These are checked server-side at claim time and cooldown-purchase time. OP status alone does not grant them through RankPermissionService; LuckPerms must resolve the node TRUE.
+cobbleclub.kit.ace
+cobbleclub.kit.champion
+cobbleclub.kit.master
+cobbleclub.kit.legend
+
+# Random teleport
+cobbleclub.command.rtp

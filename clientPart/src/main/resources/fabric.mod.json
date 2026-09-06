@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "cobbleclub",
+  "version": "${version}",
+  "name": "CobbleClub Internal Client Part",
+  "description": "Client companion mod for the CobbleClub Cobblemon server",
+  "authors": [
+    "CobbleClub"
+  ],
+  "contact": {},
+  "license": "LicenseRef-CobbleClub-Modpack",
+  "icon": "assets/cobbleclub/icon.png",
+  "environment": "client",
+  "accessWidener": "cobbleclub.accesswidener",
+  "entrypoints": {
+    "client": [
+      "com.cobbleclub.client.CobbleClubClient"
+    ]
+  },
+  "mixins": [
+    "cobbleclub.mixins.json",
+    {
+      "config": "cobbleclub.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "fabric-api": "*",
+    "cobblemon": "*",
+    "minecraft": ">=1.21"
+  },
+  "jars": [
+    {
+      "file": "META-INF/jars/clubhouse-common-claims-1.0.0.jar"
+    },
+    {
+      "file": "META-INF/jars/clubhouse-common-tags-1.0.0.jar"
+    },
+    {
+      "file": "META-INF/jars/clubhouse-common-wardrobe-1.0.0.jar"
+    }
+  ]
+}

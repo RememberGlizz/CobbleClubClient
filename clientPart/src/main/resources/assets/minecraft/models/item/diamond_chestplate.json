@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {"layer0": "minecraft:item/diamond_chestplate"},
+  "overrides": [
+    {"predicate": {"custom_model_data": 22501}, "model": "cobbleclub:item/spark_armor"},
+    {"predicate": {"custom_model_data": 22502}, "model": "cobbleclub:item/spectral_armor"},
+    {"predicate": {"custom_model_data": 22503}, "model": "cobbleclub:item/aura_armor"},
+    {"predicate": {"custom_model_data": 22504}, "model": "cobbleclub:item/fairy_armor"}
+  ]
+}

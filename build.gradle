@@ -1,0 +1,56 @@
+plugins {
+    id 'base'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+// Both legacy halves compile in their original mapping namespaces, then Loom
+// remaps each to Fabric's intermediary runtime namespace. This task combines
+// those runtime-compatible outputs into the ONE jar installed on client/server.
+tasks.register('unifiedJar', Jar) {
+    group = 'build'
+    description = 'Builds the single CobbleClub jar for both client and dedicated server.'
+    dependsOn ':clientPart:remapJar', ':serverPart:remapJar'
+
+    archiveBaseName = project.archives_base_name
+    archiveVersion = project.mod_version
+    destinationDirectory = layout.buildDirectory.dir('libs')
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from({ zipTree(project(':clientPart').tasks.named('remapJar').get().archiveFile.get().asFile) }) {
+        exclude 'fabric.mod.json'
+        exclude 'META-INF/jars/**'
+        exclude 'META-INF/MANIFEST.MF'
+        exclude 'LICENSE_*'
+    }
+
+    from({ zipTree(project(':serverPart').tasks.named('remapJar').get().archiveFile.get().asFile) }) {
+        exclude 'fabric.mod.json'
+        exclude 'META-INF/jars/**'
+        exclude 'META-INF/MANIFEST.MF'
+        exclude 'LICENSE_*'
+    }
+
+    from('src/main/resources')
+
+    into('META-INF/jars') {
+        from files(
+            'libs/clubhouse-common-claims-1.0.0.jar',
+            'libs/clubhouse-common-tags-1.0.0.jar',
+            'libs/clubhouse-common-wardrobe-1.0.0.jar'
+        )
+    }
+
+    from('LICENSE') {
+        rename { 'LICENSE_CobbleClub' }
+    }
+
+    manifest {
+        attributes('Implementation-Title': 'CobbleClub', 'Implementation-Version': project.mod_version)
+    }
+}
+
+tasks.named('build') {
+    dependsOn tasks.named('unifiedJar')
+}
