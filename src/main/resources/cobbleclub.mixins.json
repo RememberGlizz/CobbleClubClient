@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.cobbleclub.client.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PokemonEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "refmap": "clubhouse-client-cobbleclub-refmap.json"
+}

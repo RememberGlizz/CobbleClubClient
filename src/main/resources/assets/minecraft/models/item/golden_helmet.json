@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/golden_helmet"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 22005
+      },
+      "model": "cobbleclub:item/club_crown"
+    }
+  ]
+}

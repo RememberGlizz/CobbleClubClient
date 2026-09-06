@@ -1,0 +1,92 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/paper"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 22201
+      },
+      "model": "cobbleclub:item/pikachu_buddy_balloon"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22202
+      },
+      "model": "cobbleclub:item/jigglypuff_moon_balloon"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22203
+      },
+      "model": "cobbleclub:item/drifloon_festival_balloon"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22204
+      },
+      "model": "cobbleclub:item/pokeball_club_balloon"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22205
+      },
+      "model": "cobbleclub:item/club_balloon"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22206
+      },
+      "model": "cobbleclub:item/master_ball_balloon"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22207
+      },
+      "model": "cobbleclub:item/premier_ball_balloon"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22208
+      },
+      "model": "cobbleclub:item/ultra_ball_balloon"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22301
+      },
+      "model": "cobbleclub:item/duck_floaty"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22302
+      },
+      "model": "cobbleclub:item/dino_floaty"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22303
+      },
+      "model": "cobbleclub:item/flamingo_floaty"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22304
+      },
+      "model": "cobbleclub:item/pikachu_floaty"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22305
+      },
+      "model": "cobbleclub:item/gengar_floaty"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22306
+      },
+      "model": "cobbleclub:item/eevee_floaty"
+    }
+  ]
+}
