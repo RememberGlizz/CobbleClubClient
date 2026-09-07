@@ -21,7 +21,11 @@ public final class ServerConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Path PATH = FabricLoader.getInstance().getConfigDir().resolve("cobbleclub-server.json");
 
-    public int configVersion = 17;
+    public int configVersion = 18;
+    public boolean storeEnabled = false;
+    public String storeApiUrl = "https://store.example.com";
+    public String storeBridgeToken = "";
+    public int storePollIntervalSeconds = 10;
 
     public boolean claimsEnabled = true;
     public int initialClaimBlocks = 700;
@@ -210,13 +214,16 @@ public final class ServerConfig {
             addBalloonVariants(cosmetics);
             ensureRankTags(tagCategories, tags);
         }
+        if (loadedVersion < 18) {
+            renameCosmetic(cosmetics, "pikachu_floaty", "squirtle_floaty", "Squirtle Floaty");
+        }
         newbKitCooldownSeconds = Math.max(0L, newbKitCooldownSeconds);
         rankKitCooldownSeconds = Math.max(0L, rankKitCooldownSeconds);
         kitCooldownReductionPrice = Math.max(0L, kitCooldownReductionPrice);
         kitCooldownReductionStepSeconds = Math.max(1L, kitCooldownReductionStepSeconds);
         kitCooldownReductionMaxSeconds = Math.max(0L, kitCooldownReductionMaxSeconds);
         legendKitCooldownReductionMaxSeconds = Math.max(kitCooldownReductionMaxSeconds, legendKitCooldownReductionMaxSeconds);
-        configVersion = Math.max(17, configVersion);
+        configVersion = Math.max(18, configVersion);
     }
 
     private static ServerConfig defaults() {
@@ -469,10 +476,10 @@ public final class ServerConfig {
 
     private static void addPokemonFloaties(List<CosmeticDefinition> cosmetics) {
         addIfMissing(cosmetics, new CosmeticDefinition(
-                "pikachu_floaty", "Pikachu Floaty", json("Pikachu Floaty", "yellow"), "BALLOON",
+                "squirtle_floaty", "Squirtle Floaty", json("Squirtle Floaty", "aqua"), "BALLOON",
                 "minecraft:paper", 22304, false, false,
                 List.of(json("Click to buy for 7,500 PokéDollars", "red")),
-                List.of(json("Equip the Pikachu Floaty", "green")),
+                List.of(json("Equip the Squirtle Floaty", "green")),
                 List.of(json("Click to remove", "yellow")), 7500
         ));
         addIfMissing(cosmetics, new CosmeticDefinition(

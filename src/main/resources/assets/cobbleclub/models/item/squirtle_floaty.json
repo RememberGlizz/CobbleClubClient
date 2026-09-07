@@ -1,7 +1,7 @@
 {
   "textures": {
-    "tex": "cobbleclub:item/pikachu_floaty",
-    "particle": "cobbleclub:item/pikachu_floaty"
+    "tex": "cobbleclub:item/squirtle_floaty",
+    "particle": "cobbleclub:item/squirtle_floaty"
   },
   "elements": [
     {

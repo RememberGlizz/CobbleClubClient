@@ -54,11 +54,9 @@ public final class ClaimWorldRenderer {
             MatrixStack poseStack = context.matrixStack();
             VertexConsumerProvider consumers = context.consumers();
             poseStack.push();
-            // WorldRenderEvents gives us the world render matrix, but world-space claim coordinates
-            // still need one camera translation. Apply it once to the matrix stack (never once per box).
-            // This keeps the perimeter anchored to the claim while the camera/player moves.
-            var cameraPos = context.camera().getPos();
-            poseStack.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
+            // AFTER_ENTITIES supplies a matrix stack that is already in camera-relative world render
+            // space. Do NOT subtract the camera again here: doing so double-applies camera motion and
+            // makes claim walls slide/jitter with the player. Feed absolute world AABBs to WorldRenderer.
             VertexConsumer lines = consumers.getBuffer(RenderLayer.getLines());
             VertexConsumer quads = consumers.getBuffer(BORDER_BOX);
 

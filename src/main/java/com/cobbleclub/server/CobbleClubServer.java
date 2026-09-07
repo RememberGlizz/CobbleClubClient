@@ -16,6 +16,7 @@ import com.cobbleclub.server.service.KitsService;
 import com.cobbleclub.server.service.PermissionService;
 import com.cobbleclub.server.service.RtpService;
 import com.cobbleclub.server.service.TagsService;
+import com.cobbleclub.server.service.StoreBridgeService;
 import com.cobbleclub.server.service.WardrobeService;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.LongArgumentType;
@@ -85,6 +86,7 @@ public final class CobbleClubServer implements ModInitializer {
             RtpService.tick(server);
             TagsService.tick(server);
             CosmeticVisualService.tick(server);
+            StoreBridgeService.tick(server);
         });
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             safeJoinStep(handler.player, "economy", () -> EconomyService.data(handler.player));

@@ -65,6 +65,7 @@ public final class PlayerDataStore {
         public Map<String, String> equipped = new LinkedHashMap<>();
         public Map<String, Integer> colors = new LinkedHashMap<>();
         public Set<String> ownedCosmetics = new HashSet<>();
+        public Set<String> fulfilledStoreOrders = new HashSet<>();
         public boolean wardrobeHidden;
         public String glow;
         public Set<String> ownedGlows = new HashSet<>();
@@ -91,6 +92,7 @@ public final class PlayerDataStore {
             if (equipped == null) equipped = new LinkedHashMap<>();
             if (colors == null) colors = new LinkedHashMap<>();
             if (ownedCosmetics == null) ownedCosmetics = new HashSet<>();
+            if (fulfilledStoreOrders == null) fulfilledStoreOrders = new HashSet<>();
             if (ownedGlows == null) ownedGlows = new HashSet<>();
             if (presets == null) presets = new LinkedHashMap<>();
             if (crateKeys == null) crateKeys = new LinkedHashMap<>();
@@ -101,6 +103,9 @@ public final class PlayerDataStore {
             // 3.3 cosmetic id migration: preserve existing purchases/equipment after the
             // user-facing Gengar id changed from gengar_grin_mask to gengar-hat.
             if (ownedCosmetics.remove("gengar_grin_mask")) ownedCosmetics.add("gengar-hat");
+            // 3.8: Pikachu Floaty was replaced by Squirtle without taking purchases away.
+            if (ownedCosmetics.remove("pikachu_floaty")) ownedCosmetics.add("squirtle_floaty");
+            equipped.replaceAll((slot, id) -> "pikachu_floaty".equals(id) ? "squirtle_floaty" : id);
             equipped.replaceAll((slot, id) -> "gengar_grin_mask".equals(id) ? "gengar-hat" : id);
             if (colors.containsKey("gengar_grin_mask") && !colors.containsKey("gengar-hat")) {
                 colors.put("gengar-hat", colors.remove("gengar_grin_mask"));

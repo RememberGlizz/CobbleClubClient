@@ -58,10 +58,9 @@ public class CosmeticWingsLayer extends FeatureRenderer<AbstractClientPlayerEnti
       ((PlayerEntityModel)this.getContextModel()).head.rotate(pose);
 
       if (model == 22004) {
-         // Lucario orientation is now correct. Its source model sits much lower than the
-         // helmet-style hats, so lift the entire crest substantially without changing
-         // rotation, scale, or facing.
-         pose.translate(0.0F, -0.88F, 0.0F);
+         // Lucario orientation/facing/scale are proven correct. Lower only its Y anchor so
+         // the model wraps the whole player head like a mask instead of floating above it.
+         pose.translate(0.0F, -0.30F, 0.0F);
          pose.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0F));
          pose.scale(0.82F, 0.82F, 0.82F);
       } else if (model == 22001 || model == 22002 || model == 22003 || model == 22005 || (model >= 22006 && model <= 22011)) {
