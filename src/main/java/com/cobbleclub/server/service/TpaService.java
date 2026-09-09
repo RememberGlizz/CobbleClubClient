@@ -70,7 +70,7 @@ public final class TpaService {
                 .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpano"))));
         target.sendMessage(actions, false);
         target.sendMessage(Text.literal("Or type /tpayes or /tpano. Request expires in 60 seconds.").formatted(Formatting.GRAY), false);
-        target.getServerWorld().playSound(null, target.getBlockPos(), SoundEvents.BLOCK_NOTE_BLOCK_PLING, SoundCategory.PLAYERS, 0.8F, 1.35F);
+        target.getServerWorld().playSound(null, target.getBlockPos(), SoundEvents.BLOCK_NOTE_BLOCK_PLING.value(), SoundCategory.PLAYERS, 0.8F, 1.35F);
         return 1;
     }
 
@@ -96,7 +96,7 @@ public final class TpaService {
                 .append(Text.literal("Teleported to " + target.getGameProfile().getName() + ".").formatted(Formatting.GREEN)), false);
         target.sendMessage(Text.literal("✦ TPA • ").formatted(Formatting.DARK_PURPLE, Formatting.BOLD)
                 .append(Text.literal("Accepted " + requester.getGameProfile().getName() + "'s request.").formatted(Formatting.GREEN)), false);
-        target.getServerWorld().playSound(null, target.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 0.8F, 1.1F);
+        target.getServerWorld().playSound(null, target.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT.value(), SoundCategory.PLAYERS, 0.8F, 1.1F);
         return 1;
     }
 
