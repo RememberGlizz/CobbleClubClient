@@ -2,6 +2,7 @@ package com.cobbleclub.client.pokemonpreview;
 
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.cobblemon.mod.common.client.gui.PokemonGuiUtilsKt;
+import com.cobblemon.mod.common.client.gui.ProfileTransformType;
 import com.cobblemon.mod.common.client.render.models.blockbench.FloatingState;
 import com.cobblemon.mod.common.client.render.models.blockbench.PosableState;
 import com.cobblemon.mod.common.client.render.models.blockbench.repository.VaryingModelRepository;
@@ -129,14 +130,15 @@ public final class PokemonPreviewRenderer {
                state,
                partialTicks,
                20.0F,
-               true,
+               ProfileTransformType.PROFILE,
                false,
                1.0F,
                1.0F,
                1.0F,
                1.0F,
                0.0F,
-               0.0F
+               0.0F,
+               13
             );
             g.draw();
             g.getMatrices().pop();

@@ -3,7 +3,7 @@
   "id": "cobbleclub",
   "version": "${version}",
   "name": "CobbleClub",
-  "description": "Unified CobbleClub mod for Fabric 1.21.1 \u2014 one true Loom project and one jar for client and dedicated server.",
+  "description": "Unified CobbleClub mod for Fabric 1.21.1 — one true Loom project and one jar for client and dedicated server.",
   "authors": [
     "CobbleClub"
   ],
@@ -13,7 +13,8 @@
   "accessWidener": "cobbleclub.accesswidener",
   "entrypoints": {
     "main": [
-      "com.cobbleclub.server.CobbleClubServer"
+      "com.cobbleclub.server.CobbleClubServer",
+      "com.cobbleclub.server.service.TpaModInitializer"
     ],
     "client": [
       "com.cobbleclub.client.CobbleClubClient"
@@ -35,7 +36,7 @@
     "fabric-api": "*",
     "fabric-language-kotlin": "*",
     "minecraft": ">=1.21 <1.22",
-    "cobblemon": "*"
+    "cobblemon": ">=1.8.0"
   },
   "suggests": {
     "cobblemon": "*",

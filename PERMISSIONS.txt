@@ -30,6 +30,7 @@ cobbleclub.command.balance             /bal and /balance
 cobbleclub.command.gems                /gems
 cobbleclub.command.pay                 /pay <player> <amount>
 cobbleclub.command.daily               /daily
+cobbleclub.command.tpa                 /tpa <player>, /tpayes, /tpano
 cobbleclub.command.crates              /crate, /crates and /keys
 cobbleclub.command.preview.pokemon     /pokemonpreview
 cobbleclub.command.preview.gear        /gearpreview
@@ -135,3 +136,6 @@ cobbleclub.kit.legend
 
 # Random teleport
 cobbleclub.command.rtp
+
+# Player teleport requests
+cobbleclub.command.tpa

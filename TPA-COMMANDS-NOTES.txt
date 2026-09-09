@@ -1,0 +1,19 @@
+CobbleClub V3.8.4 - Built-in TPA
+
+Added server-side player teleport requests so FTB Essentials TPA can be disabled.
+
+Commands:
+- /tpa <player>  - send a teleport request
+- /tpayes        - accept the current request
+- /tpano         - deny the current request
+
+Behavior:
+- Requests expire after 60 seconds.
+- 3-second sender cooldown prevents chat/request spam.
+- One active incoming request per target.
+- Accept teleports the requester to the target, including cross-dimension teleports on the same server.
+- Chat includes clickable [ACCEPT] and [DENY] buttons.
+- Disconnects clean up pending requests.
+
+Permission:
+- cobbleclub.command.tpa (normal players allowed by default unless LuckPerms explicitly denies it)
