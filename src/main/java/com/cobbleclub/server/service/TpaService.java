@@ -96,7 +96,7 @@ public final class TpaService {
                 .append(Text.literal("Teleported to " + target.getGameProfile().getName() + ".").formatted(Formatting.GREEN)), false);
         target.sendMessage(Text.literal("✦ TPA • ").formatted(Formatting.DARK_PURPLE, Formatting.BOLD)
                 .append(Text.literal("Accepted " + requester.getGameProfile().getName() + "'s request.").formatted(Formatting.GREEN)), false);
-        target.getServerWorld().playSound(null, target.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT.value(), SoundCategory.PLAYERS, 0.8F, 1.1F);
+        target.getServerWorld().playSound(null, target.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 0.8F, 1.1F);
         return 1;
     }
 
