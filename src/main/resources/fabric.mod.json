@@ -14,7 +14,8 @@
   "entrypoints": {
     "main": [
       "com.cobbleclub.server.CobbleClubServer",
-      "com.cobbleclub.server.service.TpaModInitializer"
+      "com.cobbleclub.server.service.TpaModInitializer",
+      "com.cobbleclub.server.service.ActivityEconomyInitializer"
     ],
     "client": [
       "com.cobbleclub.client.CobbleClubClient"
