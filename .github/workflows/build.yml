@@ -3,7 +3,7 @@ name: build
 on:
   push:
     branches:
-      - CobbleClubClient-V3.8.4
+      - CobbleClubClient-V3.8.5
   workflow_dispatch:
 
 jobs:
@@ -22,6 +22,6 @@ jobs:
       - name: Upload built jars
         uses: actions/upload-artifact@v4
         with:
-          name: cobbleclub-3.8.4-build
+          name: cobbleclub-3.8.5-build
           path: build/libs/*.jar
           if-no-files-found: error

@@ -17,6 +17,18 @@ import java.util.List;
 
 public final class CatalogService {
     private static final Gson GSON = new Gson();
+    private static final List<String> DEFAULT_ADVENTURE = List.of(
+            "minecraft:diamond_helmet",
+            "minecraft:diamond_chestplate",
+            "minecraft:diamond_leggings",
+            "minecraft:diamond_boots"
+    );
+    private static final List<String> TEXTURED_ADVENTURE = List.of(
+            "cobbleclub:adventure_helmet",
+            "cobbleclub:adventure_chestplate",
+            "cobbleclub:adventure_leggings",
+            "cobbleclub:adventure_boots"
+    );
 
     private CatalogService() {}
 
@@ -37,8 +49,12 @@ public final class CatalogService {
         for (ServerConfig.GearSetDefinition definition : CobbleClubServer.config().gearSets) {
             if (definition == null || definition.id() == null) continue;
             List<ItemStack> items = new ArrayList<>();
-            if (definition.items() != null) {
-                for (String itemId : definition.items()) {
+            List<String> configuredItems = definition.items();
+            if ("adventure".equals(definition.id()) && DEFAULT_ADVENTURE.equals(configuredItems)) {
+                configuredItems = TEXTURED_ADVENTURE;
+            }
+            if (configuredItems != null) {
+                for (String itemId : configuredItems) {
                     ItemStack custom = ClubItems.stack(itemId, 1);
                     if (!custom.isEmpty()) {
                         items.add(custom);

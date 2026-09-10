@@ -67,6 +67,7 @@ public final class ClubItems {
         armor(result, "spectral", "Spectral Phantom", 22502);
         armor(result, "aura", "Aura Guardian", 22503);
         armor(result, "fairy", "Fairy Bloom", 22504);
+        armor(result, "adventure", "CobbleClub Adventure", 22505);
         return Map.copyOf(result);
     }
 
