@@ -26,7 +26,15 @@ public final class ActivityEconomyConfig {
     public int contractRefreshHours = 6;
     public long apricornSellPrice = 3L;
     public long berrySellPrice = 4L;
+
+    // Items with an explicit price always use it. A price of 0 disables that item.
     public Map<String, Long> sellPrices = new LinkedHashMap<>();
+
+    // Adds ordinary stackable items from these namespaces to the shop at a conservative fallback price.
+    // Add another mod id here later if you want its normal items to appear too.
+    public boolean autoSellCatalog = true;
+    public boolean autoSellStackableOnly = true;
+    public Map<String, Long> fallbackNamespaceSellPrices = new LinkedHashMap<>();
 
     public static ActivityEconomyConfig load() {
         ActivityEconomyConfig config = null;
@@ -63,6 +71,10 @@ public final class ActivityEconomyConfig {
         if (sellPrices == null) sellPrices = new LinkedHashMap<>();
         sellPrices.replaceAll((id, price) -> price == null ? 0L : Math.max(0L, price));
         defaults().sellPrices.forEach(sellPrices::putIfAbsent);
+
+        if (fallbackNamespaceSellPrices == null) fallbackNamespaceSellPrices = new LinkedHashMap<>();
+        fallbackNamespaceSellPrices.replaceAll((id, price) -> price == null ? 0L : Math.max(0L, price));
+        defaults().fallbackNamespaceSellPrices.forEach(fallbackNamespaceSellPrices::putIfAbsent);
     }
 
     private static ActivityEconomyConfig defaults() {
@@ -110,6 +122,11 @@ public final class ActivityEconomyConfig {
         config.sellPrices.put("minecraft:amethyst_shard", 3L);
         config.sellPrices.put("minecraft:diamond", 35L);
         config.sellPrices.put("minecraft:emerald", 30L);
+
+        // Conservative automatic prices. Exact entries above still win.
+        config.fallbackNamespaceSellPrices.put("minecraft", 1L);
+        config.fallbackNamespaceSellPrices.put("cobblemon", 2L);
+        config.fallbackNamespaceSellPrices.put("cobblefurnies", 2L);
 
         return config;
     }
