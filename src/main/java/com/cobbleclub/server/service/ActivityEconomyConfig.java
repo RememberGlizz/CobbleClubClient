@@ -3,6 +3,10 @@ package com.cobbleclub.server.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -10,11 +14,33 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 /** Settings for active PokéDollar earning and the server-backed sell list. */
 public final class ActivityEconomyConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Path PATH = FabricLoader.getInstance().getConfigDir().resolve("cobbleclub-activity-economy.json");
+    private static final Set<String> AUTO_SELL_BLOCKED = Set.of(
+            "minecraft:air",
+            "minecraft:barrier",
+            "minecraft:bedrock",
+            "minecraft:budding_amethyst",
+            "minecraft:chain_command_block",
+            "minecraft:command_block",
+            "minecraft:command_block_minecart",
+            "minecraft:debug_stick",
+            "minecraft:end_portal_frame",
+            "minecraft:jigsaw",
+            "minecraft:knowledge_book",
+            "minecraft:light",
+            "minecraft:reinforced_deepslate",
+            "minecraft:repeating_command_block",
+            "minecraft:spawner",
+            "minecraft:structure_block",
+            "minecraft:structure_void",
+            "minecraft:trial_spawner",
+            "minecraft:vault"
+    );
 
     public boolean enabled = true;
 
@@ -48,7 +74,10 @@ public final class ActivityEconomyConfig {
 
         if (config == null) config = defaults();
         config.normalize();
+
+        // Save only the human-editable settings. Generated catalog entries are runtime-only.
         config.save();
+        config.populateAutoSellPrices();
         return config;
     }
 
@@ -75,6 +104,47 @@ public final class ActivityEconomyConfig {
         if (fallbackNamespaceSellPrices == null) fallbackNamespaceSellPrices = new LinkedHashMap<>();
         fallbackNamespaceSellPrices.replaceAll((id, price) -> price == null ? 0L : Math.max(0L, price));
         defaults().fallbackNamespaceSellPrices.forEach(fallbackNamespaceSellPrices::putIfAbsent);
+    }
+
+    private void populateAutoSellPrices() {
+        if (!autoSellCatalog) return;
+
+        for (Identifier id : Registries.ITEM.getIds()) {
+            String rawId = id.toString();
+            if (sellPrices.containsKey(rawId) || blockedFromAutoSell(id)) continue;
+
+            long price = generatedPrice(id);
+            if (price > 0L) sellPrices.put(rawId, price);
+        }
+    }
+
+    private long generatedPrice(Identifier id) {
+        String namespace = id.getNamespace();
+        String path = id.getPath();
+
+        if ("cobblemon".equals(namespace)) {
+            if (path.endsWith("_apricorn")) return apricornSellPrice;
+            if (path.endsWith("_berry")) return berrySellPrice;
+        }
+
+        Long fallback = fallbackNamespaceSellPrices.get(namespace);
+        if (fallback == null || fallback <= 0L) return 0L;
+
+        Item item = Registries.ITEM.get(id);
+        if (item == null) return 0L;
+        ItemStack sample = new ItemStack(item);
+        if (sample.isEmpty()) return 0L;
+        if (autoSellStackableOnly && sample.getMaxCount() <= 1) return 0L;
+        return fallback;
+    }
+
+    private static boolean blockedFromAutoSell(Identifier id) {
+        String rawId = id.toString();
+        String path = id.getPath();
+        return AUTO_SELL_BLOCKED.contains(rawId)
+                || path.endsWith("_spawn_egg")
+                || path.contains("debug")
+                || path.contains("creative_only");
     }
 
     private static ActivityEconomyConfig defaults() {
