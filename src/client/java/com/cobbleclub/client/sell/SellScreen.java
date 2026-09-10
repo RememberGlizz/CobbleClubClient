@@ -17,16 +17,17 @@ import net.minecraft.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Environment(EnvType.CLIENT)
 public final class SellScreen extends Screen {
-    private static final int PANEL_W = 500;
-    private static final int PANEL_H = 286;
+    private static final int PANEL_W = 430;
+    private static final int PANEL_H = 246;
     private static final int GRID_COLS = 4;
-    private static final int GRID_ROWS = 4;
+    private static final int GRID_ROWS = 3;
     private static final int PAGE_SIZE = GRID_COLS * GRID_ROWS;
-    private static final int CELL_W = 78;
-    private static final int CELL_H = 44;
+    private static final int CELL_W = 65;
+    private static final int CELL_H = 42;
     private static final int CELL_GAP = 2;
 
     private SellState state;
@@ -35,6 +36,7 @@ public final class SellScreen extends Screen {
     private int page;
     private boolean pending;
 
+    private TextFieldWidget searchField;
     private TextFieldWidget amountField;
     private ThemedButton sellButton;
     private ThemedButton minusButton;
@@ -42,6 +44,10 @@ public final class SellScreen extends Screen {
     private ThemedButton allButton;
     private ThemedButton prevButton;
     private ThemedButton nextButton;
+
+    private SellState filteredState;
+    private String filteredKey = "";
+    private List<SellState.ItemEntry> filteredCache = List.of();
 
     public SellScreen(SellState state) {
         super(Text.literal("CobbleClub Sell Shop"));
@@ -52,6 +58,7 @@ public final class SellScreen extends Screen {
     public void applyState(SellState state) {
         this.state = state;
         this.pending = false;
+        this.invalidateFilter();
         if (this.selectedId != null && this.state.find(this.selectedId) == null) this.selectedId = null;
         this.clampPage();
     }
@@ -59,39 +66,47 @@ public final class SellScreen extends Screen {
     private int left() { return (this.width - PANEL_W) / 2; }
     private int top() { return (this.height - PANEL_H) / 2; }
     private int gridX() { return this.left() + 9; }
-    private int gridY() { return this.top() + 55; }
-    private int detailX() { return this.left() + 334; }
+    private int gridY() { return this.top() + 71; }
+    private int detailX() { return this.left() + 286; }
 
     @Override
     protected void init() {
         int detailX = this.detailX();
         int top = this.top();
+        String previousSearch = this.searchField == null ? "" : this.searchField.getText();
 
-        this.amountField = new TextFieldWidget(this.textRenderer, detailX + 8, top + 139, 141, 20, Text.literal("Amount"));
+        this.searchField = new TextFieldWidget(this.textRenderer, this.left() + 9, top + 48, 266, 18, Text.literal("Search items"));
+        this.searchField.setMaxLength(64);
+        this.searchField.setPlaceholder(Text.literal("Search items..."));
+        this.searchField.setText(previousSearch);
+        this.addDrawableChild(this.searchField);
+
+        this.amountField = new TextFieldWidget(this.textRenderer, detailX + 8, top + 123, 119, 18, Text.literal("Amount"));
         this.amountField.setMaxLength(5);
         this.amountField.setTextPredicate(value -> value.matches("\\d*"));
         this.amountField.setPlaceholder(Text.literal("Amount"));
         this.amountField.setText("1");
         this.addDrawableChild(this.amountField);
 
-        this.minusButton = this.addDrawableChild(new ThemedButton(detailX + 8, top + 163, 42, 18, Text.literal("-1"), b -> changeAmount(-1)));
-        this.plusButton = this.addDrawableChild(new ThemedButton(detailX + 54, top + 163, 42, 18, Text.literal("+1"), b -> changeAmount(1)));
-        this.allButton = this.addDrawableChild(new ThemedButton(detailX + 100, top + 163, 49, 18, Text.literal("All"), ThemedButton.Variant.BLUE, b -> setAllAmount()));
+        this.minusButton = this.addDrawableChild(new ThemedButton(detailX + 8, top + 144, 35, 17, Text.literal("-1"), b -> changeAmount(-1)));
+        this.plusButton = this.addDrawableChild(new ThemedButton(detailX + 47, top + 144, 35, 17, Text.literal("+1"), b -> changeAmount(1)));
+        this.allButton = this.addDrawableChild(new ThemedButton(detailX + 86, top + 144, 41, 17, Text.literal("All"), ThemedButton.Variant.BLUE, b -> setAllAmount()));
 
-        this.sellButton = this.addDrawableChild(new ThemedButton(detailX + 8, top + 205, 141, 22, Text.literal("Sell"), ThemedButton.Variant.GREEN, b -> sellSelected()));
+        this.sellButton = this.addDrawableChild(new ThemedButton(detailX + 8, top + 200, 119, 20, Text.literal("Sell"), ThemedButton.Variant.GREEN, b -> sellSelected()));
 
-        this.prevButton = this.addDrawableChild(new ThemedButton(this.left() + 9, top + 239, 54, 18, Text.literal("< Prev"), b -> {
+        this.prevButton = this.addDrawableChild(new ThemedButton(this.left() + 9, top + 207, 48, 17, Text.literal("< Prev"), b -> {
             if (this.page > 0) this.page--;
         }));
-        this.nextButton = this.addDrawableChild(new ThemedButton(this.left() + 270, top + 239, 54, 18, Text.literal("Next >"), b -> {
+        this.nextButton = this.addDrawableChild(new ThemedButton(this.left() + 227, top + 207, 48, 17, Text.literal("Next >"), b -> {
             if (this.page + 1 < pageCount()) this.page++;
         }));
 
-        this.addDrawableChild(new ThemedButton(detailX + 8, top + 234, 68, 20, Text.literal("Refresh"), b -> {
+        this.addDrawableChild(new ThemedButton(detailX + 8, top + 224, 57, 17, Text.literal("Refresh"), b -> {
             this.pending = true;
             SellNetworking.refresh();
         }));
-        this.addDrawableChild(new ThemedButton(detailX + 81, top + 234, 68, 20, Text.literal("Close"), b -> this.close()));
+        this.addDrawableChild(new ThemedButton(detailX + 70, top + 224, 57, 17, Text.literal("Close"), b -> this.close()));
+        this.invalidateFilter();
     }
 
     private void changeAmount(int delta) {
@@ -130,14 +145,33 @@ public final class SellScreen extends Screen {
         return this.state == null ? null : this.state.find(this.selectedId);
     }
 
+    private String searchQuery() {
+        if (this.searchField == null || this.searchField.getText() == null) return "";
+        return this.searchField.getText().trim().toLowerCase(Locale.ROOT).replace('_', ' ');
+    }
+
+    private void invalidateFilter() {
+        this.filteredState = null;
+        this.filteredKey = "";
+        this.filteredCache = List.of();
+    }
+
     private List<SellState.ItemEntry> filtered() {
         if (this.state == null) return List.of();
-        if ("all".equals(this.category)) return this.state.items;
+        String query = searchQuery();
+        String key = this.category + "\u0000" + query;
+        if (this.filteredState == this.state && key.equals(this.filteredKey)) return this.filteredCache;
+
         List<SellState.ItemEntry> out = new ArrayList<>();
         for (SellState.ItemEntry item : this.state.items) {
-            if (this.category.equals(item.namespace())) out.add(item);
+            if (!"all".equals(this.category) && !this.category.equals(item.namespace())) continue;
+            if (!query.isBlank() && !item.searchText().contains(query)) continue;
+            out.add(item);
         }
-        return out;
+        this.filteredState = this.state;
+        this.filteredKey = key;
+        this.filteredCache = List.copyOf(out);
+        return this.filteredCache;
     }
 
     private int pageCount() {
@@ -176,8 +210,8 @@ public final class SellScreen extends Screen {
         g.fill(left, top + 21, left + PANEL_W, top + 22, -6467875);
         g.drawCenteredTextWithShadow(this.textRenderer, this.getTitle(), left + PANEL_W / 2, top + 6, -2053377);
 
-        g.drawTextWithShadow(this.textRenderer, "SELL CATALOG", left + 9, top + 29, -6467875);
-        g.drawTextWithShadow(this.textRenderer, "Balance: " + this.state.balanceText, detailX + 8, top + 29, -2053377);
+        g.drawTextWithShadow(this.textRenderer, "SELL", left + 9, top + 31, -6467875);
+        g.drawTextWithShadow(this.textRenderer, "Balance: " + this.state.balanceText, detailX + 4, top + 31, -2053377);
 
         this.renderTabs(g, mouseX, mouseY);
         this.renderCatalog(g, mouseX, mouseY);
@@ -194,22 +228,27 @@ public final class SellScreen extends Screen {
 
         if (this.state.notice != null && !this.state.notice.isBlank()) {
             int color = this.state.error ? -2734768 : -12474273;
-            String notice = this.textRenderer.trimToWidth(this.state.notice, PANEL_W - 18);
-            g.drawCenteredTextWithShadow(this.textRenderer, notice, left + PANEL_W / 2, top + 266, color);
+            String notice = this.textRenderer.trimToWidth(this.state.notice, 266);
+            g.drawCenteredTextWithShadow(this.textRenderer, notice, left + 142, top + 231, color);
         } else {
-            g.drawCenteredTextWithShadow(this.textRenderer, "Click an item, enter how many you want to sell, then confirm.", left + PANEL_W / 2, top + 266, -7035976);
+            String footer = filtered().size() + " sellable item" + (filtered().size() == 1 ? "" : "s");
+            g.drawCenteredTextWithShadow(this.textRenderer, footer, left + 142, top + 231, -7035976);
         }
     }
 
+    private List<Tab> tabs() {
+        List<Tab> tabs = new ArrayList<>();
+        tabs.add(new Tab("all", "All", 34));
+        if (this.state == null || this.state.hasNamespace("minecraft")) tabs.add(new Tab("minecraft", "Minecraft", 58));
+        if (this.state == null || this.state.hasNamespace("cobblemon")) tabs.add(new Tab("cobblemon", "Cobblemon", 64));
+        if (this.state != null && this.state.hasNamespace("cobblefurnies")) tabs.add(new Tab("cobblefurnies", "Furnies", 50));
+        return tabs;
+    }
+
     private void renderTabs(DrawContext g, int mouseX, int mouseY) {
-        int x = this.left() + 89;
+        int x = this.left() + 47;
         int y = this.top() + 27;
-        Tab[] tabs = {
-                new Tab("all", "All", 50),
-                new Tab("minecraft", "Minecraft", 76),
-                new Tab("cobblemon", "Cobblemon", 76)
-        };
-        for (Tab tab : tabs) {
+        for (Tab tab : tabs()) {
             boolean active = tab.id.equals(this.category);
             boolean hover = PreviewUi.inRect(mouseX, mouseY, x, y, tab.width, 17);
             g.fill(x, y, x + tab.width, y + 17, active ? -14410694 : (hover ? -14936272 : -15528414));
@@ -242,51 +281,49 @@ public final class SellScreen extends Screen {
             g.drawBorder(x, y, CELL_W, CELL_H, selected ? -12474273 : (hover ? -6467875 : -13747610));
 
             ItemStack stack = entry.stack();
-            if (!stack.isEmpty()) PreviewUi.renderScaledItem(g, stack, x + 5, y + 7, 1.35F);
+            if (!stack.isEmpty()) PreviewUi.renderScaledItem(g, stack, x + 4, y + 7, 1.2F);
 
-            String name = stack.isEmpty() ? entry.id : stack.getName().getString();
-            g.drawText(this.textRenderer, this.textRenderer.trimToWidth(name, 49), x + 27, y + 6, -2962968, false);
-            g.drawText(this.textRenderer, this.state.shortMoney(entry.price), x + 27, y + 18, -12474273, false);
-            g.drawText(this.textRenderer, "Have: " + entry.count, x + 27, y + 30, entry.count > 0 ? -1 : -7035976, false);
+            g.drawText(this.textRenderer, this.textRenderer.trimToWidth(entry.displayName(), 39), x + 24, y + 5, -2962968, false);
+            g.drawText(this.textRenderer, this.state.shortMoney(entry.price), x + 24, y + 17, -12474273, false);
+            g.drawText(this.textRenderer, "x" + entry.count, x + 24, y + 29, entry.count > 0 ? -1 : -7035976, false);
         }
 
         int count = pageCount();
-        g.drawCenteredTextWithShadow(this.textRenderer, "Page " + (this.page + 1) + " / " + count, this.left() + 166, this.top() + 244, -7035976);
+        g.drawCenteredTextWithShadow(this.textRenderer, "Page " + (this.page + 1) + " / " + count, this.left() + 142, this.top() + 212, -7035976);
     }
 
     private void renderDetails(DrawContext g) {
         int x = this.detailX();
-        int y = this.top() + 48;
-        int w = 157;
-        int h = 181;
+        int y = this.top() + 47;
+        int w = 135;
+        int h = 148;
         g.fillGradient(x, y, x + w, y + h, -14998448, -16315880);
         g.drawBorder(x, y, w, h, -13747610);
         g.drawTextWithShadow(this.textRenderer, "SELECTED ITEM", x + 8, y + 7, -6467875);
 
         SellState.ItemEntry selected = selected();
         if (selected == null) {
-            g.drawCenteredTextWithShadow(this.textRenderer, "Pick an item", x + w / 2, y + 55, -7035976);
-            g.drawCenteredTextWithShadow(this.textRenderer, "from the catalog", x + w / 2, y + 68, -7035976);
+            g.drawCenteredTextWithShadow(this.textRenderer, "Pick an item", x + w / 2, y + 52, -7035976);
+            g.drawCenteredTextWithShadow(this.textRenderer, "from the catalog", x + w / 2, y + 65, -7035976);
             return;
         }
 
         ItemStack stack = selected.stack();
-        if (!stack.isEmpty()) PreviewUi.renderScaledItem(g, stack, x + 13, y + 28, 2.0F);
-        String name = stack.isEmpty() ? selected.id : stack.getName().getString();
-        g.drawTextWithShadow(this.textRenderer, this.textRenderer.trimToWidth(name, 98), x + 48, y + 28, -1);
-        g.drawTextWithShadow(this.textRenderer, this.state.shortMoney(selected.price) + " each", x + 48, y + 42, -12474273);
-        g.drawTextWithShadow(this.textRenderer, "In inventory: " + selected.count, x + 48, y + 56, selected.count > 0 ? -2962968 : -2734768);
+        if (!stack.isEmpty()) PreviewUi.renderScaledItem(g, stack, x + 10, y + 25, 1.55F);
+        g.drawTextWithShadow(this.textRenderer, this.textRenderer.trimToWidth(selected.displayName(), 89), x + 39, y + 27, -1);
+        g.drawTextWithShadow(this.textRenderer, this.state.shortMoney(selected.price) + " each", x + 39, y + 40, -12474273);
+        g.drawTextWithShadow(this.textRenderer, "Have: " + selected.count, x + 39, y + 53, selected.count > 0 ? -2962968 : -2734768);
 
-        g.drawTextWithShadow(this.textRenderer, "How many?", x + 8, y + 79, -2962968);
+        g.drawTextWithShadow(this.textRenderer, "How many?", x + 8, y + 69, -2962968);
         int amount = quantity();
         long total = amount > 0 ? safeMultiply(selected.price, amount) : 0L;
-        g.drawTextWithShadow(this.textRenderer, "Total: " + this.state.money(total), x + 8, y + 137, -2053377);
+        g.drawTextWithShadow(this.textRenderer, "Total: " + this.state.shortMoney(total), x + 8, y + 118, -2053377);
         if (amount > selected.count) {
-            g.drawTextWithShadow(this.textRenderer, "Not enough in inventory", x + 8, y + 151, -2734768);
+            g.drawTextWithShadow(this.textRenderer, "Not enough in inventory", x + 8, y + 132, -2734768);
         } else if (selected.count == 0) {
-            g.drawTextWithShadow(this.textRenderer, "You don't have any to sell", x + 8, y + 151, -7035976);
+            g.drawTextWithShadow(this.textRenderer, "None in inventory", x + 8, y + 132, -7035976);
         } else if (this.pending) {
-            g.drawTextWithShadow(this.textRenderer, "Processing...", x + 8, y + 151, -7035976);
+            g.drawTextWithShadow(this.textRenderer, "Processing...", x + 8, y + 132, -7035976);
         }
     }
 
@@ -332,6 +369,7 @@ public final class SellScreen extends Screen {
             if (tab != null) {
                 this.category = tab;
                 this.page = 0;
+                this.invalidateFilter();
                 PreviewUi.playClick();
                 return true;
             }
@@ -350,14 +388,9 @@ public final class SellScreen extends Screen {
     }
 
     private String tabAt(double mouseX, double mouseY) {
-        int x = this.left() + 89;
+        int x = this.left() + 47;
         int y = this.top() + 27;
-        Tab[] tabs = {
-                new Tab("all", "All", 50),
-                new Tab("minecraft", "Minecraft", 76),
-                new Tab("cobblemon", "Cobblemon", 76)
-        };
-        for (Tab tab : tabs) {
+        for (Tab tab : tabs()) {
             if (PreviewUi.inRect(mouseX, mouseY, x, y, tab.width, 17)) return tab.id;
             x += tab.width + 3;
         }
