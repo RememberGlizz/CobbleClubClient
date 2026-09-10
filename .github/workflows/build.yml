@@ -19,3 +19,9 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew build --no-daemon
+      - name: Upload built jars
+        uses: actions/upload-artifact@v4
+        with:
+          name: cobbleclub-3.8.4-build
+          path: build/libs/*.jar
+          if-no-files-found: error
