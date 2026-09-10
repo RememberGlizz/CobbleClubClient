@@ -78,7 +78,7 @@ public final class SellScreen extends Screen {
         this.plusButton = this.addDrawableChild(new ThemedButton(detailX + 54, top + 163, 42, 18, Text.literal("+1"), b -> changeAmount(1)));
         this.allButton = this.addDrawableChild(new ThemedButton(detailX + 100, top + 163, 49, 18, Text.literal("All"), ThemedButton.Variant.BLUE, b -> setAllAmount()));
 
-        this.sellButton = this.addDrawableChild(new ThemedButton(detailX + 8, top + 187, 141, 22, Text.literal("Sell"), ThemedButton.Variant.GREEN, b -> sellSelected()));
+        this.sellButton = this.addDrawableChild(new ThemedButton(detailX + 8, top + 205, 141, 22, Text.literal("Sell"), ThemedButton.Variant.GREEN, b -> sellSelected()));
 
         this.prevButton = this.addDrawableChild(new ThemedButton(this.left() + 9, top + 239, 54, 18, Text.literal("< Prev"), b -> {
             if (this.page > 0) this.page--;
@@ -274,7 +274,7 @@ public final class SellScreen extends Screen {
         if (!stack.isEmpty()) PreviewUi.renderScaledItem(g, stack, x + 13, y + 28, 2.0F);
         String name = stack.isEmpty() ? selected.id : stack.getName().getString();
         g.drawTextWithShadow(this.textRenderer, this.textRenderer.trimToWidth(name, 98), x + 48, y + 28, -1);
-        g.drawTextWithShadow(this.textRenderer, this.state.money(selected.price) + " each", x + 48, y + 42, -12474273);
+        g.drawTextWithShadow(this.textRenderer, this.state.shortMoney(selected.price) + " each", x + 48, y + 42, -12474273);
         g.drawTextWithShadow(this.textRenderer, "In inventory: " + selected.count, x + 48, y + 56, selected.count > 0 ? -2962968 : -2734768);
 
         g.drawTextWithShadow(this.textRenderer, "How many?", x + 8, y + 79, -2962968);
