@@ -11,8 +11,10 @@ import net.minecraft.util.Identifier;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public final class SellState {
     private static final DecimalFormat COUNT = new DecimalFormat("#,###");
@@ -23,6 +25,7 @@ public final class SellState {
     public final String notice;
     public final boolean error;
     public final List<ItemEntry> items;
+    private final Set<String> namespaces;
 
     private SellState(JsonObject json) {
         this.balanceText = string(json, "balanceText", "");
@@ -32,6 +35,7 @@ public final class SellState {
         this.error = bool(json, "error");
 
         List<ItemEntry> parsed = new ArrayList<>();
+        Set<String> foundNamespaces = new HashSet<>();
         JsonArray array = json.has("items") && json.get("items").isJsonArray() ? json.getAsJsonArray("items") : new JsonArray();
         for (JsonElement element : array) {
             if (!element.isJsonObject()) continue;
@@ -39,9 +43,14 @@ public final class SellState {
             String id = string(item, "id", "");
             long price = number(item, "price", 0L);
             int count = (int)Math.max(0L, Math.min(Integer.MAX_VALUE, number(item, "count", 0L)));
-            if (!id.isBlank() && price > 0L) parsed.add(new ItemEntry(id, price, count));
+            if (!id.isBlank() && price > 0L) {
+                ItemEntry entry = new ItemEntry(id, price, count);
+                parsed.add(entry);
+                foundNamespaces.add(entry.namespace());
+            }
         }
         this.items = List.copyOf(parsed);
+        this.namespaces = Set.copyOf(foundNamespaces);
     }
 
     public static SellState parse(String raw) {
@@ -62,11 +71,7 @@ public final class SellState {
     }
 
     public boolean hasNamespace(String namespace) {
-        if (namespace == null || namespace.isBlank()) return false;
-        for (ItemEntry item : this.items) {
-            if (namespace.equals(item.namespace())) return true;
-        }
-        return false;
+        return namespace != null && !namespace.isBlank() && this.namespaces.contains(namespace);
     }
 
     public String money(long amount) {
@@ -98,6 +103,7 @@ public final class SellState {
         public final int count;
 
         private ItemStack stack;
+        private String namespace;
         private String displayName;
         private String searchText;
 
@@ -108,8 +114,10 @@ public final class SellState {
         }
 
         public String namespace() {
+            if (this.namespace != null) return this.namespace;
             Identifier identifier = Identifier.tryParse(this.id);
-            return identifier == null ? "" : identifier.getNamespace();
+            this.namespace = identifier == null ? "" : identifier.getNamespace();
+            return this.namespace;
         }
 
         public String displayName() {
