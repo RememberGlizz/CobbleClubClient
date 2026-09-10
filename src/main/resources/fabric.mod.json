@@ -15,10 +15,12 @@
     "main": [
       "com.cobbleclub.server.CobbleClubServer",
       "com.cobbleclub.server.service.TpaModInitializer",
-      "com.cobbleclub.server.service.ActivityEconomyInitializer"
+      "com.cobbleclub.server.service.ActivityEconomyInitializer",
+      "com.cobbleclub.server.service.SellGuiInitializer"
     ],
     "client": [
-      "com.cobbleclub.client.CobbleClubClient"
+      "com.cobbleclub.client.CobbleClubClient",
+      "com.cobbleclub.client.sell.SellNetworking"
     ]
   },
   "mixins": [

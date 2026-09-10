@@ -2,12 +2,19 @@ package com.cobbleclub.server.service;
 
 import com.cobbleclub.server.CobbleClubServer;
 import com.cobbleclub.server.data.PlayerDataStore;
+import com.cobbleclub.server.network.SellPayloads;
 import com.cobblemon.mod.common.api.battles.model.actor.ActorType;
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent;
 import com.cobblemon.mod.common.api.events.pokemon.PokemonCapturedEvent;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.MinecraftServer;
@@ -21,8 +28,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -104,7 +114,6 @@ public final class ActivityEconomyService {
 
         long payout = 0L;
         int sold = 0;
-        // Main inventory only. Armor and offhand are intentionally left alone.
         for (int slot = 0; slot < 36; slot++) {
             ItemStack stack = player.getInventory().getStack(slot);
             if (stack.isEmpty()) continue;
@@ -133,6 +142,11 @@ public final class ActivityEconomyService {
 
     public static int showSellInfo(ServerPlayerEntity player) {
         if (!enabled(player)) return 0;
+        if (ServerPlayNetworking.canSend(player, SellPayloads.Open.ID)) {
+            sendSellState(player, "", false, true);
+            return 1;
+        }
+
         player.sendMessage(Text.literal("CobbleClub Sell Shop").formatted(Formatting.GOLD, Formatting.BOLD), false);
         player.sendMessage(Text.literal("/sell hand").formatted(Formatting.YELLOW)
                 .append(Text.literal(" - sell the stack in your main hand").formatted(Formatting.GRAY)), false);
@@ -141,6 +155,130 @@ public final class ActivityEconomyService {
         player.sendMessage(Text.literal("/sell prices").formatted(Formatting.YELLOW)
                 .append(Text.literal(" - show common sell prices").formatted(Formatting.GRAY)), false);
         return 1;
+    }
+
+    public static void handleSellAction(ServerPlayerEntity player, String raw) {
+        if (!enabled(player)) return;
+        try {
+            JsonElement parsed = JsonParser.parseString(raw == null ? "{}" : raw);
+            JsonObject json = parsed.isJsonObject() ? parsed.getAsJsonObject() : new JsonObject();
+            String action = json.has("action") ? json.get("action").getAsString() : "";
+
+            if ("refresh".equalsIgnoreCase(action)) {
+                sendSellState(player, "Shop refreshed.", false, false);
+                return;
+            }
+
+            if (!"sell".equalsIgnoreCase(action)) {
+                sendSellState(player, "Unknown shop action.", true, false);
+                return;
+            }
+
+            String rawId = json.has("item") ? json.get("item").getAsString() : "";
+            int quantity = json.has("quantity") ? json.get("quantity").getAsInt() : 0;
+            Identifier id = Identifier.tryParse(rawId);
+            if (id == null || !Registries.ITEM.containsId(id)) {
+                sendSellState(player, "That item is not available in the sell shop.", true, false);
+                return;
+            }
+            if (quantity <= 0 || quantity > 100_000) {
+                sendSellState(player, "Enter a valid amount to sell.", true, false);
+                return;
+            }
+
+            long unitPrice = priceFor(id);
+            if (unitPrice <= 0L) {
+                sendSellState(player, "That item cannot be sold.", true, false);
+                return;
+            }
+
+            int owned = countOwned(player, id);
+            if (owned < quantity) {
+                sendSellState(player, "You only have " + owned + " of that item in your inventory.", true, false);
+                return;
+            }
+
+            if (!removeItems(player, id, quantity)) {
+                sendSellState(player, "Your inventory changed before the sale could finish. Try again.", true, false);
+                return;
+            }
+
+            long payout = safeMultiply(unitPrice, quantity);
+            creditDeferred(player, payout);
+            progress(player, ContractType.SELL, quantity);
+            PlayerDataStore.save();
+            save();
+
+            Item item = Registries.ITEM.get(id);
+            String itemName = item == null ? id.getPath() : new ItemStack(item).getName().getString();
+            sendSellState(player, "Sold " + quantity + " " + itemName + " for " + EconomyService.format(payout) + ".", false, false);
+        } catch (Exception error) {
+            CobbleClubServer.LOGGER.warn("Could not process sell shop action for {}", player.getGameProfile().getName(), error);
+            sendSellState(player, "That sale could not be completed. Try again.", true, false);
+        }
+    }
+
+    private static void sendSellState(ServerPlayerEntity player, String notice, boolean error, boolean open) {
+        String json = sellState(player, notice, error);
+        if (open) {
+            if (ServerPlayNetworking.canSend(player, SellPayloads.Open.ID)) {
+                ServerPlayNetworking.send(player, new SellPayloads.Open(json));
+            }
+        } else if (ServerPlayNetworking.canSend(player, SellPayloads.State.ID)) {
+            ServerPlayNetworking.send(player, new SellPayloads.State(json));
+        }
+    }
+
+    private static String sellState(ServerPlayerEntity player, String notice, boolean error) {
+        JsonObject root = new JsonObject();
+        root.addProperty("balanceText", EconomyService.format(EconomyService.balance(player)));
+        root.addProperty("currencySymbol", CobbleClubServer.config().currencySymbol);
+        root.addProperty("currencyName", CobbleClubServer.config().currencyName);
+        root.addProperty("notice", notice == null ? "" : notice);
+        root.addProperty("error", error);
+
+        List<Identifier> ids = new ArrayList<>(Registries.ITEM.getIds());
+        ids.removeIf(id -> priceFor(id) <= 0L);
+        ids.sort(Comparator
+                .comparingInt((Identifier id) -> "minecraft".equals(id.getNamespace()) ? 0 : ("cobblemon".equals(id.getNamespace()) ? 1 : 2))
+                .thenComparing(Identifier::getNamespace)
+                .thenComparing(Identifier::getPath));
+
+        JsonArray items = new JsonArray();
+        for (Identifier id : ids) {
+            JsonObject item = new JsonObject();
+            item.addProperty("id", id.toString());
+            item.addProperty("price", priceFor(id));
+            item.addProperty("count", countOwned(player, id));
+            items.add(item);
+        }
+        root.add("items", items);
+        return GSON.toJson(root);
+    }
+
+    private static int countOwned(ServerPlayerEntity player, Identifier id) {
+        Item item = Registries.ITEM.get(id);
+        if (item == null) return 0;
+        int total = 0;
+        for (int slot = 0; slot < 36; slot++) {
+            ItemStack stack = player.getInventory().getStack(slot);
+            if (!stack.isEmpty() && stack.getItem() == item) total = safeIntAdd(total, stack.getCount());
+        }
+        return total;
+    }
+
+    private static boolean removeItems(ServerPlayerEntity player, Identifier id, int quantity) {
+        Item item = Registries.ITEM.get(id);
+        if (item == null || quantity <= 0) return false;
+        int remaining = quantity;
+        for (int slot = 0; slot < 36 && remaining > 0; slot++) {
+            ItemStack stack = player.getInventory().getStack(slot);
+            if (stack.isEmpty() || stack.getItem() != item) continue;
+            int take = Math.min(remaining, stack.getCount());
+            stack.decrement(take);
+            remaining -= take;
+        }
+        return remaining == 0;
     }
 
     public static int showPrices(ServerPlayerEntity player) {
