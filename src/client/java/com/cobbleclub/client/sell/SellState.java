@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public final class SellState {
     private static final DecimalFormat COUNT = new DecimalFormat("#,###");
@@ -60,6 +61,14 @@ public final class SellState {
         return null;
     }
 
+    public boolean hasNamespace(String namespace) {
+        if (namespace == null || namespace.isBlank()) return false;
+        for (ItemEntry item : this.items) {
+            if (namespace.equals(item.namespace())) return true;
+        }
+        return false;
+    }
+
     public String money(long amount) {
         return this.currencySymbol + COUNT.format(Math.max(0L, amount)) + " " + this.currencyName;
     }
@@ -89,6 +98,8 @@ public final class SellState {
         public final int count;
 
         private ItemStack stack;
+        private String displayName;
+        private String searchText;
 
         ItemEntry(String id, long price, int count) {
             this.id = id;
@@ -99,6 +110,20 @@ public final class SellState {
         public String namespace() {
             Identifier identifier = Identifier.tryParse(this.id);
             return identifier == null ? "" : identifier.getNamespace();
+        }
+
+        public String displayName() {
+            if (this.displayName != null) return this.displayName;
+            ItemStack stack = stack();
+            this.displayName = stack.isEmpty() ? this.id : stack.getName().getString();
+            return this.displayName;
+        }
+
+        public String searchText() {
+            if (this.searchText == null) {
+                this.searchText = (this.id + " " + displayName()).toLowerCase(Locale.ROOT).replace('_', ' ');
+            }
+            return this.searchText;
         }
 
         public ItemStack stack() {
