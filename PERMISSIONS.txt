@@ -31,6 +31,8 @@ cobbleclub.command.gems                /gems
 cobbleclub.command.pay                 /pay <player> <amount>
 cobbleclub.command.daily               /daily
 cobbleclub.command.tpa                 /tpa <player>, /tpayes, /tpano
+cobbleclub.command.sell                /sell, /sell hand, /sell all, /sell prices
+cobbleclub.command.contracts           /contracts and /contract
 cobbleclub.command.crates              /crate, /crates and /keys
 cobbleclub.command.preview.pokemon     /pokemonpreview
 cobbleclub.command.preview.gear        /gearpreview
@@ -139,3 +141,7 @@ cobbleclub.command.rtp
 
 # Player teleport requests
 cobbleclub.command.tpa
+
+# Active economy
+cobbleclub.command.sell
+cobbleclub.command.contracts
