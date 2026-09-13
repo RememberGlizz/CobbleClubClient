@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Chest Shops — CobbleClub player wiki.">
+<meta name="theme-color" content="#0b0a14">
+<title>Chest Shops • CobbleClub Wiki</title>
+<link rel="icon" type="image/png" href="assets/server-icon.png">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+<header class="topbar"></header>
+<div class="layout">
+<aside class="sidebar"></aside>
+<main class="content">
+<div class="page-head"><div class="kicker">Player economy</div><h1>Chest Shops</h1><p>Chest Shops turn a chest inside your CobbleClub claim into a protected player shop. The server handles price, stock, item transfer and PokéDollar payment.</p></div><section class="section"><div class="section-kicker">Seller setup</div><h2>Create a shop</h2><div class="steps"><div class="step"><div class="step-num">1</div><div><h3>Place a chest inside your claim</h3><p>The chest must be in CobbleClub-protected land where your role has the <strong>Chest Shops</strong> permission. By default, shop creation is Owner-only.</p></div></div><div class="step"><div class="step-num">2</div><div><h3>Run `/chestshop`</h3><p>This arms shop-placement mode. The instruction appears on screen; it is intentionally not duplicated into chat.</p></div></div><div class="step"><div class="step-num">3</div><div><h3>Right-click a side of the chest</h3><p>Click a horizontal side—not the top or bottom. CobbleClub needs room for the shop sign.</p></div></div><div class="step"><div class="step-num">4</div><div><h3>Choose the item</h3><p>The item-selection screen opens. Choose a non-empty inventory item that this chest will sell.</p></div></div><div class="step"><div class="step-num">5</div><div><h3>Set the unit price</h3><p>The price screen shows server guidance/minimums based on the economy. Confirm your desired unit price.</p></div></div><div class="step"><div class="step-num">6</div><div><h3>Stock the chest</h3><p>Put the sell item into the chest. The sign/shop state updates to reflect item, price and stock.</p></div></div></div></section><section class="section"><div class="section-kicker">Manage</div><h2>Seller controls</h2><div class="split"><div class="panel"><h3>Normal right-click</h3><p>As the shop owner/manager, normal interaction with the chest is used for stocking and inventory access.</p></div><div class="panel"><h3>Sneak-click / shop sign</h3><p>Use the management interaction to open shop controls rather than buying from your own listing.</p></div></div><div class="command-card"><code>/chestshop cancel</code><p>Cancel placement mode if you changed your mind before creating the shop.</p></div></section><section class="section"><div class="section-kicker">Buyer flow</div><h2>What happens when someone buys</h2><div class="steps"><div class="step"><div class="step-num">1</div><div><h3>Buyer opens the shop</h3><p>The shop UI shows the item, unit price and available stock.</p></div></div><div class="step"><div class="step-num">2</div><div><h3>Server re-checks everything</h3><p>CobbleClub verifies balance and stock on the server instead of trusting the client screen.</p></div></div><div class="step"><div class="step-num">3</div><div><h3>Money and item move together</h3><p>The buyer is charged, the item is transferred, and PokéDollars are deposited directly to the shop owner.</p></div></div><div class="step"><div class="step-num">4</div><div><h3>Failed stock changes are protected</h3><p>If the stock changed unexpectedly during the purchase, the transaction logic can refund rather than silently eating money.</p></div></div></div></section><div class="callout cyan"><strong>Designed for public shops</strong><div>Claim management permission and shopping access are separate concepts. Visitors can normally buy from a shop even though they cannot create or manage that shop, unless the claim's other access rules block them.</div></div><section class="section"><div class="section-kicker">Practical tips</div><h2>Good shop setup</h2><div class="feature-grid"><div class="feature-card"><span class="mini-badge">Tip</span><h3>Make a market subclaim</h3><p>Use a dedicated subclaim with controlled permissions so customers can enter/use the shop area without gaining build access.</p></div><div class="feature-card"><span class="mini-badge">Tip</span><h3>Keep stock simple</h3><p>One shop sells one configured item. Use multiple chests for a clean marketplace.</p></div><div class="feature-card"><span class="mini-badge">Tip</span><h3>Price from `/sell`</h3><p>The server gives price guidance. Player shops can charge more than server sell value when scarcity/effort justifies it.</p></div><div class="feature-card"><span class="mini-badge">Tip</span><h3>Use claim messages</h3><p>Entry messages can identify your market, rules or shop owner.</p></div><div class="feature-card"><span class="mini-badge">Tip</span><h3>Check access</h3><p>If buyers cannot interact, review claim role permissions/bans before rebuilding the shop.</p></div><div class="feature-card"><span class="mini-badge">Tip</span><h3>Use `/pay` for negotiated trades</h3><p>For one-off deals, direct payments are simpler than creating a permanent shop.</p></div></div></section>
+<footer class="footer">
+  <span>COBBLECLUB WIKI</span>
+  <span>Player documentation • Minecraft 1.21.1 • Cobblemon 1.8</span>
+</footer>
+</main>
+</div>
+<script src="assets/wiki.js"></script>
+<script>shell("Chest Shops");</script>
+</body>
+</html>
