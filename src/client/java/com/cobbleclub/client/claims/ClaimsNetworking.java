@@ -36,7 +36,12 @@ import com.cobbleclub.clubhouse.claims.protocol.ClaimsScreenProtocol;
 import com.cobbleclub.clubhouse.claims.protocol.ClaimsStateMsg;
 import com.cobbleclub.clubhouse.claims.protocol.ClaimsWorldMsg;
 import com.cobbleclub.server.network.Payloads;
+import java.util.ArrayList;
 import java.util.List;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -48,6 +53,7 @@ import net.minecraft.network.packet.CustomPayload;
 @Environment(value=EnvType.CLIENT)
 public final class ClaimsNetworking {
     private static final AtomicInteger NONCE = new AtomicInteger();
+    private static volatile List<PublicWarp> PUBLIC_WARPS = List.of();
 
     private ClaimsNetworking() {
     }
@@ -91,7 +97,55 @@ public final class ClaimsNetworking {
                 ClaimWorldRenderer.accept(msg);
             }
         });
+        ClientPlayNetworking.registerGlobalReceiver(Payloads.ClaimsWarpState.ID, (payload, context) -> {
+            try {
+                JsonObject root = JsonParser.parseString(payload.json()).getAsJsonObject();
+                JsonArray array = root.has("warps") && root.get("warps").isJsonArray() ? root.getAsJsonArray("warps") : new JsonArray();
+                ArrayList<PublicWarp> warps = new ArrayList<>();
+                for (JsonElement element : array) {
+                    if (!element.isJsonObject()) continue;
+                    JsonObject o = element.getAsJsonObject();
+                    warps.add(new PublicWarp(
+                            string(o, "claimId"),
+                            string(o, "name"),
+                            string(o, "claimName"),
+                            string(o, "owner"),
+                            string(o, "world"),
+                            o.has("owned") && o.get("owned").getAsBoolean()
+                    ));
+                }
+                PUBLIC_WARPS = List.copyOf(warps);
+            } catch (Exception exception) {
+                CobbleClubClient.LOGGER.warn("Dropped malformed claims warp state payload", exception);
+            }
+        });
         ClaimWorldRenderer.init();
+    }
+
+    public static void sendExtra(String action, String claimId, String value) {
+        if (ClientPlayNetworking.canSend(Payloads.ClaimsExtraAction.ID)) {
+            ClientPlayNetworking.send(new Payloads.ClaimsExtraAction(
+                    action == null ? "" : action,
+                    claimId == null ? "" : claimId,
+                    value == null ? "" : value
+            ));
+        }
+    }
+
+    public static List<PublicWarp> publicWarps() {
+        return PUBLIC_WARPS;
+    }
+
+    public static PublicWarp warpForClaim(String claimId) {
+        if (claimId == null) return null;
+        for (PublicWarp warp : PUBLIC_WARPS) {
+            if (claimId.equals(warp.claimId())) return warp;
+        }
+        return null;
+    }
+
+    private static String string(JsonObject object, String key) {
+        return object.has(key) && !object.get(key).isJsonNull() ? object.get(key).getAsString() : "";
     }
 
     public static void sendMapRequest(String dimension, List<List<Integer>> chunks) {
@@ -240,6 +294,8 @@ public final class ClaimsNetworking {
             this.tab = v;
             return this;
         }
+    }
+    public record PublicWarp(String claimId, String name, String claimName, String owner, String world, boolean owned) {
     }
 }
 
