@@ -162,7 +162,7 @@ public final class ClaimListPanel {
         if (row.standing()) {
             g.drawTextWithShadow(this.font, (Text)Text.literal((String)"Standing in this one").formatted(Formatting.GREEN), this.x0 + 10 + this.font.getWidth(claim.getName()) + 8, y + 5, -11141291);
         }
-        String zone = claim.getZone() != null ? claim.getZone() : claim.getDimension();
+        String zone = ClaimsState.friendlyWorldName(claim.getZone() != null ? claim.getZone() : claim.getDimension());
         String meta = claim.isOwner() ? zone : zone + " \u00b7 " + claim.getOwnerName();
         g.drawTextWithShadow(this.font, (Text)Text.literal((String)meta).formatted(Formatting.GRAY), this.x0 + 10, y + 17, -7035976);
         g.disableScissor();
