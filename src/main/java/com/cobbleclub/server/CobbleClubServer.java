@@ -123,9 +123,11 @@ public final class CobbleClubServer
             CobbleClubServer.safeJoinStep(handler.player, "Newb Kit", () -> KitsService.onJoin(handler.player));
             CobbleClubServer.safeJoinStep(handler.player, "pending vote rewards", () -> VoteRewardService.onJoin(handler.player));
             CobbleClubServer.safeJoinStep(handler.player, "claim borders", () -> ClaimsService.syncWorldSnapshots(server));
+            CobbleClubServer.safeJoinStep(handler.player, "featherboard online", () -> FeatherboardService.playerJoined(server));
             PlayerDataStore.save();
         });
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
+            FeatherboardService.playerDisconnected(server, handler.player.getUuid());
             CosmeticVisualService.remove(handler.player);
             ClaimsService.forgetWorldSnapshot(handler.player);
             RtpService.forget(handler.player);
@@ -151,7 +153,7 @@ public final class CobbleClubServer
 
     public static void acceptHandshake(ServerPlayerEntity player, String version) {
         String clientBuild = version == null ? "unknown" : version;
-        String serverBuild = CobbleClubServer.serverModVersion() + "|wild5-tags24-wool9-noblur1-managedborder1";
+        String serverBuild = CobbleClubServer.serverModVersion() + "|" + UI_PROTOCOL;
         CLIENT_VERSIONS.put(player.getUuid(), clientBuild);
         LOGGER.info("CobbleClub client {} connected with build {} (server {})", new Object[]{player.getGameProfile().getName(), clientBuild, serverBuild});
         if (!serverBuild.equals(clientBuild)) {
