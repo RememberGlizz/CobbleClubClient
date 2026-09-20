@@ -21,7 +21,7 @@ import net.minecraft.network.packet.CustomPayload;
 
 @Environment(value=EnvType.CLIENT)
 public final class ClientModHandshake {
-    private static final String UI_PROTOCOL = "wild5-tags24-wool9-noblur1-managedborder1";
+    private static final String UI_PROTOCOL = "wild5-tags24-wool9-noblur1-managedborder1-featherboard1";
 
     private ClientModHandshake() {
     }
@@ -29,7 +29,7 @@ public final class ClientModHandshake {
     public static void init() {
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
             if (ClientPlayNetworking.canSend(Payloads.Handshake.ID)) {
-                ClientPlayNetworking.send((CustomPayload)new Payloads.Handshake(ClientModHandshake.modVersion() + "|wild5-tags24-wool9-noblur1-managedborder1"));
+                ClientPlayNetworking.send((CustomPayload)new Payloads.Handshake(ClientModHandshake.modVersion() + "|" + UI_PROTOCOL));
             }
         });
     }
