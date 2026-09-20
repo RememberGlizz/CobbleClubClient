@@ -287,6 +287,35 @@ public final class Payloads {
         }
     }
 
+    public record ClaimsExtraAction(String action, String claimId, String value) implements CustomPayload
+    {
+        public static final CustomPayload.Id<ClaimsExtraAction> ID = new CustomPayload.Id<>(Payloads.id("claims_extra_action/v1"));
+        public static final PacketCodec<RegistryByteBuf, ClaimsExtraAction> CODEC = PacketCodec.of((entry, buf) -> {
+            buf.writeString(entry.action == null ? "" : entry.action, 64);
+            buf.writeString(entry.claimId == null ? "" : entry.claimId, 128);
+            buf.writeString(entry.value == null ? "" : entry.value, 256);
+        }, buf -> new ClaimsExtraAction(buf.readString(64), buf.readString(128), buf.readString(256)));
+
+        @Override
+        public CustomPayload.Id<? extends CustomPayload> getId() {
+            return ID;
+        }
+    }
+
+    public record ClaimsWarpState(String json) implements CustomPayload
+    {
+        public static final CustomPayload.Id<ClaimsWarpState> ID = new CustomPayload.Id<>(Payloads.id("claims_warp_state/v1"));
+        public static final PacketCodec<RegistryByteBuf, ClaimsWarpState> CODEC = PacketCodec.of(
+                (entry, buf) -> buf.writeString(entry.json == null ? "{}" : entry.json, 65536),
+                buf -> new ClaimsWarpState(buf.readString(65536))
+        );
+
+        @Override
+        public CustomPayload.Id<? extends CustomPayload> getId() {
+            return ID;
+        }
+    }
+
     public record KitsAction(String action) implements CustomPayload
     {
         public static final CustomPayload.Id<KitsAction> ID = new CustomPayload.Id<>(Payloads.id("kits_action/v1"));
