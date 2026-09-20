@@ -306,7 +306,7 @@ public final class KitsScreen extends Screen {
                         ? "Public · first join auto-delivery · 12h cooldown"
                         : "Premium rank kit · 18h cooldown";
 
-        float accessScale = 0.78f;
+        float accessScale = 0.70f;
 
         g.getMatrices().push();
         g.getMatrices().scale(
@@ -319,7 +319,7 @@ public final class KitsScreen extends Screen {
                 this.textRenderer,
                 access,
                 (int) ((x + 208) / accessScale),
-                (int) ((y + 40) / accessScale),
+                (int) ((y + 38) / accessScale),
                 -7035976
         );
 
@@ -389,7 +389,7 @@ public final class KitsScreen extends Screen {
                     this.textRenderer,
                     "• " + items[i],
                     x + 16 + column * 200,
-                    boxY + 28 + row * 15,
+                    boxY + 27 + row * ("newb".equals(this.selected) ? 13 : 15),
                     -2962968
             );
         }
@@ -416,14 +416,10 @@ public final class KitsScreen extends Screen {
                             : -12474273
             );
         } else {
-            String paid =
-                    KitsScreen.shortTime(
-                            kit.reductionPurchasedSeconds
-                    )
-                            + "/"
-                            + KitsScreen.shortTime(
-                                    kit.reductionMaxSeconds
-                            );
+            String paid = KitsScreen.reductionUsage(
+                    kit.reductionPurchasedSeconds,
+                    kit.reductionMaxSeconds
+            );
 
             float footerScale = 0.84f;
 
@@ -477,5 +473,12 @@ public final class KitsScreen extends Screen {
         }
 
         return KitsScreen.time(seconds);
+    }
+
+    private static String reductionUsage(long usedSeconds, long maxSeconds) {
+        if (usedSeconds % 3600L == 0L && maxSeconds % 3600L == 0L) {
+            return usedSeconds / 3600L + "/" + maxSeconds / 3600L + "h";
+        }
+        return KitsScreen.shortTime(usedSeconds) + "/" + KitsScreen.shortTime(maxSeconds);
     }
 }
