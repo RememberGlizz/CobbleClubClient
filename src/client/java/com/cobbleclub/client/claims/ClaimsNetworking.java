@@ -111,7 +111,8 @@ public final class ClaimsNetworking {
                             string(o, "claimName"),
                             string(o, "owner"),
                             string(o, "world"),
-                            o.has("owned") && o.get("owned").getAsBoolean()
+                            o.has("owned") && o.get("owned").getAsBoolean(),
+                            o.has("public") && o.get("public").getAsBoolean()
                     ));
                 }
                 PUBLIC_WARPS = List.copyOf(warps);
@@ -295,7 +296,7 @@ public final class ClaimsNetworking {
             return this;
         }
     }
-    public record PublicWarp(String claimId, String name, String claimName, String owner, String world, boolean owned) {
+    public record PublicWarp(String claimId, String name, String claimName, String owner, String world, boolean owned, boolean publicEnabled) {
     }
 }
 
