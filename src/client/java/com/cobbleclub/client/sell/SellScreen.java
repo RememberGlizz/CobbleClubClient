@@ -496,7 +496,9 @@ public final class SellScreen
     }
 
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (this.client != null && this.client.options.inventoryKey.matchesKey(keyCode, scanCode)) {
+        boolean typing = (this.searchField != null && this.searchField.isFocused())
+                || (this.amountField != null && this.amountField.isFocused());
+        if (!typing && this.client != null && this.client.options.inventoryKey.matchesKey(keyCode, scanCode)) {
             this.close();
             return true;
         }
