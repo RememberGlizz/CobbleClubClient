@@ -1,6 +1,6 @@
 {
   "type": "normal",
-  "relativeLevelCap": 1,
+  "relativeLevelCap": 0,
   "requiredDefeats": [
     [
       "cc_kanto_leader_erika"

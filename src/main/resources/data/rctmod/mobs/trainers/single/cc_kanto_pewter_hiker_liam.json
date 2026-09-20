@@ -1,6 +1,6 @@
 {
   "type": "normal",
-  "relativeLevelCap": 1,
+  "relativeLevelCap": 0,
   "requiredDefeats": [],
   "maxTrainerWins": -1,
   "maxTrainerDefeats": 1,
