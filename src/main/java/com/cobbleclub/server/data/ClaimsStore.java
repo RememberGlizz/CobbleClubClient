@@ -176,6 +176,8 @@ public final class ClaimsStore {
         public String enterSubtitle;
         public String leaveTitle;
         public String leaveSubtitle;
+        public boolean publicWarp;
+        public String warpName;
 
         public void normalize() {
             if (this.trusted == null) {
@@ -189,6 +191,10 @@ public final class ClaimsStore {
             }
             if (this.subClaims == null) {
                 this.subClaims = new ArrayList<SubClaimData>();
+            }
+            if (this.warpName != null) {
+                this.warpName = this.warpName.trim();
+                if (this.warpName.isEmpty()) this.warpName = null;
             }
             for (SubClaimData subClaim : this.subClaims) {
                 subClaim.normalize();
