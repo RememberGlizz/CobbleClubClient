@@ -50,6 +50,7 @@ public final class ServerNetworking {
         PayloadTypeRegistry.playS2C().register(Payloads.CratePreview.ID, Payloads.CratePreview.CODEC);
         PayloadTypeRegistry.playS2C().register(Payloads.GearCatalog.ID, Payloads.GearCatalog.CODEC);
         PayloadTypeRegistry.playS2C().register(Payloads.ManagedBorderState.ID, Payloads.ManagedBorderState.CODEC);
+        PayloadTypeRegistry.playS2C().register(Payloads.FeatherboardState.ID, Payloads.FeatherboardState.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(Payloads.Handshake.ID, (payload, context) -> context.server().execute(() -> CobbleClubServer.acceptHandshake(context.player(), payload.version())));
         ServerPlayNetworking.registerGlobalReceiver(Payloads.DashboardAction.ID, (payload, context) -> context.server().execute(() -> DashboardService.handle(context.player(), payload.action())));
         ServerPlayNetworking.registerGlobalReceiver(Payloads.KitsAction.ID, (payload, context) -> context.server().execute(() -> KitsService.handle(context.player(), payload.action())));
