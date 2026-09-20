@@ -754,6 +754,11 @@ public final class ClaimDetailPanel {
                 }
                 case 3: {
                     this.renderMessages(g, claim);
+                    break;
+                }
+                case 4: {
+                    this.renderWarps(g, claim);
+                    break;
                 }
             }
             g.disableScissor();
