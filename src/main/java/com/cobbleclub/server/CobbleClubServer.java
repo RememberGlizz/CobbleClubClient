@@ -16,6 +16,7 @@ import com.cobbleclub.server.service.DashboardService;
 import com.cobbleclub.server.service.EconomyService;
 import com.cobbleclub.server.service.FeatherboardService;
 import com.cobbleclub.server.service.KitsService;
+import com.cobbleclub.server.service.KantoRctService;
 import com.cobbleclub.server.service.LaunchService;
 import com.cobbleclub.server.service.LeaderboardService;
 import com.cobbleclub.server.service.PermissionService;
@@ -113,6 +114,7 @@ public final class CobbleClubServer
             CosmeticVisualService.tick(server);
             StoreBridgeService.tick(server);
             FeatherboardService.tick(server);
+            KantoRctService.tick(server);
         });
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             CobbleClubServer.safeJoinStep(handler.player, "economy", () -> EconomyService.data(handler.player));
@@ -184,6 +186,13 @@ public final class CobbleClubServer
             LeaderboardService.registerCommands(dispatcher);
             PondService.registerCommands(dispatcher);
             LaunchService.registerCommands(dispatcher);
+            dispatcher.register(CommandManager.literal("cobbleclubrctinternal")
+                    .then(CommandManager.literal("kanto")
+                            .then(CommandManager.argument("milestone", StringArgumentType.word())
+                                    .executes(context -> KantoRctService.handleReward(
+                                            ((ServerCommandSource)context.getSource()).getPlayer(),
+                                            StringArgumentType.getString(context, "milestone")
+                                    )))));
             dispatcher.register((CommandManager.literal("club").requires(source -> PermissionService.has(source, "cobbleclub.command.club", true))).executes(context -> {
                 DashboardService.open(((ServerCommandSource)context.getSource()).getPlayer());
                 return 1;
