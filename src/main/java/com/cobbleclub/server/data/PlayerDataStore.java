@@ -115,6 +115,7 @@ public final class PlayerDataStore {
         public long lastNewbKitClaimMillis;
         public Map<String, Long> kitClaimTimes = new LinkedHashMap<String, Long>();
         public Map<String, Long> kitCooldownReductions = new LinkedHashMap<String, Long>();
+        public Set<String> rctMilestones = new HashSet<String>();
         public int revision;
 
         public void normalize() {
@@ -158,6 +159,9 @@ public final class PlayerDataStore {
             }
             if (this.kitCooldownReductions == null) {
                 this.kitCooldownReductions = new LinkedHashMap<String, Long>();
+            }
+            if (this.rctMilestones == null) {
+                this.rctMilestones = new HashSet<String>();
             }
             this.pokemonCatches = Math.max(0L, this.pokemonCatches);
             this.shinyPokemonCatches = Math.max(0L, this.shinyPokemonCatches);
