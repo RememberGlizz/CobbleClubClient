@@ -837,6 +837,23 @@ public final class ClaimDetailPanel {
         g.drawTextWithShadow(this.font, Text.literal("Public visitors remain Visitors and may buy from chest shops.").formatted(Formatting.DARK_GRAY), x, y + 84, -1);
         g.drawTextWithShadow(this.font, Text.literal("They cannot build, edit shops, or gain member permissions.").formatted(Formatting.DARK_GRAY), x, y + 96, -1);
         g.drawTextWithShadow(this.font, Text.literal("Disabling the warp blocks public travel; trusted members are unchanged.").formatted(Formatting.DARK_GRAY), x, y + 108, -1);
+
+        int listY = y + 126;
+        g.drawTextWithShadow(this.font, Text.literal("Active Public Warps").formatted(Formatting.GRAY), x, listY, -1);
+        int shown = 0;
+        for (ClaimsNetworking.PublicWarp publicWarp : ClaimsNetworking.publicWarps()) {
+            if (publicWarp == null || !publicWarp.publicEnabled()) continue;
+            if (shown >= 4) break;
+            String display = publicWarp.name() == null || publicWarp.name().isBlank() ? publicWarp.claimName() : publicWarp.name();
+            String line = "• " + display + " · " + publicWarp.owner() + " · " + ClaimsState.friendlyWorldName(publicWarp.world());
+            g.drawTextWithShadow(this.font, Text.literal(line).formatted(Formatting.DARK_GRAY), x, listY + 14 + shown * 12, -1);
+            shown++;
+        }
+        if (shown == 0) {
+            g.drawTextWithShadow(this.font, Text.literal("No public claim warps are active.").formatted(Formatting.DARK_GRAY), x, listY + 14, -1);
+        } else if (ClaimsNetworking.publicWarps().stream().filter(w -> w != null && w.publicEnabled()).count() > shown) {
+            g.drawTextWithShadow(this.font, Text.literal("More are available in the Public Warps tab.").formatted(Formatting.DARK_GRAY), x, listY + 14 + shown * 12, -1);
+        }
     }
 
     private void renderInfo(DrawContext g, ClaimDetailEntry claim, int mouseX, int mouseY) {
@@ -1139,7 +1156,7 @@ public final class ClaimDetailPanel {
             case PERMS -> 14 + this.state.permissionCatalog.size() * 20 + (claim.getSubClaims() != null && !claim.getSubClaims().isEmpty() ? 16 : 0) + 4;
             case MEMBERS -> ((claim.getMembers() != null ? claim.getMembers().size() + 1 : 1) + (claim.getBanned() != null && !claim.getBanned().isEmpty() ? claim.getBanned().size() + 1 : 0)) * 20 + 4;
             case MESSAGES -> 160 + (this.messagesReadOnly(claim) ? 16 : 0);
-            case WARPS -> 132;
+            case WARPS -> 202;
         };
     }
 
