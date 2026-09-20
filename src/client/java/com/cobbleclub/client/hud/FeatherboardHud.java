@@ -16,6 +16,7 @@ import net.minecraft.util.Formatting;
 @Environment(EnvType.CLIENT)
 public final class FeatherboardHud {
     private static volatile Payloads.FeatherboardState state;
+    private static volatile int liveOnline = -1;
     private static final NumberFormat NUMBERS = NumberFormat.getIntegerInstance(Locale.US);
 
     private FeatherboardHud() {
@@ -23,7 +24,12 @@ public final class FeatherboardHud {
 
     public static void init() {
         ClientPlayNetworking.registerGlobalReceiver(Payloads.FeatherboardState.ID, (payload, context) ->
-                context.client().execute(() -> state = payload));
+                context.client().execute(() -> {
+                    state = payload;
+                    liveOnline = payload.online();
+                }));
+        ClientPlayNetworking.registerGlobalReceiver(Payloads.FeatherboardOnline.ID, (payload, context) ->
+                context.client().execute(() -> liveOnline = payload.online()));
         HudRenderCallback.EVENT.register((context, tickCounter) -> render(context));
     }
 
@@ -59,7 +65,7 @@ public final class FeatherboardHud {
         row(g, font, x, yy, "Caught", NUMBERS.format(s.catches()), 0xFFFF9F64); yy += lineH;
         row(g, font, x, yy, "Shinies", NUMBERS.format(s.shinies()), 0xFFFF70D0); yy += lineH;
         row(g, font, x, yy, "World", friendlyWorld(s.world()), 0xFFB9C6D8); yy += lineH;
-        row(g, font, x, yy, "Online", Integer.toString(s.online()), 0xFFFFFFFF); yy += lineH;
+        row(g, font, x, yy, "Online", Integer.toString(liveOnline >= 0 ? liveOnline : s.online()), 0xFFFFFFFF); yy += lineH;
 
         String health = String.format(Locale.ROOT, "%.1f TPS  ·  %.1f ms", s.tps(), s.mspt());
         int healthColor = s.tps() >= 19.0f ? 0xFF75F59A : (s.tps() >= 17.0f ? 0xFFFFD166 : 0xFFFF6B6B);
