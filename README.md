@@ -1,4 +1,4 @@
-# 💜✨ CobbleClub Client v3.9.22 / 4.0 On Modrinth (Fuck modrinth) ✨💜
+# 💜✨ CobbleClub Client v3.9.22 or 4.0 On Modrinth ✨💜
 
 <p align="center">
   <b>🌌 Premium Cobblemon • Custom Systems • Full Client Experience 🌌</b>
