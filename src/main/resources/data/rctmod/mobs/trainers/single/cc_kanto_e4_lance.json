@@ -1,0 +1,24 @@
+{
+  "type": "e4",
+  "relativeLevelCap": 0,
+  "requiredDefeats": [
+    [
+      "cc_kanto_e4_agatha"
+    ]
+  ],
+  "maxTrainerWins": -1,
+  "maxTrainerDefeats": 1,
+  "battleCooldownTicks": 100,
+  "series": [
+    "cobbleclub_kanto"
+  ],
+  "optional": false,
+  "spawnWeightFactor": 0.045,
+  "biomeTagWhitelist": [
+    "is_overworld"
+  ],
+  "biomeTagBlacklist": [
+    "is_nether",
+    "is_end"
+  ]
+}

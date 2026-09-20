@@ -1,0 +1,82 @@
+{
+  "name": "Elite Four Lance",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.9,
+      "switchBias": 0.78,
+      "itemBias": 0.95,
+      "maxSelectMargin": 0.055
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 2
+    }
+  ],
+  "team": [
+    {
+      "species": "gyarados",
+      "level": 56,
+      "moveset": [
+        "waterfall",
+        "crunch",
+        "icefang",
+        "dragondance"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "dragonair",
+      "level": 56,
+      "moveset": [
+        "dragonpulse",
+        "thunderwave",
+        "icebeam",
+        "aquatail"
+      ],
+      "nature": "calm"
+    },
+    {
+      "species": "aerodactyl",
+      "level": 58,
+      "moveset": [
+        "rockslide",
+        "aerialace",
+        "crunch",
+        "earthquake"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "dragonair",
+      "level": 58,
+      "moveset": [
+        "dragonpulse",
+        "thunderbolt",
+        "flamethrower",
+        "thunderwave"
+      ],
+      "nature": "modest"
+    },
+    {
+      "species": "dragonite",
+      "level": 60,
+      "moveset": [
+        "dragonclaw",
+        "hurricane",
+        "firepunch",
+        "dragondance"
+      ],
+      "nature": "adamant",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Lt. Surge",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.6,
+      "switchBias": 0.4,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.27
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "voltorb",
+      "level": 23,
+      "moveset": [
+        "spark",
+        "sonicboom",
+        "charge",
+        "rollout"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "pikachu",
+      "level": 24,
+      "moveset": [
+        "quickattack",
+        "electroball",
+        "thunderwave",
+        "doubleteam"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "raichu",
+      "level": 26,
+      "moveset": [
+        "thunderpunch",
+        "quickattack",
+        "thunderwave",
+        "doubleteam"
+      ],
+      "nature": "adamant",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "name": "Gym Leader Misty",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.5,
+      "switchBias": 0.35,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.3
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "staryu",
+      "level": 18,
+      "moveset": [
+        "watergun",
+        "rapidspin",
+        "recover",
+        "swift"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "starmie",
+      "level": 21,
+      "moveset": [
+        "waterpulse",
+        "swift",
+        "recover",
+        "confusion"
+      ],
+      "nature": "modest",
+      "heldItem": "oran_berry"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Erika",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.72,
+      "switchBias": 0.45,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.24
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "tangela",
+      "level": 29,
+      "moveset": [
+        "megadrain",
+        "growth",
+        "bind",
+        "stunspore"
+      ],
+      "nature": "bold"
+    },
+    {
+      "species": "weepinbell",
+      "level": 30,
+      "moveset": [
+        "razorleaf",
+        "poisonpowder",
+        "wrap",
+        "growth"
+      ],
+      "nature": "careful"
+    },
+    {
+      "species": "gloom",
+      "level": 32,
+      "moveset": [
+        "gigadrain",
+        "sleeppowder",
+        "acid",
+        "moonlight"
+      ],
+      "nature": "calm",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Pewter Hiker Liam",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.35,
+      "switchBias": 0.35,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.5
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "geodude",
+      "level": 10,
+      "moveset": [
+        "tackle",
+        "defensecurl",
+        "rockpolish"
+      ]
+    },
+    {
+      "species": "sandshrew",
+      "level": 11,
+      "moveset": [
+        "scratch",
+        "defensecurl",
+        "sandattack"
+      ]
+    }
+  ]
+}

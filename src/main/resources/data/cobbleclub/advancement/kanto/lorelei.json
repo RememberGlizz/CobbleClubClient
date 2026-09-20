@@ -1,0 +1,15 @@
+{
+  "criteria": {
+    "first_defeat": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "trainer_ids": [
+          "cc_kanto_e4_lorelei"
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "function": "cobbleclub:kanto/reward_lorelei"
+  }
+}

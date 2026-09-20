@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Koga",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.75,
+      "switchBias": 0.5,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.2
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "venonat",
+      "level": 34,
+      "moveset": [
+        "psybeam",
+        "supersonic",
+        "poisonpowder",
+        "leechlife"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "muk",
+      "level": 36,
+      "moveset": [
+        "sludge",
+        "minimize",
+        "disable",
+        "poisongas"
+      ],
+      "nature": "careful"
+    },
+    {
+      "species": "weezing",
+      "level": 38,
+      "moveset": [
+        "sludge",
+        "smokescreen",
+        "assurance",
+        "toxic"
+      ],
+      "nature": "bold",
+      "heldItem": "black_sludge"
+    }
+  ]
+}

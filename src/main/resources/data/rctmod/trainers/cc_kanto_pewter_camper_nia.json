@@ -1,0 +1,38 @@
+{
+  "name": "Pewter Camper Nia",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.55,
+      "switchBias": 0.35,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.5
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "rattata",
+      "level": 10,
+      "moveset": [
+        "tackle",
+        "quickattack",
+        "tailwhip"
+      ]
+    },
+    {
+      "species": "nidoran_f",
+      "level": 11,
+      "moveset": [
+        "scratch",
+        "growl",
+        "poisonsting"
+      ]
+    }
+  ]
+}

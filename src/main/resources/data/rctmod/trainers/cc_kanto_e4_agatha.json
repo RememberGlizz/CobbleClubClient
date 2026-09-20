@@ -1,0 +1,82 @@
+{
+  "name": "Elite Four Agatha",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.88,
+      "switchBias": 0.75,
+      "itemBias": 0.94,
+      "maxSelectMargin": 0.07
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 2
+    }
+  ],
+  "team": [
+    {
+      "species": "gengar",
+      "level": 54,
+      "moveset": [
+        "shadowball",
+        "sludgebomb",
+        "confuseray",
+        "hypnosis"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "golbat",
+      "level": 54,
+      "moveset": [
+        "airslash",
+        "toxic",
+        "confuseray",
+        "bite"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "haunter",
+      "level": 55,
+      "moveset": [
+        "shadowball",
+        "psychic",
+        "hypnosis",
+        "destinybond"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "arbok",
+      "level": 56,
+      "moveset": [
+        "poisonjab",
+        "crunch",
+        "glare",
+        "earthquake"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "gengar",
+      "level": 57,
+      "moveset": [
+        "shadowball",
+        "sludgebomb",
+        "thunderbolt",
+        "willowisp"
+      ],
+      "nature": "timid",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

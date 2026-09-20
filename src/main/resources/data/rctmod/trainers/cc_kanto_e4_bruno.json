@@ -1,0 +1,86 @@
+{
+  "name": "Elite Four Bruno",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.85,
+      "switchBias": 0.72,
+      "itemBias": 0.92,
+      "maxSelectMargin": 0.08
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 1
+    },
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "onix",
+      "level": 53,
+      "moveset": [
+        "rockslide",
+        "earthquake",
+        "stealthrock",
+        "dragonbreath"
+      ],
+      "nature": "impish"
+    },
+    {
+      "species": "hitmonchan",
+      "level": 54,
+      "moveset": [
+        "drainpunch",
+        "icepunch",
+        "thunderpunch",
+        "machpunch"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "hitmonlee",
+      "level": 54,
+      "moveset": [
+        "highjumpkick",
+        "blazekick",
+        "brickbreak",
+        "meditate"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "onix",
+      "level": 55,
+      "moveset": [
+        "rockslide",
+        "earthquake",
+        "ironhead",
+        "screech"
+      ],
+      "nature": "careful"
+    },
+    {
+      "species": "machamp",
+      "level": 56,
+      "moveset": [
+        "crosschop",
+        "knockoff",
+        "rockslide",
+        "bulkup"
+      ],
+      "nature": "adamant",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

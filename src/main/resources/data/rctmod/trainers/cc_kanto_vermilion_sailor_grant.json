@@ -1,0 +1,38 @@
+{
+  "name": "Vermilion Sailor Grant",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.55,
+      "switchBias": 0.35,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.42
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "machop",
+      "level": 22,
+      "moveset": [
+        "lowkick",
+        "karatechop",
+        "leer"
+      ]
+    },
+    {
+      "species": "magnemite",
+      "level": 22,
+      "moveset": [
+        "thundershock",
+        "supersonic",
+        "sonicboom"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Vermilion Engineer Tess",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.5,
+      "switchBias": 0.35,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.4
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "voltorb",
+      "level": 22,
+      "moveset": [
+        "spark",
+        "charge",
+        "sonicboom"
+      ]
+    },
+    {
+      "species": "pikachu",
+      "level": 23,
+      "moveset": [
+        "electroball",
+        "quickattack",
+        "thunderwave"
+      ]
+    }
+  ]
+}

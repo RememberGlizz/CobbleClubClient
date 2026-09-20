@@ -1,0 +1,48 @@
+{
+  "name": "Gym Leader Brock",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.45,
+      "switchBias": 0.25,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.35
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "geodude",
+      "level": 12,
+      "moveset": [
+        "tackle",
+        "defensecurl",
+        "rockthrow"
+      ],
+      "nature": "impish"
+    },
+    {
+      "species": "onix",
+      "level": 14,
+      "moveset": [
+        "tackle",
+        "rockthrow",
+        "bind",
+        "screech"
+      ],
+      "nature": "careful",
+      "heldItem": "oran_berry"
+    }
+  ]
+}

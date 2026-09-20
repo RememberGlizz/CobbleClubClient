@@ -1,0 +1,86 @@
+{
+  "name": "Elite Four Lorelei",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.84,
+      "switchBias": 0.7,
+      "itemBias": 0.92,
+      "maxSelectMargin": 0.09
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 1
+    },
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "dewgong",
+      "level": 52,
+      "moveset": [
+        "surf",
+        "icebeam",
+        "aquaring",
+        "encore"
+      ],
+      "nature": "calm"
+    },
+    {
+      "species": "cloyster",
+      "level": 52,
+      "moveset": [
+        "iciclespear",
+        "razorshell",
+        "protect",
+        "spikes"
+      ],
+      "nature": "impish"
+    },
+    {
+      "species": "slowbro",
+      "level": 53,
+      "moveset": [
+        "psychic",
+        "surf",
+        "yawn",
+        "slackoff"
+      ],
+      "nature": "bold"
+    },
+    {
+      "species": "jynx",
+      "level": 54,
+      "moveset": [
+        "icebeam",
+        "psychic",
+        "lovelykiss",
+        "fakeout"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "lapras",
+      "level": 55,
+      "moveset": [
+        "icebeam",
+        "surf",
+        "bodyslam",
+        "sing"
+      ],
+      "nature": "calm",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

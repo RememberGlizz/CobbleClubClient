@@ -1,0 +1,40 @@
+{
+  "name": "Saffron Channeler Nova",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.75,
+      "switchBias": 0.35,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.27
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "haunter",
+      "level": 39,
+      "moveset": [
+        "hex",
+        "confuseray",
+        "hypnosis",
+        "nightshade"
+      ]
+    },
+    {
+      "species": "mr_mime",
+      "level": 39,
+      "moveset": [
+        "psybeam",
+        "lightscreen",
+        "reflect",
+        "magicalleaf"
+      ]
+    }
+  ]
+}

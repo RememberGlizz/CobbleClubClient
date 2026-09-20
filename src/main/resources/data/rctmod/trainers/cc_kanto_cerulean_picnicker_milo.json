@@ -1,0 +1,38 @@
+{
+  "name": "Cerulean Picnicker Milo",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.55,
+      "switchBias": 0.35,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.45
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "oddish",
+      "level": 17,
+      "moveset": [
+        "absorb",
+        "acid",
+        "growth"
+      ]
+    },
+    {
+      "species": "psyduck",
+      "level": 18,
+      "moveset": [
+        "watergun",
+        "confusion",
+        "disable"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "name": "Champion Blue",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.92,
+      "switchBias": 0.82,
+      "itemBias": 0.97,
+      "maxSelectMargin": 0.04
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 2
+    }
+  ],
+  "team": [
+    {
+      "species": "pidgeot",
+      "level": 60,
+      "moveset": [
+        "bravebird",
+        "quickattack",
+        "sandattack",
+        "featherdance"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "alakazam",
+      "level": 60,
+      "moveset": [
+        "psychic",
+        "recover",
+        "shadowball",
+        "reflect"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "rhydon",
+      "level": 61,
+      "moveset": [
+        "earthquake",
+        "rockslide",
+        "megahorn",
+        "scaryface"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "exeggutor",
+      "level": 61,
+      "moveset": [
+        "psychic",
+        "gigadrain",
+        "sleeppowder",
+        "leechseed"
+      ],
+      "nature": "modest"
+    },
+    {
+      "species": "arcanine",
+      "level": 62,
+      "moveset": [
+        "flareblitz",
+        "crunch",
+        "extremespeed",
+        "willowisp"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "blastoise",
+      "level": 63,
+      "moveset": [
+        "hydropump",
+        "icebeam",
+        "flashcannon",
+        "protect"
+      ],
+      "nature": "modest",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

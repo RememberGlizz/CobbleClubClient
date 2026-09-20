@@ -1,0 +1,38 @@
+{
+  "name": "Fuchsia Juggler Nico",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.65,
+      "switchBias": 0.35,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.34
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "drowzee",
+      "level": 33,
+      "moveset": [
+        "confusion",
+        "hypnosis",
+        "headbutt"
+      ]
+    },
+    {
+      "species": "koffing",
+      "level": 34,
+      "moveset": [
+        "sludge",
+        "smokescreen",
+        "assurance"
+      ]
+    }
+  ]
+}

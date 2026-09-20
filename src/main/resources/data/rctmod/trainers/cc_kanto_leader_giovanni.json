@@ -1,0 +1,71 @@
+{
+  "name": "Gym Leader Giovanni",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.8,
+      "switchBias": 0.68,
+      "itemBias": 0.9,
+      "maxSelectMargin": 0.1
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 2
+    }
+  ],
+  "team": [
+    {
+      "species": "persian",
+      "level": 47,
+      "moveset": [
+        "slash",
+        "bite",
+        "fakeout",
+        "screech"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "nidoqueen",
+      "level": 49,
+      "moveset": [
+        "earthpower",
+        "bodyslam",
+        "toxic",
+        "crunch"
+      ],
+      "nature": "modest"
+    },
+    {
+      "species": "nidoking",
+      "level": 50,
+      "moveset": [
+        "earthquake",
+        "poisonjab",
+        "megahorn",
+        "thunderpunch"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "rhydon",
+      "level": 52,
+      "moveset": [
+        "earthquake",
+        "rockslide",
+        "takedown",
+        "scaryface"
+      ],
+      "nature": "adamant",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

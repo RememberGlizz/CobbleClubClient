@@ -1,0 +1,61 @@
+{
+  "name": "Gym Leader Sabrina",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.82,
+      "switchBias": 0.58,
+      "itemBias": 0.8,
+      "maxSelectMargin": 0.15
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "mr_mime",
+      "level": 39,
+      "moveset": [
+        "psybeam",
+        "lightscreen",
+        "reflect",
+        "magicalleaf"
+      ],
+      "nature": "calm",
+      "heldItem": "light_clay"
+    },
+    {
+      "species": "kadabra",
+      "level": 41,
+      "moveset": [
+        "psybeam",
+        "recover",
+        "reflect",
+        "disable"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "alakazam",
+      "level": 43,
+      "moveset": [
+        "psychic",
+        "recover",
+        "reflect",
+        "psyshock"
+      ],
+      "nature": "timid",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

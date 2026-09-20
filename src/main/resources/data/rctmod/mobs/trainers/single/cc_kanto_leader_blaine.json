@@ -1,0 +1,27 @@
+{
+  "type": "leader",
+  "relativeLevelCap": 1,
+  "requiredDefeats": [
+    [
+      "cc_kanto_cinnabar_burglar_cole"
+    ],
+    [
+      "cc_kanto_cinnabar_scientist_mira"
+    ]
+  ],
+  "maxTrainerWins": -1,
+  "maxTrainerDefeats": 1,
+  "battleCooldownTicks": 100,
+  "series": [
+    "cobbleclub_kanto"
+  ],
+  "optional": false,
+  "spawnWeightFactor": 0.12,
+  "biomeTagWhitelist": [
+    "is_overworld"
+  ],
+  "biomeTagBlacklist": [
+    "is_nether",
+    "is_end"
+  ]
+}

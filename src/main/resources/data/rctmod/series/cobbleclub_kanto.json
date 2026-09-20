@@ -1,0 +1,13 @@
+{
+  "title": {
+    "text": "CobbleClub · Kanto Journey",
+    "color": "light_purple",
+    "bold": true
+  },
+  "description": {
+    "text": "Eight badges. The Indigo League. One path to Champion.",
+    "color": "gray"
+  },
+  "difficulty": 5,
+  "requiredSeries": []
+}

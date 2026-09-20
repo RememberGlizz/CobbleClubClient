@@ -1,0 +1,40 @@
+{
+  "name": "Saffron Psychic Eli",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.7,
+      "switchBias": 0.35,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.28
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "kadabra",
+      "level": 38,
+      "moveset": [
+        "psybeam",
+        "disable",
+        "recover",
+        "reflect"
+      ]
+    },
+    {
+      "species": "slowpoke",
+      "level": 38,
+      "moveset": [
+        "confusion",
+        "waterpulse",
+        "yawn",
+        "headbutt"
+      ]
+    }
+  ]
+}

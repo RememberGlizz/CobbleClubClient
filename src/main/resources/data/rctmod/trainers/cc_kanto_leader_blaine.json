@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Blaine",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.78,
+      "switchBias": 0.62,
+      "itemBias": 0.85,
+      "maxSelectMargin": 0.13
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "growlithe",
+      "level": 43,
+      "moveset": [
+        "flamewheel",
+        "bite",
+        "agility",
+        "crunch"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "rapidash",
+      "level": 45,
+      "moveset": [
+        "flamecharge",
+        "stomp",
+        "agility",
+        "firespin"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "magmar",
+      "level": 48,
+      "moveset": [
+        "flamethrower",
+        "confuseray",
+        "smokescreen",
+        "psychic"
+      ],
+      "nature": "modest",
+      "heldItem": "charcoal"
+    }
+  ]
+}
