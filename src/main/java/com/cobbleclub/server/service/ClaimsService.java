@@ -672,14 +672,17 @@ public final class ClaimsService {
         JsonObject root = new JsonObject();
         JsonArray warps = new JsonArray();
         for (ClaimsStore.ClaimData claim : ClaimsStore.all()) {
-            if (claim == null || !claim.publicWarp) continue;
+            if (claim == null) continue;
+            boolean owned = claim.ownerUuid.equals(player.getUuidAsString());
+            if (!claim.publicWarp && !owned) continue;
             JsonObject entry = new JsonObject();
             entry.addProperty("claimId", claim.id);
             entry.addProperty("name", claim.warpName == null || claim.warpName.isBlank() ? claim.name : claim.warpName);
             entry.addProperty("claimName", claim.name);
             entry.addProperty("owner", claim.ownerName);
             entry.addProperty("world", claim.dimension);
-            entry.addProperty("owned", claim.ownerUuid.equals(player.getUuidAsString()));
+            entry.addProperty("owned", owned);
+            entry.addProperty("public", claim.publicWarp);
             warps.add(entry);
         }
         root.add("warps", warps);
