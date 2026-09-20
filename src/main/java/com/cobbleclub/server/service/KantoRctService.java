@@ -41,7 +41,7 @@ public final class KantoRctService {
             Map.entry("bruno", new Milestone("Elite Four Bruno", null, null, 3500L, 3L, 3, null)),
             Map.entry("agatha", new Milestone("Elite Four Agatha", null, null, 4000L, 4L, 3, null)),
             Map.entry("lance", new Milestone("Elite Four Lance", null, null, 5000L, 5L, 4, null)),
-            Map.entry("champion", new Milestone("Champion Blue", null, null, 12500L, 12L, 5, "cobblemon:master_ball"))
+            Map.entry("champion", new Milestone("Champion Blue", "Kanto League Trophy", "league_trophy", 12500L, 12L, 5, "cobblemon:master_ball"))
     );
 
     private KantoRctService() {
@@ -143,36 +143,43 @@ public final class KantoRctService {
     }
 
     private static ItemStack badgeStack(String badgeKey, String displayName) {
-        String wantedPath = badgeKey + "_badge";
+        List<Identifier> preferredIds = new ArrayList<>();
 
-        // Prefer the two badge mods actually shipped in the CobbleClub pack.
-        // Namespace matching is intentionally tolerant because published mod ids can
-        // differ slightly from their display names.
-        for (String preferred : List.of("cobbleversebadges", "cobbleverse_badges", "cobblemonpokemonbadges", "cobblemon_pokemon_badges")) {
-            for (Identifier id : Registries.ITEM.getIds()) {
-                if (!wantedPath.equals(id.getPath())) continue;
-                String namespace = id.getNamespace().toLowerCase(Locale.ROOT);
-                if (!namespace.equals(preferred) && !namespace.contains(preferred.replace("_", ""))) continue;
-                Item candidate = Registries.ITEM.get(id);
-                if (candidate != null && candidate != Items.AIR) {
-                    CobbleClubServer.LOGGER.info("Resolved {} from installed badge mod item {}", displayName, id);
-                    return new ItemStack(candidate);
-                }
+        // CobbleverseBadges 1.3 canonical Kanto ids.
+        String cobbleversePath = "league_trophy".equals(badgeKey)
+                ? "kanto_league_trophy"
+                : "kanto_" + badgeKey + "_badge";
+        preferredIds.add(Identifier.of("cobbleversebadges", cobbleversePath));
+
+        // Secondary known-name candidates for CobblemonPokemonBadges-style packs.
+        String genericPath = "league_trophy".equals(badgeKey)
+                ? "kanto_league_trophy"
+                : badgeKey + "_badge";
+        preferredIds.add(Identifier.of("cobblemonpokemonbadges", genericPath));
+        preferredIds.add(Identifier.of("cobblemon_pokemon_badges", genericPath));
+        preferredIds.add(Identifier.of("cobblemonpokemonbadges", "kanto_" + genericPath));
+        preferredIds.add(Identifier.of("cobblemon_pokemon_badges", "kanto_" + genericPath));
+
+        for (Identifier id : preferredIds) {
+            if (!Registries.ITEM.containsId(id)) continue;
+            Item item = Registries.ITEM.get(id);
+            if (item != null && item != Items.AIR) {
+                CobbleClubServer.LOGGER.info("Resolved {} as {}", displayName, id);
+                return new ItemStack(item);
             }
         }
 
-        // Safety net: accept any installed badge item with the canonical Kanto path.
+        // Final safety net: scan for a matching Kanto/generic path from any badge mod.
         for (Identifier id : Registries.ITEM.getIds()) {
-            if (!wantedPath.equals(id.getPath())) continue;
-            Item candidate = Registries.ITEM.get(id);
-            if (candidate == null || candidate == Items.AIR) continue;
-            if (id.getNamespace().toLowerCase(Locale.ROOT).contains("badge")) {
-                CobbleClubServer.LOGGER.warn("Resolved {} from fallback badge namespace {}", displayName, id);
-                return new ItemStack(candidate);
-            }
+            String path = id.getPath();
+            if (!path.equals(cobbleversePath) && !path.equals(genericPath)) continue;
+            Item item = Registries.ITEM.get(id);
+            if (item == null || item == Items.AIR) continue;
+            CobbleClubServer.LOGGER.warn("Resolved {} from fallback badge item {}", displayName, id);
+            return new ItemStack(item);
         }
 
-        CobbleClubServer.LOGGER.error("No installed badge item with path '{}' was found. Using named fallback item.", wantedPath);
+        CobbleClubServer.LOGGER.error("No installed item was found for {}. Using named fallback item.", displayName);
         ItemStack fallback = new ItemStack(Items.NETHER_STAR);
         fallback.set(DataComponentTypes.CUSTOM_NAME, Text.literal(displayName).formatted(Formatting.GOLD, Formatting.BOLD));
         return fallback;
