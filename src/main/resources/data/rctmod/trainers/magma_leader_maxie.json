@@ -1,0 +1,201 @@
+{
+  "name": "Magma Leader Maxie",
+  "identity": "Team Magma Leader",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "maxSelectMargin": 0.15
+    }
+  },
+  "battleRules": {
+    "maxItemUses": 3
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 3
+    }
+  ],
+  "team": [
+    {
+      "species": "groudon",
+      "gender": "GENDERLESS",
+      "heldItem": "mega_showdown:red_orb",
+      "level": 85,
+      "nature": "careful",
+      "moveset": [
+        "spikes",
+        "precipiceblades",
+        "willowisp",
+        "stealthrock"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 244,
+        "atk": 16,
+        "def": 0,
+        "spa": 0,
+        "spd": 248,
+        "spe": 0
+      }
+    },
+    {
+      "species": "weezing",
+      "gender": "FEMALE",
+      "level": 80,
+      "nature": "calm",
+      "ability": "levitate",
+      "moveset": [
+        "sludgebomb",
+        "willowisp",
+        "painsplit",
+        "toxicspikes"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 0,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 0,
+        "spa": 4,
+        "spd": 252,
+        "spe": 0
+      },
+      "heldItem": "rocky_helmet"
+    },
+    {
+      "species": "camerupt",
+      "gender": "MALE",
+      "level": 80,
+      "nature": "modest",
+      "ability": "solidrock",
+      "moveset": [
+        "eruption",
+        "fireblast",
+        "earthpower",
+        "stealthrock"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 4,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "heldItem": "choice_specs"
+    },
+    {
+      "species": "volcarona",
+      "gender": "FEMALE",
+      "level": 83,
+      "nature": "modest",
+      "ability": "flamebody",
+      "moveset": [
+        "substitute",
+        "quiverdance",
+        "morningsun",
+        "fierydance"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 0,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "heldItem": "leftovers"
+    },
+    {
+      "species": "krookodile",
+      "gender": "MALE",
+      "level": 84,
+      "nature": "jolly",
+      "ability": "intimidate",
+      "moveset": [
+        "earthquake",
+        "knockoff",
+        "gunkshot",
+        "closecombat"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "heldItem": "choice_band"
+    },
+    {
+      "species": "crobat",
+      "gender": "MALE",
+      "level": 84,
+      "nature": "jolly",
+      "ability": "infiltrator",
+      "moveset": [
+        "bravebird",
+        "toxic",
+        "defog",
+        "roost"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 0,
+        "spa": 0,
+        "spd": 56,
+        "spe": 200
+      },
+      "heldItem": "heavy_duty_boots"
+    }
+  ],
+  "battleFormat": "GEN_9_TRIPLES"
+}

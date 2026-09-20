@@ -1,0 +1,103 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.fabricmc.net/' }
+    maven { url = 'https://repo.terradevelopment.net/repository/maven-releases' }
+    maven { url = 'https://jitpack.io' }
+    maven {
+        url = 'http://5.161.199.182/repository/maven-releases/'
+        allowInsecureProtocol = true
+        content { includeGroup 'dev.galacticraft' }
+    }
+    maven { url = 'https://maven2.bai.lol' }
+    exclusiveContent {
+        forRepository {
+            maven { url = 'https://api.modrinth.com/maven' }
+        }
+        filter { includeGroup 'maven.modrinth' }
+    }
+}
+
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        cobbleclub {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
+    modImplementation "maven.modrinth:${project.cobblemon_project_id}:${project.cobblemon_version_id}"
+
+    // Compile directly against NuVotifier-Fabric's real Fabric event API. It remains a
+    // server-side optional runtime mod so the universal CobbleClub client jar does not
+    // force players to install NuVotifier. 1.1.0+1.21.1 = Modrinth version HtuzbWTM.
+    modCompileOnly "maven.modrinth:Jnh9oSBU:HtuzbWTM"
+    compileOnly "com.github.NuVotifier.NuVotifier:nuvotifier-api:2.7.2"
+
+    // CobbleClub owns the wild worlds. DynamicDimensions is bundled jar-in-jar so the old
+    // Multiworld mod is no longer required. BadPackets is DynamicDimensions' required network lib.
+    modImplementation "dev.galacticraft:dynamicdimensions-fabric:0.9.1+34"
+    include "dev.galacticraft:dynamicdimensions-fabric:0.9.1+34"
+    modImplementation "lol.bai:badpackets:fabric-0.8.2"
+    include "lol.bai:badpackets:fabric-0.8.2"
+
+    // Shared protocol/common modules used by both environments.
+    modImplementation files('libs/clubhouse-common-claims-1.0.0.jar')
+    modImplementation files('libs/clubhouse-common-tags-1.0.0.jar')
+    modImplementation files('libs/clubhouse-common-wardrobe-1.0.0.jar')
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') {
+        expand 'version': project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+    options.encoding = 'UTF-8'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    withSourcesJar()
+}
+
+// Keep the three existing common modules nested in the ONE CobbleClub jar.
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    into('META-INF/jars') {
+        from files(
+            'libs/clubhouse-common-claims-1.0.0.jar',
+            'libs/clubhouse-common-tags-1.0.0.jar',
+            'libs/clubhouse-common-wardrobe-1.0.0.jar'
+        )
+    }
+
+    from('LICENSE') {
+        rename { "LICENSE_${project.archives_base_name}" }
+    }
+}

@@ -1,0 +1,5 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {"layer0": "minecraft:item/diamond_pickaxe"},
+  "overrides": [{"predicate": {"custom_model_data": 22301}, "model": "cobbleclub:item/aura_pickaxe"}]
+}

@@ -1,0 +1,29 @@
+{
+  "credit": "CobbleClub Claiming Staff",
+  "ambientocclusion": true,
+  "textures": {"wood":"minecraft:block/dark_oak_planks","binding":"minecraft:block/exposed_copper","metal":"minecraft:block/gold_block","gem":"minecraft:block/emerald_block","light":"minecraft:block/amethyst_block"},
+  "elements": [
+    {"name":"grip","from":[7,0,7],"to":[9,9,9],"faces":{"north":{"texture":"#wood"},"east":{"texture":"#wood"},"south":{"texture":"#wood"},"west":{"texture":"#wood"},"up":{"texture":"#wood"},"down":{"texture":"#wood"}}},
+    {"name":"pommel","from":[6.5,0,6.5],"to":[9.5,2,9.5],"faces":{"north":{"texture":"#binding"},"east":{"texture":"#binding"},"south":{"texture":"#binding"},"west":{"texture":"#binding"},"up":{"texture":"#metal"},"down":{"texture":"#binding"}}},
+    {"name":"lower_band","from":[6.5,3,6.5],"to":[9.5,4,9.5],"faces":{"north":{"texture":"#binding"},"east":{"texture":"#binding"},"south":{"texture":"#binding"},"west":{"texture":"#binding"},"up":{"texture":"#binding"},"down":{"texture":"#binding"}}},
+    {"name":"upper_band","from":[6.5,7,6.5],"to":[9.5,8,9.5],"faces":{"north":{"texture":"#binding"},"east":{"texture":"#binding"},"south":{"texture":"#binding"},"west":{"texture":"#binding"},"up":{"texture":"#binding"},"down":{"texture":"#binding"}}},
+    {"name":"crown","from":[5.5,9,6],"to":[10.5,11,10],"faces":{"north":{"texture":"#metal"},"east":{"texture":"#binding"},"south":{"texture":"#metal"},"west":{"texture":"#binding"},"up":{"texture":"#metal"},"down":{"texture":"#binding"}}},
+    {"name":"left_prong_lower","from":[3,10,7],"to":[5.5,12,9],"faces":{"north":{"texture":"#metal"},"east":{"texture":"#metal"},"south":{"texture":"#metal"},"west":{"texture":"#metal"},"up":{"texture":"#metal"},"down":{"texture":"#metal"}}},
+    {"name":"left_prong_upper","from":[4,12,7],"to":[5.5,13,9],"faces":{"north":{"texture":"#metal"},"east":{"texture":"#metal"},"south":{"texture":"#metal"},"west":{"texture":"#metal"},"up":{"texture":"#metal"},"down":{"texture":"#metal"}}},
+    {"name":"right_prong_lower","from":[10.5,10,7],"to":[13,12,9],"faces":{"north":{"texture":"#metal"},"east":{"texture":"#metal"},"south":{"texture":"#metal"},"west":{"texture":"#metal"},"up":{"texture":"#metal"},"down":{"texture":"#metal"}}},
+    {"name":"right_prong_upper","from":[10.5,12,7],"to":[12,13,9],"faces":{"north":{"texture":"#metal"},"east":{"texture":"#metal"},"south":{"texture":"#metal"},"west":{"texture":"#metal"},"up":{"texture":"#metal"},"down":{"texture":"#metal"}}},
+    {"name":"left_tip","from":[2,12,7],"to":[4,15,9],"faces":{"north":{"texture":"#binding"},"east":{"texture":"#binding"},"south":{"texture":"#binding"},"west":{"texture":"#binding"},"up":{"texture":"#metal"},"down":{"texture":"#binding"}}},
+    {"name":"right_tip","from":[12,12,7],"to":[14,15,9],"faces":{"north":{"texture":"#binding"},"east":{"texture":"#binding"},"south":{"texture":"#binding"},"west":{"texture":"#binding"},"up":{"texture":"#metal"},"down":{"texture":"#binding"}}},
+    {"name":"claim_core","from":[6,11,6],"to":[10,15,10],"rotation":{"origin":[8,13,8],"axis":"y","angle":45},"faces":{"north":{"texture":"#gem"},"east":{"texture":"#light"},"south":{"texture":"#gem"},"west":{"texture":"#light"},"up":{"texture":"#gem"},"down":{"texture":"#light"}}},
+    {"name":"core_cap","from":[7,15,7],"to":[9,16,9],"faces":{"north":{"texture":"#light"},"east":{"texture":"#light"},"south":{"texture":"#light"},"west":{"texture":"#light"},"up":{"texture":"#gem"},"down":{"texture":"#light"}}}
+  ],
+  "display": {
+    "thirdperson_righthand":{"rotation":[0,-90,55],"translation":[0,4,0.5],"scale":[0.85,0.85,0.85]},
+    "thirdperson_lefthand":{"rotation":[0,90,-55],"translation":[0,4,0.5],"scale":[0.85,0.85,0.85]},
+    "firstperson_righthand":{"rotation":[0,-90,25],"translation":[1.13,3.2,1.13],"scale":[0.75,0.75,0.75]},
+    "firstperson_lefthand":{"rotation":[0,90,-25],"translation":[1.13,3.2,1.13],"scale":[0.75,0.75,0.75]},
+    "gui":{"rotation":[25,-45,20],"translation":[0,1,0],"scale":[0.9,0.9,0.9]},
+    "ground":{"translation":[0,3,0],"scale":[0.55,0.55,0.55]},
+    "fixed":{"rotation":[0,180,0],"scale":[0.8,0.8,0.8]}
+  }
+}

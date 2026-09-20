@@ -1,0 +1,25 @@
+{
+  "name": "cobblemon:terastal_transformation",
+  "order": 1,
+  "variations": [
+    {
+      "aspects": [],
+      "poser": "cobblemon:terastal_transformation",
+      "model": "cobblemon:terastal_transformation.geo",
+      "texture": "cobblemon:textures/terastal_transformation/terastal_crystals.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "emissive": true,
+          "texture": "cobblemon:textures/terastal_transformation/terastal_crystals.png"
+        },
+        {
+          "name": "translucent",
+          "texture": "cobblemon:textures/terastal_transformation/terastal_crystals_traslucent.png",
+          "translucent": true,
+          "emissive": true
+        }
+      ]
+    }
+  ]
+}

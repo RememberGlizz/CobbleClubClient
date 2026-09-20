@@ -1,0 +1,85 @@
+{
+  "providers": [
+    {
+      "type": "bitmap",
+      "file": "cobbleclub:font/ranks/trainer.png",
+      "ascent": 9,
+      "height": 10,
+      "chars": [
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "cobbleclub:font/ranks/newb.png",
+      "ascent": 9,
+      "height": 10,
+      "chars": [
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "cobbleclub:font/ranks/ace.png",
+      "ascent": 9,
+      "height": 10,
+      "chars": [
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "cobbleclub:font/ranks/champion.png",
+      "ascent": 9,
+      "height": 10,
+      "chars": [
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "cobbleclub:font/ranks/master.png",
+      "ascent": 9,
+      "height": 10,
+      "chars": [
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "cobbleclub:font/ranks/legend.png",
+      "ascent": 9,
+      "height": 10,
+      "chars": [
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "cobbleclub:font/ranks/mod.png",
+      "ascent": 9,
+      "height": 10,
+      "chars": [
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "cobbleclub:font/ranks/admin.png",
+      "ascent": 9,
+      "height": 10,
+      "chars": [
+        ""
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "cobbleclub:font/ranks/shiny_hunter.png",
+      "ascent": 9,
+      "height": 10,
+      "chars": [
+        ""
+      ]
+    }
+  ]
+}

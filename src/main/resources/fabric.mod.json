@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "cobbleclub",
+  "version": "3.9.22-cobblemon1.8",
+  "name": "CobbleClub",
+  "description": "Unified CobbleClub mod for Fabric 1.21.1 — one true Loom project and one jar for client and dedicated server.",
+  "authors": [
+    "CobbleClub"
+  ],
+  "license": "LicenseRef-CobbleClub-Modpack",
+  "icon": "assets/cobbleclub/icon.png",
+  "environment": "*",
+  "accessWidener": "cobbleclub.accesswidener",
+  "entrypoints": {
+    "main": [
+      "com.cobbleclub.server.chestshop.ChestShopInitializer",
+      "com.cobbleclub.server.CobbleClubServer",
+      "com.cobbleclub.server.world.ManagedWorldInitializer",
+      "com.cobbleclub.server.service.TpaModInitializer",
+      "com.cobbleclub.server.service.ActivityEconomyInitializer",
+      "com.cobbleclub.server.service.SellGuiInitializer"
+    ],
+    "client": [
+      "com.cobbleclub.client.CobbleClubClient",
+      "com.cobbleclub.client.sell.SellNetworking",
+      "com.cobbleclub.client.chestshop.ChestShopNetworking",
+      "com.cobbleclub.client.wild.WildNetworking"
+    ]
+  },
+  "mixins": [
+    "cobbleclub-server.mixins.json",
+    {
+      "config": "cobbleclub.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "cobbleclub.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": "\u003e\u003d0.15.0",
+    "fabric-api": "*",
+    "fabric-language-kotlin": "*",
+    "minecraft": "\u003e\u003d1.21 \u003c1.22",
+    "cobblemon": "\u003e\u003d1.8.0",
+    "dynamicdimensions": "\u003e\u003d0.9.1",
+    "badpackets": "\u003e\u003d0.8"
+  },
+  "suggests": {
+    "cobblemon": "*",
+    "luckperms": "*",
+    "nuvotifier-fabric": "\u003e\u003d1.0.1",
+    "pokeblocks": "*"
+  },
+  "jars": [
+    {
+      "file": "META-INF/jars/clubhouse-common-claims-1.0.0.jar"
+    },
+    {
+      "file": "META-INF/jars/clubhouse-common-tags-1.0.0.jar"
+    },
+    {
+      "file": "META-INF/jars/clubhouse-common-wardrobe-1.0.0.jar"
+    }
+  ],
+  "provides": [
+    "cobbleclub_server"
+  ]
+}

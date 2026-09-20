@@ -1,0 +1,205 @@
+{
+  "name": "Aqua Leader Archie",
+  "identity": "Team Aqua Leader",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "maxSelectMargin": 0.15
+    }
+  },
+  "battleRules": {
+    "maxItemUses": 3
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 3
+    }
+  ],
+  "team": [
+    {
+      "species": "kyogre",
+      "gender": "GENDERLESS",
+      "heldItem": "mega_showdown:blue_orb",
+      "level": 85,
+      "nature": "modest",
+      "moveset": [
+        "calmmind",
+        "originpulse",
+        "icebeam",
+        "thunder"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 0,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 244,
+        "atk": 0,
+        "def": 0,
+        "spa": 248,
+        "spd": 16,
+        "spe": 0
+      }
+      
+    },
+    {
+      "species": "sharpedo",
+      "gender": "MALE",
+      "level": 83,
+      "nature": "rash",
+      "ability": "speedboost",
+      "moveset": [
+        "hydropump",
+        "darkpulse",
+        "closecombat",
+        "protect"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 4,
+        "def": 0,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "heldItem": "life_orb"
+    },
+    {
+      "species": "mandibuzz",
+      "gender": "FEMALE",
+      "level": 83,
+      "nature": "impish",
+      "ability": "overcoat",
+      "moveset": [
+        "foulplay",
+        "defog",
+        "toxic",
+        "roost"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 248,
+        "atk": 0,
+        "def": 136,
+        "spa": 0,
+        "spd": 108,
+        "spe": 16
+      },
+      "heldItem": "heavy_duty_boots"
+    },
+    {
+      "species": "crawdaunt",
+      "gender": "MALE",
+      "level": 82,
+      "nature": "adamant",
+      "ability": "adaptability",
+      "moveset": [
+        "swordsdance",
+        "crabhammer",
+        "knockoff",
+        "aquajet"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "heldItem": "life_orb"
+    },
+    {
+      "species": "samurott",
+      "gender": "MALE",
+      "level": 82,
+      "nature": "jolly",
+      "ability": "sharpness",
+      "moveset": [
+        "ceaselessedge",
+        "razorshell",
+        "aquajet",
+        "knockoff"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "aspects": [
+        "hisuian"
+      ],
+      "heldItem": "focus_sash"
+    },
+    {
+      "species": "toxapex",
+      "gender": "MALE",
+      "level": 82,
+      "nature": "bold",
+      "ability": "regenerator",
+      "moveset": [
+        "surf",
+        "toxic",
+        "haze",
+        "recover"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 248,
+        "atk": 0,
+        "def": 152,
+        "spa": 0,
+        "spd": 108,
+        "spe": 0
+      },
+      "heldItem": "leftovers"
+    }
+  ],
+  "battleFormat": "GEN_9_TRIPLES"
+}

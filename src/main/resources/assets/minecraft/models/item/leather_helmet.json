@@ -1,0 +1,69 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/leather_helmet",
+    "layer1": "minecraft:item/leather_helmet_overlay"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 22001
+      },
+      "model": "cobbleclub:item/pika_spark_cap"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22002
+      },
+      "model": "cobbleclub:item/eevee_explorer_hood"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22003
+      },
+      "model": "cobbleclub:item/gengar_grin_mask"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22004
+      },
+      "model": "cobbleclub:item/lucario_aura_crest"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22006
+      },
+      "model": "cobbleclub:item/gengar_grin_mask_crimson"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22007
+      },
+      "model": "cobbleclub:item/gengar_grin_mask_azure"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22008
+      },
+      "model": "cobbleclub:item/gengar_grin_mask_toxic"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22009
+      },
+      "model": "cobbleclub:item/froggy_hat_blue"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22010
+      },
+      "model": "cobbleclub:item/froggy_hat_pink"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 22011
+      },
+      "model": "cobbleclub:item/froggy_hat_purple"
+    }
+  ]
+}

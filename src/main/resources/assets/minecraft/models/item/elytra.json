@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {"layer0": "minecraft:item/elytra"},
+  "overrides": [
+    {"predicate": {"custom_model_data": 22101}, "model": "cobbleclub:item/charizard_flame_wings"},
+    {"predicate": {"custom_model_data": 22102}, "model": "cobbleclub:item/fairy_ribbon_wings"},
+    {"predicate": {"custom_model_data": 22103}, "model": "cobbleclub:item/aura_wings"},
+    {"predicate": {"custom_model_data": 22104}, "model": "cobbleclub:item/seed_sprout_wings"}
+  ]
+}

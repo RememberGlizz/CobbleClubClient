@@ -1,0 +1,80 @@
+{
+  "mappings": {
+    "com/cobbleclub/client/mixin/GameRendererMixin": {
+      "Lnet/minecraft/client/renderer/GameRenderer;loadBlurEffect(Lnet/minecraft/server/packs/resources/ResourceProvider;)V": "Lnet/minecraft/class_757;method_57797(Lnet/minecraft/class_5912;)V",
+      "reloadShaders": "Lnet/minecraft/class_757;method_34538(Lnet/minecraft/class_5912;)V"
+    },
+    "com/cobbleclub/client/mixin/HumanoidArmorLayerMixin": {
+      "Lnet/minecraft/world/item/ArmorMaterial$Layer;texture(Z)Lnet/minecraft/resources/ResourceLocation;": "Lnet/minecraft/class_1741$class_9196;method_56693(Z)Lnet/minecraft/class_2960;",
+      "renderArmorPiece": "Lnet/minecraft/class_970;method_4169(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1309;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V"
+    },
+    "com/cobbleclub/client/mixin/InventoryScreenMixin": {
+      "init": "Lnet/minecraft/class_490;method_25426()V",
+      "render": "Lnet/minecraft/class_490;method_25394(Lnet/minecraft/class_332;IIF)V"
+    },
+    "com/cobbleclub/client/mixin/LivingEntityRendererMixin": {
+      "Lnet/minecraft/client/renderer/MultiBufferSource;getBuffer(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;": "Lnet/minecraft/class_4597;getBuffer(Lnet/minecraft/class_1921;)Lnet/minecraft/class_4588;",
+      "render*": "Lnet/minecraft/class_922;method_4054(Lnet/minecraft/class_1309;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V"
+    },
+    "com/cobbleclub/client/mixin/PokemonRendererMixin": {
+      "<init>": "Lcom/cobblemon/mod/common/client/render/pokemon/PokemonRenderer;<init>(Lnet/minecraft/class_5617$class_5618;)V",
+      "render*": "Lcom/cobblemon/mod/common/client/render/pokemon/PokemonRenderer;render(Lcom/cobblemon/mod/common/entity/pokemon/PokemonEntity;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V"
+    },
+    "com/cobbleclub/client/mixin/ShaderInstanceMixin": {
+      "<init>": "Lnet/minecraft/class_5944;<init>(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V",
+      "Lnet/minecraft/resources/ResourceLocation;withDefaultNamespace(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;": "Lnet/minecraft/class_2960;method_60656(Ljava/lang/String;)Lnet/minecraft/class_2960;"
+    },
+    "com/cobbleclub/client/mixin/battle/BattleGuiMixin": {
+      "mouseClicked": "Lcom/cobblemon/mod/common/client/gui/battle/BattleGUI;method_25402(DDI)Z",
+      "mouseDragged": "Lcom/cobblemon/mod/common/client/gui/battle/BattleGUI;method_25403(DDIDD)Z",
+      "render": "Lcom/cobblemon/mod/common/client/gui/battle/BattleGUI;method_25394(Lnet/minecraft/class_332;IIF)V"
+    },
+    "com/cobbleclub/client/mixin/battle/BattleOverlayMixin": {
+      "render": "Lcom/cobblemon/mod/common/client/gui/battle/BattleOverlay;method_1753(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V"
+    },
+    "com/cobbleclub/client/mixin/battle/NativeBattleLogHiderMixin": {
+      "mouseClicked": "Lcom/cobblemon/mod/common/client/gui/battle/widgets/BattleMessagePane;method_25402(DDI)Z",
+      "renderWidget": "Lcom/cobblemon/mod/common/client/gui/battle/widgets/BattleMessagePane;method_48579(Lnet/minecraft/class_332;IIF)V"
+    }
+  },
+  "data": {
+    "named:intermediary": {
+      "com/cobbleclub/client/mixin/GameRendererMixin": {
+        "Lnet/minecraft/client/renderer/GameRenderer;loadBlurEffect(Lnet/minecraft/server/packs/resources/ResourceProvider;)V": "Lnet/minecraft/class_757;method_57797(Lnet/minecraft/class_5912;)V",
+        "reloadShaders": "Lnet/minecraft/class_757;method_34538(Lnet/minecraft/class_5912;)V"
+      },
+      "com/cobbleclub/client/mixin/HumanoidArmorLayerMixin": {
+        "Lnet/minecraft/world/item/ArmorMaterial$Layer;texture(Z)Lnet/minecraft/resources/ResourceLocation;": "Lnet/minecraft/class_1741$class_9196;method_56693(Z)Lnet/minecraft/class_2960;",
+        "renderArmorPiece": "Lnet/minecraft/class_970;method_4169(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1309;Lnet/minecraft/class_1304;ILnet/minecraft/class_572;)V"
+      },
+      "com/cobbleclub/client/mixin/InventoryScreenMixin": {
+        "init": "Lnet/minecraft/class_490;method_25426()V",
+        "render": "Lnet/minecraft/class_490;method_25394(Lnet/minecraft/class_332;IIF)V"
+      },
+      "com/cobbleclub/client/mixin/LivingEntityRendererMixin": {
+        "Lnet/minecraft/client/renderer/MultiBufferSource;getBuffer(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;": "Lnet/minecraft/class_4597;getBuffer(Lnet/minecraft/class_1921;)Lnet/minecraft/class_4588;",
+        "render*": "Lnet/minecraft/class_922;method_4054(Lnet/minecraft/class_1309;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V"
+      },
+      "com/cobbleclub/client/mixin/PokemonRendererMixin": {
+        "<init>": "Lcom/cobblemon/mod/common/client/render/pokemon/PokemonRenderer;<init>(Lnet/minecraft/class_5617$class_5618;)V",
+        "render*": "Lcom/cobblemon/mod/common/client/render/pokemon/PokemonRenderer;render(Lcom/cobblemon/mod/common/entity/pokemon/PokemonEntity;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V"
+      },
+      "com/cobbleclub/client/mixin/ShaderInstanceMixin": {
+        "<init>": "Lnet/minecraft/class_5944;<init>(Lnet/minecraft/class_5912;Ljava/lang/String;Lnet/minecraft/class_293;)V",
+        "Lnet/minecraft/resources/ResourceLocation;withDefaultNamespace(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;": "Lnet/minecraft/class_2960;method_60656(Ljava/lang/String;)Lnet/minecraft/class_2960;"
+      },
+      "com/cobbleclub/client/mixin/battle/BattleGuiMixin": {
+        "mouseClicked": "Lcom/cobblemon/mod/common/client/gui/battle/BattleGUI;method_25402(DDI)Z",
+        "mouseDragged": "Lcom/cobblemon/mod/common/client/gui/battle/BattleGUI;method_25403(DDIDD)Z",
+        "render": "Lcom/cobblemon/mod/common/client/gui/battle/BattleGUI;method_25394(Lnet/minecraft/class_332;IIF)V"
+      },
+      "com/cobbleclub/client/mixin/battle/BattleOverlayMixin": {
+        "render": "Lcom/cobblemon/mod/common/client/gui/battle/BattleOverlay;method_1753(Lnet/minecraft/class_332;Lnet/minecraft/class_9779;)V"
+      },
+      "com/cobbleclub/client/mixin/battle/NativeBattleLogHiderMixin": {
+        "mouseClicked": "Lcom/cobblemon/mod/common/client/gui/battle/widgets/BattleMessagePane;method_25402(DDI)Z",
+        "renderWidget": "Lcom/cobblemon/mod/common/client/gui/battle/widgets/BattleMessagePane;method_48579(Lnet/minecraft/class_332;IIF)V"
+      }
+    }
+  }
+}

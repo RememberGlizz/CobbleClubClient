@@ -1,0 +1,68 @@
+{
+  "bridge": {
+    "minecraft:diamond_helmet": {
+      "22501": "cobbleclub:spark_armor",
+      "22502": "cobbleclub:spectral_armor",
+      "22503": "cobbleclub:aura_armor",
+      "22504": "cobbleclub:fairy_armor",
+      "22505": "cobbleclub:adventure_armor"
+    },
+    "minecraft:diamond_chestplate": {
+      "22501": "cobbleclub:spark_armor",
+      "22502": "cobbleclub:spectral_armor",
+      "22503": "cobbleclub:aura_armor",
+      "22504": "cobbleclub:fairy_armor",
+      "22505": "cobbleclub:adventure_armor"
+    },
+    "minecraft:diamond_leggings": {
+      "22501": "cobbleclub:spark_armor",
+      "22502": "cobbleclub:spectral_armor",
+      "22503": "cobbleclub:aura_armor",
+      "22504": "cobbleclub:fairy_armor",
+      "22505": "cobbleclub:adventure_armor"
+    },
+    "minecraft:diamond_boots": {
+      "22501": "cobbleclub:spark_armor",
+      "22502": "cobbleclub:spectral_armor",
+      "22503": "cobbleclub:aura_armor",
+      "22504": "cobbleclub:fairy_armor",
+      "22505": "cobbleclub:adventure_armor"
+    },
+    "minecraft:golden_helmet": {
+      "22501": "cobbleclub:spark_armor"
+    },
+    "minecraft:golden_chestplate": {
+      "22501": "cobbleclub:spark_armor"
+    },
+    "minecraft:golden_leggings": {
+      "22501": "cobbleclub:spark_armor"
+    },
+    "minecraft:golden_boots": {
+      "22501": "cobbleclub:spark_armor"
+    },
+    "minecraft:iron_helmet": {
+      "22502": "cobbleclub:spectral_armor"
+    },
+    "minecraft:iron_chestplate": {
+      "22502": "cobbleclub:spectral_armor"
+    },
+    "minecraft:iron_leggings": {
+      "22502": "cobbleclub:spectral_armor"
+    },
+    "minecraft:iron_boots": {
+      "22502": "cobbleclub:spectral_armor"
+    },
+    "minecraft:netherite_helmet": {
+      "22504": "cobbleclub:fairy_armor"
+    },
+    "minecraft:netherite_chestplate": {
+      "22504": "cobbleclub:fairy_armor"
+    },
+    "minecraft:netherite_leggings": {
+      "22504": "cobbleclub:fairy_armor"
+    },
+    "minecraft:netherite_boots": {
+      "22504": "cobbleclub:fairy_armor"
+    }
+  }
+}

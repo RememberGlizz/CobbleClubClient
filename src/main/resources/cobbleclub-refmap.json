@@ -1,0 +1,104 @@
+{
+  "mappings": {
+    "com/cobbleclub/server/mixin/BlockAttachedEntityMixin": {
+      "damage": "Lnet/minecraft/class_9691;method_5643(Lnet/minecraft/class_1282;F)Z"
+    },
+    "com/cobbleclub/server/mixin/DispenserBlockMixin": {
+      "dispense": "Lnet/minecraft/class_2315;method_10012(Lnet/minecraft/class_3218;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)V"
+    },
+    "com/cobbleclub/server/mixin/DropperBlockMixin": {
+      "dispense": "Lnet/minecraft/class_2325;method_10012(Lnet/minecraft/class_3218;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)V"
+    },
+    "com/cobbleclub/server/mixin/ExplosionMixin": {
+      "collectBlocksAndDamageEntities": "Lnet/minecraft/class_1927;method_8348()V"
+    },
+    "com/cobbleclub/server/mixin/FarmlandBlockMixin": {
+      "onLandedUpon": "Lnet/minecraft/class_2344;method_9554(Lnet/minecraft/class_1937;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;F)V"
+    },
+    "com/cobbleclub/server/mixin/FireBlockMixin": {
+      "trySpreadingFire": "Lnet/minecraft/class_2358;method_10196(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;ILnet/minecraft/class_5819;I)V"
+    },
+    "com/cobbleclub/server/mixin/FlowableFluidMixin": {
+      "flow": "Lnet/minecraft/class_3609;method_15745(Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_3610;)V"
+    },
+    "com/cobbleclub/server/mixin/HopperBlockEntityMixin": {
+      "serverTick": "Lnet/minecraft/class_2614;method_31692(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2614;)V"
+    },
+    "com/cobbleclub/server/mixin/ManagedServerWorldDataMixin": {
+      "<init>": "Lnet/minecraft/class_3218;<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5268;Lnet/minecraft/class_5321;Lnet/minecraft/class_5363;Lnet/minecraft/class_3949;ZJLjava/util/List;ZLnet/minecraft/class_8565;)V",
+      "Lnet/minecraft/world/gen/GeneratorOptions;getSeed()J": "Lnet/minecraft/class_5285;method_28028()J",
+      "getSeed": "Lnet/minecraft/class_3218;method_8412()J",
+      "setSpawnPos": "Lnet/minecraft/class_3218;method_8554(Lnet/minecraft/class_2338;F)V"
+    },
+    "com/cobbleclub/server/mixin/ManagedWorldSpawnMixin": {
+      "<init>": "Lnet/minecraft/class_1937;<init>(Lnet/minecraft/class_5269;Lnet/minecraft/class_5321;Lnet/minecraft/class_5455;Lnet/minecraft/class_6880;Ljava/util/function/Supplier;ZZJI)V",
+      "Lnet/minecraft/world/biome/source/BiomeAccess;<init>(Lnet/minecraft/world/biome/source/BiomeAccess$Storage;J)V": "Lnet/minecraft/class_4543;<init>(Lnet/minecraft/class_4543$class_4544;J)V",
+      "getSpawnAngle": "Lnet/minecraft/class_1937;method_43127()F",
+      "getSpawnPos": "Lnet/minecraft/class_1937;method_43126()Lnet/minecraft/class_2338;"
+    },
+    "com/cobbleclub/server/mixin/PistonHandlerMixin": {
+      "calculatePush": "Lnet/minecraft/class_2674;method_11537()Z"
+    },
+    "com/cobbleclub/server/mixin/PondItemPickupMixin": {
+      "onPlayerCollision": "Lnet/minecraft/class_1542;method_5694(Lnet/minecraft/class_1657;)V"
+    },
+    "com/cobbleclub/server/mixin/WorldBorderAccessor": {
+      "listeners": "field_12730:Ljava/util/List;"
+    },
+    "com/cobbleclub/server/mixin/WorldBorderSyncerAccessor": {
+      "border": "field_17652:Lnet/minecraft/class_2784;"
+    }
+  },
+  "data": {
+    "named:intermediary": {
+      "com/cobbleclub/server/mixin/BlockAttachedEntityMixin": {
+        "damage": "Lnet/minecraft/class_9691;method_5643(Lnet/minecraft/class_1282;F)Z"
+      },
+      "com/cobbleclub/server/mixin/DispenserBlockMixin": {
+        "dispense": "Lnet/minecraft/class_2315;method_10012(Lnet/minecraft/class_3218;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)V"
+      },
+      "com/cobbleclub/server/mixin/DropperBlockMixin": {
+        "dispense": "Lnet/minecraft/class_2325;method_10012(Lnet/minecraft/class_3218;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;)V"
+      },
+      "com/cobbleclub/server/mixin/ExplosionMixin": {
+        "collectBlocksAndDamageEntities": "Lnet/minecraft/class_1927;method_8348()V"
+      },
+      "com/cobbleclub/server/mixin/FarmlandBlockMixin": {
+        "onLandedUpon": "Lnet/minecraft/class_2344;method_9554(Lnet/minecraft/class_1937;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_1297;F)V"
+      },
+      "com/cobbleclub/server/mixin/FireBlockMixin": {
+        "trySpreadingFire": "Lnet/minecraft/class_2358;method_10196(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;ILnet/minecraft/class_5819;I)V"
+      },
+      "com/cobbleclub/server/mixin/FlowableFluidMixin": {
+        "flow": "Lnet/minecraft/class_3609;method_15745(Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;Lnet/minecraft/class_3610;)V"
+      },
+      "com/cobbleclub/server/mixin/HopperBlockEntityMixin": {
+        "serverTick": "Lnet/minecraft/class_2614;method_31692(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_2614;)V"
+      },
+      "com/cobbleclub/server/mixin/ManagedServerWorldDataMixin": {
+        "<init>": "Lnet/minecraft/class_3218;<init>(Lnet/minecraft/server/MinecraftServer;Ljava/util/concurrent/Executor;Lnet/minecraft/class_32$class_5143;Lnet/minecraft/class_5268;Lnet/minecraft/class_5321;Lnet/minecraft/class_5363;Lnet/minecraft/class_3949;ZJLjava/util/List;ZLnet/minecraft/class_8565;)V",
+        "Lnet/minecraft/world/gen/GeneratorOptions;getSeed()J": "Lnet/minecraft/class_5285;method_28028()J",
+        "getSeed": "Lnet/minecraft/class_3218;method_8412()J",
+        "setSpawnPos": "Lnet/minecraft/class_3218;method_8554(Lnet/minecraft/class_2338;F)V"
+      },
+      "com/cobbleclub/server/mixin/ManagedWorldSpawnMixin": {
+        "<init>": "Lnet/minecraft/class_1937;<init>(Lnet/minecraft/class_5269;Lnet/minecraft/class_5321;Lnet/minecraft/class_5455;Lnet/minecraft/class_6880;Ljava/util/function/Supplier;ZZJI)V",
+        "Lnet/minecraft/world/biome/source/BiomeAccess;<init>(Lnet/minecraft/world/biome/source/BiomeAccess$Storage;J)V": "Lnet/minecraft/class_4543;<init>(Lnet/minecraft/class_4543$class_4544;J)V",
+        "getSpawnAngle": "Lnet/minecraft/class_1937;method_43127()F",
+        "getSpawnPos": "Lnet/minecraft/class_1937;method_43126()Lnet/minecraft/class_2338;"
+      },
+      "com/cobbleclub/server/mixin/PistonHandlerMixin": {
+        "calculatePush": "Lnet/minecraft/class_2674;method_11537()Z"
+      },
+      "com/cobbleclub/server/mixin/PondItemPickupMixin": {
+        "onPlayerCollision": "Lnet/minecraft/class_1542;method_5694(Lnet/minecraft/class_1657;)V"
+      },
+      "com/cobbleclub/server/mixin/WorldBorderAccessor": {
+        "listeners": "field_12730:Ljava/util/List;"
+      },
+      "com/cobbleclub/server/mixin/WorldBorderSyncerAccessor": {
+        "border": "field_17652:Lnet/minecraft/class_2784;"
+      }
+    }
+  }
+}

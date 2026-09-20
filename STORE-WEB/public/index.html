@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b0712">
+  <title>CobbleClub Store</title>
+  <link rel="icon" href="/assets/dirt-block.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="CobbleClub Store home">
+      <img src="/assets/cobbleclub-logo.png" alt="CobbleClub logo">
+      <div><strong>COBBLE<span>CLUB</span></strong><small>NETWORK STORE</small></div>
+    </a>
+    <nav class="mainnav" aria-label="CobbleClub links">
+      <a id="wikiLink" href="#">WIKI</a>
+      <a href="#shop">STORE</a>
+      <a href="#support">SUPPORT</a>
+    </nav>
+    <div class="secure">SECURE CHECKOUT <i></i></div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <em>OFFICIAL COBBLECLUB NETWORK STORE</em>
+        <h1>Build your legacy.<br><span>Support the Club.</span></h1>
+        <p>CobbleClub is built, hosted, maintained, and expanded through the support of its community. Every rank, Gem package, crate key, and direct donation helps us pay for infrastructure, development, backups, events, custom systems, and the work required to keep the network healthy.</p>
+        <div class="hero-actions">
+          <a class="primary-action" href="#shop">EXPLORE THE STORE</a>
+          <button class="ip-card" id="copyIp" type="button"><small>SERVER IP · CLICK TO COPY</small><strong id="serverIp">play.cobble-club.com</strong></button>
+        </div>
+      </div>
+      <aside class="download-panel">
+        <span class="eyebrow">PLAY COBBLECLUB</span>
+        <h2>Get the official pack</h2>
+        <a class="download modrinth" id="modrinthLink" href="#" target="_blank" rel="noopener">
+          <img src="/assets/modrinth-mark.svg" alt=""><div><strong>Modrinth</strong><small>Download on Modrinth</small></div>
+        </a>
+        <a class="download curseforge" id="curseforgeLink" href="#" target="_blank" rel="noopener">
+          <img src="/assets/curseforge-mark.svg" alt=""><div><strong>CurseForge</strong><small>Download on CurseForge</small></div>
+        </a>
+        <p>Use the current CobbleClub modpack version before joining the network.</p>
+      </aside>
+    </section>
+
+    <section class="player-wrap">
+      <div class="player-copy"><em>AUTOMATIC DELIVERY</em><h2>Set your Minecraft player.</h2><p>Rank, Gem, and key purchases are delivered automatically to this exact Java username.</p></div>
+      <div class="player">
+        <label for="username">MINECRAFT USERNAME</label>
+        <div><input id="username" maxlength="16" autocomplete="off" placeholder="Enter your username"><button id="save">SET PLAYER</button></div>
+        <small id="status">Your purchase will be delivered to this player.</small>
+      </div>
+    </section>
+
+    <section id="shop" class="shop-section">
+      <div class="shophead"><div><em>THE CLUB SHOP</em><h2>Choose your upgrade</h2></div><nav id="filters" class="filters"></nav></div>
+      <div id="products" class="grid">Loading…</div>
+    </section>
+
+    <section id="support" class="support-section">
+      <div class="support-copy">
+        <em>KEEP COBBLECLUB ONLINE</em>
+        <h2>Support the network directly.</h2>
+        <p>CobbleClub depends on community support to stay online and continue improving. A direct donation gives no rank, currency, crate keys, items, or gameplay benefit — it is simply a way to help fund the servers and the people building them.</p>
+        <p>Your support helps cover hosting, database services, backups, development tools, custom feature work, events, moderation infrastructure, and future upgrades. Whether it is $1 or something larger, it goes toward keeping CobbleClub stable, independent, and moving forward.</p>
+        <div class="support-note"><strong>100% optional.</strong> You never need to donate to play CobbleClub.</div>
+      </div>
+      <div class="donation-card">
+        <span class="donation-heart">♥</span><em>DIRECT SUPPORT</em><h3>Choose any amount</h3><p>CAD $1.00 – $10,000.00</p>
+        <div class="donation-input"><span>$</span><input id="donationAmount" inputmode="decimal" type="number" min="1" max="10000" step="1" value="10"><b>CAD</b></div>
+        <div class="quick-donate"><button data-amount="5">$5</button><button data-amount="10">$10</button><button data-amount="25">$25</button><button data-amount="50">$50</button><button data-amount="100">$100</button></div>
+        <button id="donateButton" class="donate-button">SUPPORT COBBLECLUB</button>
+        <small>No in-game rewards are attached to donations.</small>
+      </div>
+    </section>
+
+    <section class="trust-row">
+      <div><b>⚡</b><strong>Automatic fulfillment</strong><small>Eligible purchases deliver through the CobbleClub server bridge.</small></div>
+      <div><b>◆</b><strong>Community funded</strong><small>Purchases directly support network operation and development.</small></div>
+      <div><b>✓</b><strong>Stripe checkout</strong><small>Payments are processed through Stripe's secure checkout.</small></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand"><img src="/assets/cobbleclub-logo.png" alt=""><strong>COBBLECLUB NETWORK</strong></div>
+    <div class="footer-copy">© 2026 CobbleClub Network. All rights reserved.<br><small>Not affiliated with Mojang Studios, Microsoft, The Pokémon Company, Nintendo, Game Freak, or their subsidiaries. Minecraft and Pokémon-related names and marks belong to their respective owners.</small></div>
+  </footer>
+  <div id="toast"></div>
+  <script src="/site-config.js"></script><script src="/store.js"></script>
+</body>
+</html>
