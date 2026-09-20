@@ -225,6 +225,32 @@ public final class ClaimsState {
         return json == null ? Text.empty() : ConfiguredText.fill(PreviewUi.deserialize(json, ""), placeholders);
     }
 
+    public static String friendlyWorldName(String raw) {
+        if (raw == null || raw.isBlank()) {
+            return "Unknown World";
+        }
+        String id = raw;
+        int colon = id.indexOf(':');
+        if (colon >= 0 && colon + 1 < id.length()) {
+            id = id.substring(colon + 1);
+        }
+        id = id.replace('-', '_');
+        if ("overworld".equalsIgnoreCase(id)) return "Overworld";
+        if ("the_nether".equalsIgnoreCase(id) || "nether".equalsIgnoreCase(id)) return "The Nether";
+        if ("the_end".equalsIgnoreCase(id) || "end".equalsIgnoreCase(id)) return "The End";
+        if (id.toLowerCase().endsWith("world") && id.length() > 5) {
+            id = id.substring(0, id.length() - 5) + "_world";
+        }
+        StringBuilder out = new StringBuilder();
+        for (String part : id.split("_+")) {
+            if (part.isBlank()) continue;
+            if (!out.isEmpty()) out.append(' ');
+            out.append(Character.toUpperCase(part.charAt(0)));
+            if (part.length() > 1) out.append(part.substring(1).toLowerCase());
+        }
+        return out.isEmpty() ? "Unknown World" : out.toString();
+    }
+
     public static String fmtBlocks(int n) {
         return BLOCK_COUNT.format(n);
     }
