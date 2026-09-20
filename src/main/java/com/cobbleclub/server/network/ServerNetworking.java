@@ -28,6 +28,7 @@ public final class ServerNetworking {
         PayloadTypeRegistry.playC2S().register(Payloads.KitsAction.ID, Payloads.KitsAction.CODEC);
         PayloadTypeRegistry.playC2S().register(Payloads.ClaimsAction.ID, Payloads.ClaimsAction.CODEC);
         PayloadTypeRegistry.playC2S().register(Payloads.ClaimsMapRequest.ID, Payloads.ClaimsMapRequest.CODEC);
+        PayloadTypeRegistry.playC2S().register(Payloads.ClaimsExtraAction.ID, Payloads.ClaimsExtraAction.CODEC);
         PayloadTypeRegistry.playC2S().register(Payloads.TagsAction.ID, Payloads.TagsAction.CODEC);
         PayloadTypeRegistry.playC2S().register(Payloads.WardrobeAction.ID, Payloads.WardrobeAction.CODEC);
         PayloadTypeRegistry.playC2S().register(Payloads.CrateTestReward.ID, Payloads.CrateTestReward.CODEC);
@@ -39,6 +40,7 @@ public final class ServerNetworking {
         PayloadTypeRegistry.playS2C().register(Payloads.ClaimsState.ID, Payloads.ClaimsState.CODEC);
         PayloadTypeRegistry.playS2C().register(Payloads.ClaimsMapTiles.ID, Payloads.ClaimsMapTiles.CODEC);
         PayloadTypeRegistry.playS2C().register(Payloads.ClaimsWorld.ID, Payloads.ClaimsWorld.CODEC);
+        PayloadTypeRegistry.playS2C().register(Payloads.ClaimsWarpState.ID, Payloads.ClaimsWarpState.CODEC);
         PayloadTypeRegistry.playS2C().register(Payloads.TagsOpen.ID, Payloads.TagsOpen.CODEC);
         PayloadTypeRegistry.playS2C().register(Payloads.TagsState.ID, Payloads.TagsState.CODEC);
         PayloadTypeRegistry.playS2C().register(Payloads.WardrobeOpen.ID, Payloads.WardrobeOpen.CODEC);
@@ -53,6 +55,7 @@ public final class ServerNetworking {
         ServerPlayNetworking.registerGlobalReceiver(Payloads.KitsAction.ID, (payload, context) -> context.server().execute(() -> KitsService.handle(context.player(), payload.action())));
         ServerPlayNetworking.registerGlobalReceiver(Payloads.ClaimsAction.ID, (payload, context) -> context.server().execute(() -> ClaimsService.handleAction(context.player(), payload.json())));
         ServerPlayNetworking.registerGlobalReceiver(Payloads.ClaimsMapRequest.ID, (payload, context) -> context.server().execute(() -> ClaimsService.handleMapRequest(context.player(), payload.json())));
+        ServerPlayNetworking.registerGlobalReceiver(Payloads.ClaimsExtraAction.ID, (payload, context) -> context.server().execute(() -> ClaimsService.handleExtraAction(context.player(), payload.action(), payload.claimId(), payload.value())));
         ServerPlayNetworking.registerGlobalReceiver(Payloads.TagsAction.ID, (payload, context) -> context.server().execute(() -> TagsService.handle(context.player(), payload.json())));
         ServerPlayNetworking.registerGlobalReceiver(Payloads.WardrobeAction.ID, (payload, context) -> context.server().execute(() -> WardrobeService.handle(context.player(), payload.json())));
         ServerPlayNetworking.registerGlobalReceiver(Payloads.CrateTestReward.ID, (payload, context) -> context.server().execute(() -> CatalogService.handleTestReward(context.player(), payload)));
