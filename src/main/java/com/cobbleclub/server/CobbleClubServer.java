@@ -14,6 +14,7 @@ import com.cobbleclub.server.service.CosmeticVisualService;
 import com.cobbleclub.server.service.CrateService;
 import com.cobbleclub.server.service.DashboardService;
 import com.cobbleclub.server.service.EconomyService;
+import com.cobbleclub.server.service.FeatherboardService;
 import com.cobbleclub.server.service.KitsService;
 import com.cobbleclub.server.service.LaunchService;
 import com.cobbleclub.server.service.LeaderboardService;
@@ -71,7 +72,7 @@ public final class CobbleClubServer
     public static final String MOD_ID = "cobbleclub";
     public static final Logger LOGGER = LoggerFactory.getLogger("CobbleClub Server");
     private static final Map<UUID, String> CLIENT_VERSIONS = new ConcurrentHashMap<>();
-    private static final String UI_PROTOCOL = "wild5-tags24-wool9-noblur1-managedborder1";
+    private static final String UI_PROTOCOL = "wild5-tags24-wool9-noblur1-managedborder1-featherboard1";
     private static ServerConfig config;
 
     public void onInitialize() {
@@ -111,6 +112,7 @@ public final class CobbleClubServer
             TagsService.tick(server);
             CosmeticVisualService.tick(server);
             StoreBridgeService.tick(server);
+            FeatherboardService.tick(server);
         });
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             CobbleClubServer.safeJoinStep(handler.player, "economy", () -> EconomyService.data(handler.player));
