@@ -70,6 +70,8 @@ import com.cobbleclub.server.config.ServerConfig;
 import com.cobbleclub.server.data.ClaimsStore;
 import com.cobbleclub.server.data.PlayerDataStore;
 import com.cobbleclub.server.network.Payloads;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.cobbleclub.server.service.EconomyService;
 import com.cobbleclub.server.service.PermissionService;
 import java.util.ArrayList;
@@ -116,6 +118,78 @@ public final class ClaimsService {
         ClaimsOpenMsg message = new ClaimsOpenMsg(1, ClaimsService.textJson("CobbleClub Claims", "light_purple"), ClaimsService.budget(player), player.getBlockX(), player.getBlockZ(), ClaimsService.dimension(player.getServerWorld()), config.mapRadiusChunks, 3, 32, "^[A-Za-z0-9 _-]+$", 64, config.maxClaimChunksPerSide, ClaimsService.permissionCatalog(), List.of("VISITOR", "TRUSTED", "OWNER"), ClaimsService.visibleDetails(player), ClaimsService.mapClaims(player), null, "MAP", Boolean.valueOf(config.economyEnabled && config.claimBlockPurchaseAmount > 0 && ClaimsService.claimBlockPurchasePrice(player) > 0L), null, Integer.valueOf(config.maxClaimDistanceChunks), Boolean.valueOf(false), Boolean.valueOf(true), Boolean.valueOf(ClaimsService.isBypass(player)), List.of(ClaimsService.textJson("Shift-drag on the map to claim land.", "gray"), ClaimsService.textJson("Trusted players can build unless you change a permission.", "gray"), ClaimsService.textJson("Earn " + config.gemsPerPlaytimeReward + " gems every " + Math.max(1, config.claimBlockRewardIntervalSeconds / 60) + " minutes online.", "aqua"), ClaimsService.textJson("Use /daily for " + config.dailyGems + " gems each UTC day.", "green")), Map.of("claim_earn_playtime", ClaimsService.textJson("Playtime: +" + config.gemsPerPlaytimeReward + " gems every " + Math.max(1, config.claimBlockRewardIntervalSeconds / 60) + " minutes online", "aqua"), "claim_earn_daily", ClaimsService.textJson("Daily: +" + config.dailyGems + " gems with /daily", "green"), "claim_purchase", ClaimsService.textJson("Next purchase: +" + config.claimBlockPurchaseAmount + " for " + EconomyService.formatGems(ClaimsService.claimBlockPurchasePrice(player)), "yellow")));
         ServerPlayNetworking.send((ServerPlayerEntity)player, (CustomPayload)new Payloads.ClaimsOpen(ClaimsScreenProtocol.INSTANCE.encode((Object)message)));
         ClaimsService.sendWorld(player);
+        ClaimsService.sendWarpState(player);
+    }
+
+    public static void handleExtraAction(ServerPlayerEntity player, String action, String claimId, String value) {
+        if (player == null || action == null || !PermissionService.has(player, "cobbleclub.claims.use", true)) {
+            return;
+        }
+        String normalized = action.trim().toLowerCase(Locale.ROOT);
+        Result result;
+        switch (normalized) {
+            case "refresh" -> {
+                ClaimsService.sendWarpState(player);
+                return;
+            }
+            case "leave" -> {
+                ClaimsStore.ClaimData claim = ClaimsService.find(claimId);
+                if (claim == null || claim.ownerUuid.equals(player.getUuidAsString())) {
+                    result = Result.error("You cannot leave that claim.");
+                } else if (claim.trusted.remove(player.getUuidAsString()) == null) {
+                    result = Result.error("You are not a trusted member of that claim.");
+                } else {
+                    result = Result.ok(true, "You left " + claim.name + ".");
+                }
+            }
+            case "set_public" -> {
+                ClaimsStore.ClaimData claim = ClaimsService.manageable(player, claimId);
+                if (claim == null) {
+                    result = Result.error("You cannot change that claim warp.");
+                } else {
+                    claim.publicWarp = Boolean.parseBoolean(value);
+                    if (claim.publicWarp && (claim.warpName == null || claim.warpName.isBlank())) {
+                        claim.warpName = claim.name;
+                    }
+                    result = Result.ok(true, claim.publicWarp ? "Public warp enabled." : "Public warp disabled.");
+                }
+            }
+            case "set_warp_name" -> {
+                ClaimsStore.ClaimData claim = ClaimsService.manageable(player, claimId);
+                String name = value == null ? "" : value.trim();
+                if (claim == null) {
+                    result = Result.error("You cannot rename that warp.");
+                } else if (!ClaimsService.validWarpName(name)) {
+                    result = Result.error("Use a clean 3-32 character warp name.");
+                } else {
+                    claim.warpName = name;
+                    result = Result.ok(true, "Warp name updated.");
+                }
+            }
+            case "warp" -> {
+                ClaimsStore.ClaimData claim = ClaimsService.find(claimId);
+                if (claim == null || ClaimsService.isBanned(player, claim)) {
+                    result = Result.error("That warp is unavailable.");
+                } else {
+                    boolean member = claim.ownerUuid.equals(player.getUuidAsString()) || claim.trusted.containsKey(player.getUuidAsString()) || ClaimsService.isBypass(player);
+                    if (!claim.publicWarp && !member) {
+                        result = Result.error("That claim is private.");
+                    } else {
+                        result = ClaimsService.teleportToClaim(player, claim);
+                    }
+                }
+            }
+            default -> {
+                return;
+            }
+        }
+        if (result.changed) {
+            ClaimsStore.save();
+            ++revision;
+        }
+        ClaimsService.sendState(player, 0, result);
+        ClaimsService.sendWorld(player);
+        ClaimsService.sendWarpState(player);
     }
 
     public static void handleAction(ServerPlayerEntity player, String json) {
@@ -142,6 +216,7 @@ public final class ClaimsService {
         ++revision;
         ClaimsService.sendState(player, message.getNonce(), result);
         ClaimsService.sendWorld(player);
+        ClaimsService.sendWarpState(player);
     }
 
     public static void handleMapRequest(ServerPlayerEntity player, String json) {
@@ -467,6 +542,10 @@ public final class ClaimsService {
         if (claim == null) {
             return Result.error("You cannot teleport to that claim.");
         }
+        return ClaimsService.teleportToClaim(player, claim);
+    }
+
+    private static Result teleportToClaim(ServerPlayerEntity player, ClaimsStore.ClaimData claim) {
         ServerWorld world = ClaimsService.world(player.getServer(), claim.dimension);
         if (world == null) {
             return Result.error("That world is unavailable.");
@@ -584,6 +663,41 @@ public final class ClaimsService {
         PlayerDataStore.save();
         long next = ClaimsService.claimBlockPurchasePrice(player);
         return Result.ok(true, "Purchased " + config.claimBlockPurchaseAmount + " claim blocks for " + EconomyService.formatGems(price) + ". Next expansion: " + EconomyService.formatGems(next) + ".");
+    }
+
+    private static void sendWarpState(ServerPlayerEntity player) {
+        if (player == null || !ServerPlayNetworking.canSend(player, Payloads.ClaimsWarpState.ID)) {
+            return;
+        }
+        JsonObject root = new JsonObject();
+        JsonArray warps = new JsonArray();
+        for (ClaimsStore.ClaimData claim : ClaimsStore.all()) {
+            if (claim == null || !claim.publicWarp) continue;
+            JsonObject entry = new JsonObject();
+            entry.addProperty("claimId", claim.id);
+            entry.addProperty("name", claim.warpName == null || claim.warpName.isBlank() ? claim.name : claim.warpName);
+            entry.addProperty("claimName", claim.name);
+            entry.addProperty("owner", claim.ownerName);
+            entry.addProperty("world", claim.dimension);
+            entry.addProperty("owned", claim.ownerUuid.equals(player.getUuidAsString()));
+            warps.add(entry);
+        }
+        root.add("warps", warps);
+        ServerPlayNetworking.send(player, new Payloads.ClaimsWarpState(root.toString()));
+    }
+
+    private static boolean validWarpName(String name) {
+        if (name == null || !name.matches("[A-Za-z0-9 _'\\-]{3,32}")) {
+            return false;
+        }
+        String normalized = name.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "");
+        return !(normalized.contains("fuck")
+                || normalized.contains("shit")
+                || normalized.contains("bitch")
+                || normalized.contains("cunt")
+                || normalized.contains("nigger")
+                || normalized.contains("faggot")
+                || normalized.contains("retard"));
     }
 
     public static long claimBlockPurchasePrice(ServerPlayerEntity player) {
