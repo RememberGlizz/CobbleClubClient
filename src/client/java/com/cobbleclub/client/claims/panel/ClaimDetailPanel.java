@@ -418,19 +418,20 @@ public final class ClaimDetailPanel {
         }
         int buttonX = contentX;
         boolean showTeleport = info && (trustedView || this.adminView() || this.state.adminBypass);
-        this.place((ClickableWidget)this.teleportButton, contentX, infoY + layout.buttonRowY(), 70, showTeleport);
+        int actionY = Math.min(infoY + layout.buttonRowY(), this.y1 - 24);
+        this.place((ClickableWidget)this.teleportButton, contentX, actionY, 70, showTeleport);
         if (showTeleport) {
             buttonX = contentX + 74;
         }
-        this.place((ClickableWidget)this.mapButton, buttonX, infoY + layout.buttonRowY(), 46, showMap);
+        this.place((ClickableWidget)this.mapButton, buttonX, actionY, 46, showMap);
         if (showMap) {
             buttonX += 50;
         }
-        this.place((ClickableWidget)this.deleteButton, buttonX, infoY + layout.buttonRowY(), 56, showDelete);
+        this.place((ClickableWidget)this.deleteButton, buttonX, actionY, 56, showDelete);
         if (showDelete) {
             buttonX += 60;
         }
-        this.place((ClickableWidget)this.leaveClaimButton, buttonX, infoY + layout.buttonRowY(), 56, trustedView);
+        this.place((ClickableWidget)this.leaveClaimButton, buttonX, actionY, 56, trustedView);
         this.place((ClickableWidget)this.transferBox, contentX, infoY + layout.transferRowY(), contentW - 76, info && owner);
         this.place((ClickableWidget)this.transferButton, this.x1 - 6 - 70, infoY + layout.transferRowY(), 70, info && owner);
         boolean subSection = info && owner && layout.subNameRowY() >= 0;
@@ -834,11 +835,20 @@ public final class ClaimDetailPanel {
                         .append(Text.literal(enabled ? "PUBLIC" : "PRIVATE").formatted(enabled ? Formatting.GREEN : Formatting.RED)),
                 x, y + 16, -1);
         g.drawTextWithShadow(this.font, Text.literal("Warp Name").formatted(Formatting.GRAY), x, y + 26, -1);
-        g.drawTextWithShadow(this.font, Text.literal("Public visitors remain Visitors and may buy from chest shops.").formatted(Formatting.DARK_GRAY), x, y + 84, -1);
-        g.drawTextWithShadow(this.font, Text.literal("They cannot build, edit shops, or gain member permissions.").formatted(Formatting.DARK_GRAY), x, y + 96, -1);
-        g.drawTextWithShadow(this.font, Text.literal("Disabling the warp blocks public travel; trusted members are unchanged.").formatted(Formatting.DARK_GRAY), x, y + 108, -1);
+        int noteY = y + 84;
+        int noteWidth = Math.max(80, this.x1 - x - 14);
+        for (Text note : List.of(
+                Text.literal("Public visitors remain Visitors and may buy from chest shops.").formatted(Formatting.DARK_GRAY),
+                Text.literal("They cannot build, edit shops, or gain member permissions.").formatted(Formatting.DARK_GRAY),
+                Text.literal("Disabling the warp blocks public travel; trusted members are unchanged.").formatted(Formatting.DARK_GRAY))) {
+            for (var line : this.font.wrapLines(note, noteWidth)) {
+                g.drawTextWithShadow(this.font, line, x, noteY, -1);
+                noteY += 11;
+            }
+            noteY += 1;
+        }
 
-        int listY = y + 126;
+        int listY = noteY + 4;
         g.drawTextWithShadow(this.font, Text.literal("Active Public Warps").formatted(Formatting.GRAY), x, listY, -1);
         int shown = 0;
         for (ClaimsNetworking.PublicWarp publicWarp : ClaimsNetworking.publicWarps()) {
@@ -1156,7 +1166,7 @@ public final class ClaimDetailPanel {
             case PERMS -> 14 + this.state.permissionCatalog.size() * 20 + (claim.getSubClaims() != null && !claim.getSubClaims().isEmpty() ? 16 : 0) + 4;
             case MEMBERS -> ((claim.getMembers() != null ? claim.getMembers().size() + 1 : 1) + (claim.getBanned() != null && !claim.getBanned().isEmpty() ? claim.getBanned().size() + 1 : 0)) * 20 + 4;
             case MESSAGES -> 160 + (this.messagesReadOnly(claim) ? 16 : 0);
-            case WARPS -> 202;
+            case WARPS -> 230;
         };
     }
 
