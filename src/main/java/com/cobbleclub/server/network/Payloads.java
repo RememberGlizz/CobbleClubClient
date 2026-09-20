@@ -107,6 +107,20 @@ public final class Payloads {
         }
     }
 
+    public record FeatherboardOnline(int online) implements CustomPayload
+    {
+        public static final CustomPayload.Id<FeatherboardOnline> ID = new CustomPayload.Id<>(Payloads.id("featherboard_online/v1"));
+        public static final PacketCodec<RegistryByteBuf, FeatherboardOnline> CODEC = PacketCodec.of(
+                (value, buf) -> buf.writeVarInt(Math.max(0, value.online)),
+                buf -> new FeatherboardOnline(Math.max(0, buf.readVarInt()))
+        );
+
+        @Override
+        public CustomPayload.Id<? extends CustomPayload> getId() {
+            return ID;
+        }
+    }
+
     public record FeatherboardState(
             String playerName,
             String rank,
