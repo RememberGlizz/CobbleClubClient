@@ -51,6 +51,8 @@ public class ClaimsScreen extends Screen {
     private ThemedButton mapTabButton;
     private ThemedButton claimsTabButton;
     private ThemedButton trustedTabButton;
+    private ThemedButton warpsTabButton;
+    private int publicWarpScroll;
     private ThemedButton zoomInButton;
     private ThemedButton zoomOutButton;
     private ThemedButton centerButton;
@@ -253,6 +255,8 @@ public class ClaimsScreen extends Screen {
         this.claimsTabButton = this.addDrawableChild(new ThemedButton(tabX, this.panelTop() + 2, this.tabWidth("My Claims"), 20, Text.literal("My Claims"), (b) -> this.switchTab(ClaimsScreen.Tab.CLAIMS)));
         tabX += this.claimsTabButton.getWidth() + 4;
         this.trustedTabButton = this.addDrawableChild(new ThemedButton(tabX, this.panelTop() + 2, this.tabWidth("Trusted Claims"), 20, Text.literal("Trusted Claims"), (b) -> this.switchTab(ClaimsScreen.Tab.TRUSTED)));
+        tabX += this.trustedTabButton.getWidth() + 4;
+        this.warpsTabButton = this.addDrawableChild(new ThemedButton(tabX, this.panelTop() + 2, this.tabWidth("Public Warps"), 20, Text.literal("Public Warps"), (b) -> this.switchTab(ClaimsScreen.Tab.WARPS)));
         this.addDrawableChild(new ThemedButton(this.panelRight() - 56, this.panelTop() + 2, 52, 20, Text.literal("Close"), (b) -> this.close()));
         this.zoomInButton = this.addDrawableChild(new ThemedButton(0, 0, 16, 16, Text.literal("+"), (b) -> this.mapView.zoomBy(1, this.mapViewCenterX(), this.mapViewCenterY())));
         this.zoomOutButton = this.addDrawableChild(new ThemedButton(0, 0, 16, 16, Text.literal("-"), (b) -> this.mapView.zoomBy(-1, this.mapViewCenterX(), this.mapViewCenterY())));
@@ -284,8 +288,12 @@ public class ClaimsScreen extends Screen {
     private void switchTab(Tab newTab) {
         if (this.tab != newTab) {
             this.tab = newTab;
-            if (newTab == ClaimsScreen.Tab.MAP) {
+            if (newTab == ClaimsScreen.Tab.MAP || newTab == ClaimsScreen.Tab.WARPS) {
                 this.selectClaim(null);
+            }
+            if (newTab == ClaimsScreen.Tab.WARPS) {
+                this.publicWarpScroll = 0;
+                ClaimsNetworking.sendExtra("refresh", "", "");
             }
 
             PreviewUi.playClick();
@@ -332,6 +340,8 @@ public class ClaimsScreen extends Screen {
             this.renderActionBar(g);
             this.mapView.render(g, mouseX, mouseY, this.detailPanel.selectedClaimId());
             this.renderStatusStrip(g, mouseX, mouseY);
+        } else if (this.tab == ClaimsScreen.Tab.WARPS) {
+            this.renderPublicWarps(g, mouseX, mouseY);
         } else if (!this.detailVisible()) {
             // Never draw the claims/trusted list underneath an open detail pane.
             this.listPanel.render(g, mouseX, mouseY, this.detailPanel.selectedClaimId());
@@ -432,7 +442,9 @@ public class ClaimsScreen extends Screen {
             }
         }
 
-        ThemedButton active = this.tab == ClaimsScreen.Tab.MAP ? this.mapTabButton : (this.tab == ClaimsScreen.Tab.CLAIMS ? this.claimsTabButton : this.trustedTabButton);
+        ThemedButton active = this.tab == ClaimsScreen.Tab.MAP ? this.mapTabButton
+                : (this.tab == ClaimsScreen.Tab.CLAIMS ? this.claimsTabButton
+                : (this.tab == ClaimsScreen.Tab.TRUSTED ? this.trustedTabButton : this.warpsTabButton));
         if (active != null) {
             g.fill(active.getX() + 2, this.panelTop() + 24 - 2, active.getX() + active.getWidth() - 2, this.panelTop() + 24 - 1, -2053377);
         }
@@ -452,7 +464,8 @@ public class ClaimsScreen extends Screen {
     }
 
     private int tabsRight() {
-        return this.trustedTabButton == null ? this.panelLeft() : this.trustedTabButton.getX() + this.trustedTabButton.getWidth();
+        ThemedButton last = this.warpsTabButton != null ? this.warpsTabButton : this.trustedTabButton;
+        return last == null ? this.panelLeft() : last.getX() + last.getWidth();
     }
 
     private void toggleHelp() {
@@ -712,6 +725,72 @@ public class ClaimsScreen extends Screen {
         }
     }
 
+    private List<ClaimsNetworking.PublicWarp> visiblePublicWarps() {
+        ArrayList<ClaimsNetworking.PublicWarp> result = new ArrayList<>();
+        for (ClaimsNetworking.PublicWarp warp : ClaimsNetworking.publicWarps()) {
+            if (warp != null && warp.publicEnabled()) result.add(warp);
+        }
+        return result;
+    }
+
+    private int publicWarpRowHeight() {
+        return 34;
+    }
+
+    private int publicWarpMaxScroll() {
+        int view = Math.max(1, this.contentBottom() - this.contentTop() - 8);
+        int total = this.visiblePublicWarps().size() * this.publicWarpRowHeight();
+        return Math.max(0, total - view);
+    }
+
+    private ClaimsNetworking.PublicWarp publicWarpAt(double mouseX, double mouseY) {
+        if (mouseX < this.contentLeft() || mouseX >= this.contentRightEdge()
+                || mouseY < this.contentTop() || mouseY >= this.contentBottom()) {
+            return null;
+        }
+        int y = this.contentTop() + 4 - this.publicWarpScroll;
+        for (ClaimsNetworking.PublicWarp warp : this.visiblePublicWarps()) {
+            if (mouseY >= y && mouseY < y + this.publicWarpRowHeight() - 2) return warp;
+            y += this.publicWarpRowHeight();
+        }
+        return null;
+    }
+
+    private void renderPublicWarps(DrawContext g, int mouseX, int mouseY) {
+        int left = this.contentLeft();
+        int right = this.contentRightEdge();
+        int top = this.contentTop();
+        int bottom = this.contentBottom();
+        g.fill(left, top, right, bottom, 0x99101620);
+        g.drawBorder(left, top, right - left, bottom - top, -13747610);
+
+        List<ClaimsNetworking.PublicWarp> warps = this.visiblePublicWarps();
+        if (warps.isEmpty()) {
+            g.drawCenteredTextWithShadow(this.textRenderer, Text.literal("No public claim warps are active."), (left + right) / 2, top + 18, -7035976);
+            return;
+        }
+
+        this.publicWarpScroll = MathHelper.clamp(this.publicWarpScroll, 0, this.publicWarpMaxScroll());
+        g.enableScissor(left + 1, top + 1, right - 1, bottom - 1);
+        int y = top + 4 - this.publicWarpScroll;
+        for (ClaimsNetworking.PublicWarp warp : warps) {
+            int rowH = this.publicWarpRowHeight() - 2;
+            if (y + rowH >= top && y < bottom) {
+                boolean hover = mouseX >= left + 4 && mouseX < right - 4 && mouseY >= y && mouseY < y + rowH;
+                g.fill(left + 4, y, right - 4, y + rowH, hover ? -14405546 : -15064506);
+                g.drawBorder(left + 4, y, right - left - 8, rowH, hover ? -6467875 : -13747610);
+                String name = warp.name() == null || warp.name().isBlank() ? warp.claimName() : warp.name();
+                g.drawTextWithShadow(this.textRenderer, Text.literal(name).formatted(Formatting.LIGHT_PURPLE), left + 10, y + 5, -1);
+                String meta = "Owner: " + warp.owner() + " · " + ClaimsState.friendlyWorldName(warp.world());
+                g.drawTextWithShadow(this.textRenderer, Text.literal(meta).formatted(Formatting.GRAY), left + 10, y + 18, -1);
+                String label = "Warp";
+                g.drawTextWithShadow(this.textRenderer, Text.literal(label).formatted(Formatting.AQUA), right - 12 - this.textRenderer.getWidth(label), y + 11, -1);
+            }
+            y += this.publicWarpRowHeight();
+        }
+        g.disableScissor();
+    }
+
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (this.confirmActive) {
             if (button == 0) {
@@ -752,8 +831,18 @@ public class ClaimsScreen extends Screen {
                 this.mapView.mousePressed(mouseX, mouseY, button, hasShiftDown(), this.detailPanel.selectedClaimId());
                 this.dismissOverlayPanel();
                 return true;
+            } else if (this.tab == ClaimsScreen.Tab.WARPS && button == 0) {
+                ClaimsNetworking.PublicWarp warp = this.publicWarpAt(mouseX, mouseY);
+                if (warp != null) {
+                    ClaimsNetworking.sendExtra("warp", warp.claimId(), "");
+                    PreviewUi.playClick();
+                    this.close();
+                    return true;
+                }
+                return false;
             } else {
-                return this.tab != ClaimsScreen.Tab.MAP ? this.listPanel.mouseClicked(mouseX, mouseY, button) : false;
+                return (this.tab == ClaimsScreen.Tab.CLAIMS || this.tab == ClaimsScreen.Tab.TRUSTED)
+                        ? this.listPanel.mouseClicked(mouseX, mouseY, button) : false;
             }
         }
     }
@@ -792,8 +881,13 @@ public class ClaimsScreen extends Screen {
             return true;
         } else if (this.tab == ClaimsScreen.Tab.MAP && this.mapView.contains(mouseX, mouseY)) {
             return this.mapView.mouseScrolled(mouseX, mouseY, scrollY);
+        } else if (this.tab == ClaimsScreen.Tab.WARPS) {
+            int max = this.publicWarpMaxScroll();
+            this.publicWarpScroll = MathHelper.clamp(this.publicWarpScroll - (int)(scrollY * 24.0), 0, max);
+            return true;
         } else {
-            return this.tab != ClaimsScreen.Tab.MAP && this.listPanel.mouseScrolled(mouseX, mouseY, scrollY) ? true : super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
+            return (this.tab == ClaimsScreen.Tab.CLAIMS || this.tab == ClaimsScreen.Tab.TRUSTED)
+                    && this.listPanel.mouseScrolled(mouseX, mouseY, scrollY) ? true : super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
         }
     }
 
@@ -892,6 +986,7 @@ public class ClaimsScreen extends Screen {
     private enum Tab {
         MAP,
         CLAIMS,
-        TRUSTED
+        TRUSTED,
+        WARPS
     }
 }
