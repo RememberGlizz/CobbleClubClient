@@ -1,4 +1,4 @@
-# 💜✨ CobbleClub Client v3.9.22 - Rebuild ✨💜
+# 💜✨ CobbleClub Client v3.9.22 - Rebuild ✨💜 play.cobble-club.com
 
 <p align="center">
   <b>🌌 Premium Cobblemon • Custom Systems • Full Client Experience 🌌</b>
