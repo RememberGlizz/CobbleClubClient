@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "cobbleclub",
-  "version": "3.9.22-cobblemon1.8",
+  "version": "3.9.23-cobblemon1.8",
   "name": "CobbleClub",
   "description": "Unified CobbleClub mod for Fabric 1.21.1 — one true Loom project and one jar for client and dedicated server.",
   "authors": [
