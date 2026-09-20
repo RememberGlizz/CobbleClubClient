@@ -86,6 +86,7 @@ public final class ClaimDetailPanel {
     private TextFieldWidget transferBox;
     private ThemedButton transferButton;
     private ThemedButton deleteButton;
+    private ThemedButton leaveClaimButton;
     private Tooltip deleteDenyTooltip;
     private TextFieldWidget trustBox;
     private ThemedButton trustButton;
@@ -98,6 +99,10 @@ public final class ClaimDetailPanel {
     private TextFieldWidget leaveTitleBox;
     private TextFieldWidget leaveSubtitleBox;
     private ThemedButton saveMessagesButton;
+    private TextFieldWidget warpNameBox;
+    private ThemedButton warpNameSaveButton;
+    private ThemedButton warpToggleButton;
+    private String warpNameText;
     private String renameText;
     private String transferText = "";
     private String trustText = "";
@@ -143,6 +148,7 @@ public final class ClaimDetailPanel {
             this.enterSubtitleText = null;
             this.leaveTitleText = null;
             this.leaveSubtitleText = null;
+            this.warpNameText = null;
             this.syncEditBoxValues();
         }
     }
@@ -215,6 +221,8 @@ public final class ClaimDetailPanel {
         add.accept((ClickableWidget)this.transferButton);
         this.deleteButton = new ThemedButton(0, 0, 70, 18, (Text)Text.literal((String)"Delete"), ThemedButton.Variant.RED, b -> this.deleteClicked());
         add.accept((ClickableWidget)this.deleteButton);
+        this.leaveClaimButton = new ThemedButton(0, 0, 56, 18, (Text)Text.literal((String)"Leave"), ThemedButton.Variant.RED, b -> this.leaveClaimClicked());
+        add.accept((ClickableWidget)this.leaveClaimButton);
         this.trustBox = new TextFieldWidget(this.font, 0, 0, 100, 16, (Text)Text.literal((String)"Trust player"));
         this.trustBox.setMaxLength(16);
         this.trustBox.setPlaceholder((Text)Text.literal((String)"Player name...").formatted(Formatting.DARK_GRAY));
@@ -250,6 +258,15 @@ public final class ClaimDetailPanel {
         });
         this.saveMessagesButton = new ThemedButton(0, 0, 60, 18, (Text)Text.literal((String)"Save"), ThemedButton.Variant.GREEN, b -> this.saveMessages());
         add.accept((ClickableWidget)this.saveMessagesButton);
+        this.warpNameBox = new TextFieldWidget(this.font, 0, 0, 100, 16, (Text)Text.literal((String)"Public warp name"));
+        this.warpNameBox.setMaxLength(32);
+        this.warpNameBox.setPlaceholder((Text)Text.literal((String)"Warp name...").formatted(Formatting.DARK_GRAY));
+        this.warpNameBox.setChangedListener(value -> this.warpNameText = value);
+        add.accept((ClickableWidget)this.warpNameBox);
+        this.warpNameSaveButton = new ThemedButton(0, 0, 48, 16, (Text)Text.literal((String)"Save"), ThemedButton.Variant.GREEN, b -> this.saveWarpName());
+        add.accept((ClickableWidget)this.warpNameSaveButton);
+        this.warpToggleButton = new ThemedButton(0, 0, 92, 18, (Text)Text.literal((String)"Enable Public"), ThemedButton.Variant.BLUE, b -> this.togglePublicWarp());
+        add.accept((ClickableWidget)this.warpToggleButton);
         this.syncEditBoxValues();
     }
 
@@ -295,6 +312,11 @@ public final class ClaimDetailPanel {
             ClaimDetailPanel.setIfDiffers(this.enterSubtitleBox, this.enterSubtitleText);
             ClaimDetailPanel.setIfDiffers(this.leaveTitleBox, this.leaveTitleText);
             ClaimDetailPanel.setIfDiffers(this.leaveSubtitleBox, this.leaveSubtitleText);
+            ClaimsNetworking.PublicWarp warp = ClaimsNetworking.warpForClaim(claim.getClaimId());
+            if (this.warpNameText == null) {
+                this.warpNameText = warp != null && warp.name() != null && !warp.name().isBlank() ? warp.name() : ClaimDetailPanel.orEmpty(claim.getName());
+            }
+            ClaimDetailPanel.setIfDiffers(this.warpNameBox, this.warpNameText);
         }
     }
 
@@ -342,6 +364,10 @@ public final class ClaimDetailPanel {
             this.transferClicked();
             return true;
         }
+        if (this.warpNameBox != null && this.warpNameBox.isFocused()) {
+            this.saveWarpName();
+            return true;
+        }
         for (TextFieldWidget box : List.of(this.enterTitleBox, this.enterSubtitleBox, this.leaveTitleBox, this.leaveSubtitleBox)) {
             if (box == null || !box.isFocused()) continue;
             this.saveMessages();
@@ -367,6 +393,7 @@ public final class ClaimDetailPanel {
         boxes.add(this.enterSubtitleBox);
         boxes.add(this.leaveTitleBox);
         boxes.add(this.leaveSubtitleBox);
+        boxes.add(this.warpNameBox);
         return boxes;
     }
 
@@ -384,12 +411,13 @@ public final class ClaimDetailPanel {
         this.place((ClickableWidget)this.renameBox, contentX, infoY + layout.nameRowY(), contentW - 54, info && owner);
         this.place((ClickableWidget)this.saveNameButton, this.x1 - 6 - 48, infoY + layout.nameRowY(), 48, info && owner);
         boolean showMap = info && this.state.isOnMap(this.claimId);
+        boolean trustedView = info && visible && !claim.isOwner() && !this.adminView();
         boolean bl = showDelete = info && owner;
         if (showDelete) {
             this.deleteButton.setTooltip(this.canDelete(claim) ? null : this.deleteDenyTooltip());
         }
         int buttonX = contentX;
-        boolean showTeleport = info && (this.adminView() || this.state.adminBypass);
+        boolean showTeleport = info && (trustedView || this.adminView() || this.state.adminBypass);
         this.place((ClickableWidget)this.teleportButton, contentX, infoY + layout.buttonRowY(), 70, showTeleport);
         if (showTeleport) {
             buttonX = contentX + 74;
@@ -399,6 +427,10 @@ public final class ClaimDetailPanel {
             buttonX += 50;
         }
         this.place((ClickableWidget)this.deleteButton, buttonX, infoY + layout.buttonRowY(), 56, showDelete);
+        if (showDelete) {
+            buttonX += 60;
+        }
+        this.place((ClickableWidget)this.leaveClaimButton, buttonX, infoY + layout.buttonRowY(), 56, trustedView);
         this.place((ClickableWidget)this.transferBox, contentX, infoY + layout.transferRowY(), contentW - 76, info && owner);
         this.place((ClickableWidget)this.transferButton, this.x1 - 6 - 70, infoY + layout.transferRowY(), 70, info && owner);
         boolean subSection = info && owner && layout.subNameRowY() >= 0;
@@ -416,6 +448,16 @@ public final class ClaimDetailPanel {
         this.place((ClickableWidget)this.leaveTitleBox, contentX, msgY + 76, contentW, visible && this.subTab == SubTab.MESSAGES && canMessages);
         this.place((ClickableWidget)this.leaveSubtitleBox, contentX, msgY + 108, contentW, visible && this.subTab == SubTab.MESSAGES && canMessages);
         this.place((ClickableWidget)this.saveMessagesButton, contentX, msgY + 130, 60, visible && this.subTab == SubTab.MESSAGES && canMessages);
+        boolean warps = visible && this.subTab == SubTab.WARPS && owner;
+        int warpY = this.contentTop() - this.scroll;
+        this.place((ClickableWidget)this.warpNameBox, contentX, warpY + 34, contentW - 54, warps);
+        this.place((ClickableWidget)this.warpNameSaveButton, this.x1 - 6 - 48, warpY + 34, 48, warps);
+        this.place((ClickableWidget)this.warpToggleButton, contentX, warpY + 58, 92, warps);
+        if (warps && this.warpToggleButton != null) {
+            ClaimsNetworking.PublicWarp warp = ClaimsNetworking.warpForClaim(claim.getClaimId());
+            boolean enabled = warp != null && warp.publicEnabled();
+            this.warpToggleButton.setMessage(Text.literal(enabled ? "Disable Public" : "Enable Public"));
+        }
     }
 
     private void place(ClickableWidget widget, int x, int y, int width, boolean visible) {
@@ -435,7 +477,7 @@ public final class ClaimDetailPanel {
     }
 
     private InfoLayout infoLayout(ClaimDetailEntry claim) {
-        int y = 74;
+        int y = 86;
         if (claim.is3D()) {
             y += 12;
         }
@@ -725,6 +767,7 @@ public final class ClaimDetailPanel {
             case PERMS -> "Perms";
             case MEMBERS -> "Members";
             case MESSAGES -> "Messages";
+            case WARPS -> "Warps";
         };
     }
 
@@ -744,12 +787,59 @@ public final class ClaimDetailPanel {
         return null;
     }
 
+    private void leaveClaimClicked() {
+        ClaimDetailEntry claim = this.claim();
+        if (claim == null || claim.isOwner() || this.adminView()) return;
+        this.confirm.request(
+                Text.literal("Leave Trusted Claim"),
+                Text.literal("Leave " + claim.getName() + "? You will lose trusted access unless the owner adds you again."),
+                () -> ClaimsNetworking.sendExtra("leave", claim.getClaimId(), "")
+        );
+    }
+
+    private void saveWarpName() {
+        ClaimDetailEntry claim = this.claim();
+        if (claim == null || !claim.isOwner() || this.adminView()) return;
+        String value = this.warpNameText == null ? "" : this.warpNameText.trim();
+        ClaimsNetworking.sendExtra("set_warp_name", claim.getClaimId(), value);
+        PreviewUi.playClick();
+    }
+
+    private void togglePublicWarp() {
+        ClaimDetailEntry claim = this.claim();
+        if (claim == null || !claim.isOwner() || this.adminView()) return;
+        ClaimsNetworking.PublicWarp warp = ClaimsNetworking.warpForClaim(claim.getClaimId());
+        boolean enabled = warp != null && warp.publicEnabled();
+        ClaimsNetworking.sendExtra("set_public", claim.getClaimId(), Boolean.toString(!enabled));
+        PreviewUi.playClick();
+    }
+
+    private void renderWarps(DrawContext g, ClaimDetailEntry claim) {
+        int x = this.x0 + 6;
+        int y = this.contentTop() - this.scroll;
+        if (!claim.isOwner() || this.adminView()) {
+            g.drawTextWithShadow(this.font, Text.literal("Warp settings are available to the claim owner.").formatted(Formatting.GRAY), x, y + 4, -1);
+            return;
+        }
+        ClaimsNetworking.PublicWarp warp = ClaimsNetworking.warpForClaim(claim.getClaimId());
+        boolean enabled = warp != null && warp.publicEnabled();
+        g.drawTextWithShadow(this.font, Text.literal("Public Claim Warp").formatted(Formatting.LIGHT_PURPLE), x, y + 2, -1);
+        g.drawTextWithShadow(this.font,
+                Text.literal("Status: ").formatted(Formatting.GRAY)
+                        .append(Text.literal(enabled ? "PUBLIC" : "PRIVATE").formatted(enabled ? Formatting.GREEN : Formatting.RED)),
+                x, y + 16, -1);
+        g.drawTextWithShadow(this.font, Text.literal("Warp Name").formatted(Formatting.GRAY), x, y + 26, -1);
+        g.drawTextWithShadow(this.font, Text.literal("Public visitors remain Visitors and may buy from chest shops.").formatted(Formatting.DARK_GRAY), x, y + 84, -1);
+        g.drawTextWithShadow(this.font, Text.literal("They cannot build, edit shops, or gain member permissions.").formatted(Formatting.DARK_GRAY), x, y + 96, -1);
+        g.drawTextWithShadow(this.font, Text.literal("Disabling the warp blocks public travel; trusted members are unchanged.").formatted(Formatting.DARK_GRAY), x, y + 108, -1);
+    }
+
     private void renderInfo(DrawContext g, ClaimDetailEntry claim, int mouseX, int mouseY) {
         int x = this.x0 + 6;
         int y = this.contentTop() - this.scroll;
         int lineY = y + 2;
         g.drawTextWithShadow(this.font, ClaimDetailPanel.line("Owner: ", claim.getOwnerName()), x, lineY, -1);
-        g.drawTextWithShadow(this.font, ClaimDetailPanel.line("Where: ", claim.getZone()), x, lineY += 12, -1);
+        g.drawTextWithShadow(this.font, ClaimDetailPanel.line("Where: ", ClaimsState.friendlyWorldName(claim.getZone())), x, lineY += 12, -1);
         int centerX = (claim.getBox().getMinX() + claim.getBox().getMaxX()) / 2;
         int centerZ = (claim.getBox().getMinZ() + claim.getBox().getMaxZ()) / 2;
         g.drawTextWithShadow(this.font, ClaimDetailPanel.line("Center: ", centerX + ", " + centerZ), x, lineY += 12, -1);
@@ -1044,6 +1134,7 @@ public final class ClaimDetailPanel {
             case PERMS -> 14 + this.state.permissionCatalog.size() * 20 + (claim.getSubClaims() != null && !claim.getSubClaims().isEmpty() ? 16 : 0) + 4;
             case MEMBERS -> ((claim.getMembers() != null ? claim.getMembers().size() + 1 : 1) + (claim.getBanned() != null && !claim.getBanned().isEmpty() ? claim.getBanned().size() + 1 : 0)) * 20 + 4;
             case MESSAGES -> 160 + (this.messagesReadOnly(claim) ? 16 : 0);
+            case WARPS -> 132;
         };
     }
 
@@ -1238,7 +1329,8 @@ public final class ClaimDetailPanel {
         INFO,
         PERMS,
         MEMBERS,
-        MESSAGES
+        MESSAGES,
+        WARPS
     }
 
     @FunctionalInterface
