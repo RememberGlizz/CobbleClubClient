@@ -24,6 +24,7 @@ package com.cobbleclub.client;
 
 import com.cobbleclub.client.battle.BattleClientInit;
 import com.cobbleclub.client.claims.ClaimsNetworking;
+import com.cobbleclub.client.hud.FeatherboardHud;
 import com.cobbleclub.client.crate.CratePreviewNetworking;
 import com.cobbleclub.client.dashboard.DashboardNetworking;
 import com.cobbleclub.client.gearpreview.GearPreviewNetworking;
@@ -79,6 +80,7 @@ implements ClientModInitializer {
         CratePreviewNetworking.init();
         TagsNetworking.init();
         ClaimsNetworking.init();
+        FeatherboardHud.init();
         DashboardNetworking.init();
         KitsNetworking.init();
         ClientModHandshake.init();
