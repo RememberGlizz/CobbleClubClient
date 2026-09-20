@@ -107,6 +107,53 @@ public final class Payloads {
         }
     }
 
+    public record FeatherboardState(
+            String playerName,
+            String rank,
+            String world,
+            long balance,
+            long gems,
+            int claimBlocks,
+            long catches,
+            long shinies,
+            int online,
+            float tps,
+            float mspt
+    ) implements CustomPayload
+    {
+        public static final CustomPayload.Id<FeatherboardState> ID = new CustomPayload.Id<>(Payloads.id("featherboard_state/v1"));
+        public static final PacketCodec<RegistryByteBuf, FeatherboardState> CODEC = PacketCodec.of((value, buf) -> {
+            buf.writeString(value.playerName == null ? "" : value.playerName, 64);
+            buf.writeString(value.rank == null ? "" : value.rank, 64);
+            buf.writeString(value.world == null ? "" : value.world, 256);
+            buf.writeLong(value.balance);
+            buf.writeLong(value.gems);
+            buf.writeInt(value.claimBlocks);
+            buf.writeLong(value.catches);
+            buf.writeLong(value.shinies);
+            buf.writeInt(value.online);
+            buf.writeFloat(value.tps);
+            buf.writeFloat(value.mspt);
+        }, buf -> new FeatherboardState(
+                buf.readString(64),
+                buf.readString(64),
+                buf.readString(256),
+                buf.readLong(),
+                buf.readLong(),
+                buf.readInt(),
+                buf.readLong(),
+                buf.readLong(),
+                buf.readInt(),
+                buf.readFloat(),
+                buf.readFloat()
+        ));
+
+        @Override
+        public CustomPayload.Id<? extends CustomPayload> getId() {
+            return ID;
+        }
+    }
+
     public record CrateTestReward(String crateId, int prizeIndex, boolean shiny) implements CustomPayload
     {
         public static final CustomPayload.Id<CrateTestReward> ID = new CustomPayload.Id<>(Payloads.id("crate_test_reward/v1"));
