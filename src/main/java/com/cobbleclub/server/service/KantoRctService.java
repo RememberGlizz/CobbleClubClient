@@ -144,18 +144,32 @@ public final class KantoRctService {
 
     private static ItemStack badgeStack(String badgeKey, String displayName) {
         String wantedPath = badgeKey + "_badge";
-        Item found = null;
 
+        // Prefer the two badge mods actually shipped in the CobbleClub pack.
+        // Namespace matching is intentionally tolerant because published mod ids can
+        // differ slightly from their display names.
+        for (String preferred : List.of("cobbleversebadges", "cobbleverse_badges", "cobblemonpokemonbadges", "cobblemon_pokemon_badges")) {
+            for (Identifier id : Registries.ITEM.getIds()) {
+                if (!wantedPath.equals(id.getPath())) continue;
+                String namespace = id.getNamespace().toLowerCase(Locale.ROOT);
+                if (!namespace.equals(preferred) && !namespace.contains(preferred.replace("_", ""))) continue;
+                Item candidate = Registries.ITEM.get(id);
+                if (candidate != null && candidate != Items.AIR) {
+                    CobbleClubServer.LOGGER.info("Resolved {} from installed badge mod item {}", displayName, id);
+                    return new ItemStack(candidate);
+                }
+            }
+        }
+
+        // Safety net: accept any installed badge item with the canonical Kanto path.
         for (Identifier id : Registries.ITEM.getIds()) {
             if (!wantedPath.equals(id.getPath())) continue;
             Item candidate = Registries.ITEM.get(id);
             if (candidate == null || candidate == Items.AIR) continue;
-            found = candidate;
-            if (id.getNamespace().toLowerCase(Locale.ROOT).contains("badge")) break;
-        }
-
-        if (found != null) {
-            return new ItemStack(found);
+            if (id.getNamespace().toLowerCase(Locale.ROOT).contains("badge")) {
+                CobbleClubServer.LOGGER.warn("Resolved {} from fallback badge namespace {}", displayName, id);
+                return new ItemStack(candidate);
+            }
         }
 
         CobbleClubServer.LOGGER.error("No installed badge item with path '{}' was found. Using named fallback item.", wantedPath);
