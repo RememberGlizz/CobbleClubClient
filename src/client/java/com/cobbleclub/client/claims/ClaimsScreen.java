@@ -418,22 +418,28 @@ public class ClaimsScreen extends Screen {
                 ? "Claim Blocks: " + ClaimsState.fmtBlocks(-remaining) + " over budget"
                 : "Claim Blocks: " + ClaimsState.fmtBlocks(remaining) + " left (" + used + " used)";
         int avail = this.budgetTextRight() - this.tabsRight() - 6;
-        if (this.textRenderer.getWidth(text) > avail) {
+        boolean showBudget = avail >= 38;
+        if (showBudget && this.textRenderer.getWidth(text) > avail) {
             text = remaining < 0 ? ClaimsState.fmtBlocks(-remaining) + " over" : ClaimsState.fmtBlocks(remaining) + " left";
         }
 
-        if (this.textRenderer.getWidth(text) > avail) {
+        if (showBudget && this.textRenderer.getWidth(text) > avail) {
             text = ClaimsState.fmtBlocks(remaining) + "/" + ClaimsState.fmtBlocks(budget.getTotal());
         }
+        if (showBudget && this.textRenderer.getWidth(text) > avail) {
+            showBudget = false;
+        }
 
-        this.budgetTextLeft = this.budgetTextRight() - this.textRenderer.getWidth(text);
-        boolean buyHover = this.state.canBuyBlocks && this.overBudgetText((double)mouseX, (double)mouseY);
-        if (this.state.canBuyBlocks) {
+        this.budgetTextLeft = showBudget ? this.budgetTextRight() - this.textRenderer.getWidth(text) : this.budgetTextRight();
+        boolean buyHover = showBudget && this.state.canBuyBlocks && this.overBudgetText((double)mouseX, (double)mouseY);
+        if (showBudget && this.state.canBuyBlocks) {
             g.fill(this.budgetTextLeft - 4, this.panelTop() + 5, this.budgetTextRight() + 4, this.panelTop() + 19, buyHover ? -14405546 : -15064506);
             g.drawBorder(this.budgetTextLeft - 4, this.panelTop() + 5, this.budgetTextRight() - this.budgetTextLeft + 8, 14, buyHover ? -6467875 : -13747610);
         }
 
-        g.drawTextWithShadow(this.textRenderer, text, this.budgetTextLeft, this.panelTop() + 8, buyHover ? -1 : color);
+        if (showBudget) {
+            g.drawTextWithShadow(this.textRenderer, text, this.budgetTextLeft, this.panelTop() + 8, buyHover ? -1 : color);
+        }
         if (this.state.adminTargetName != null) {
             int titleLeft = this.tabsRight() + 6;
             int titleSpan = this.helpButtonLeft() - 6 - titleLeft;
@@ -544,10 +550,11 @@ public class ClaimsScreen extends Screen {
 
     private void updateFloatingWidgets() {
         boolean map = this.tab == ClaimsScreen.Tab.MAP;
+        boolean mapControls = map && !this.detailVisible();
         int right = this.contentRightEdge();
-        this.setFloating(this.zoomInButton, right - 20, this.mapTop() + 4, map);
-        this.setFloating(this.zoomOutButton, right - 20, this.mapTop() + 24, map);
-        this.setFloating(this.centerButton, right - 58, this.contentBottom() - 20, map);
+        this.setFloating(this.zoomInButton, right - 20, this.mapTop() + 4, mapControls);
+        this.setFloating(this.zoomOutButton, right - 20, this.mapTop() + 24, mapControls);
+        this.setFloating(this.centerButton, right - 58, this.contentBottom() - 20, mapControls);
         this.setFloating(this.helpButton, this.helpButtonLeft(), this.panelTop() + 2, this.helpButtonLeft() > this.tabsRight() + 4);
         ChunkSelection selection = this.mapView.selection();
         boolean confirming = map && selection.isActive();
