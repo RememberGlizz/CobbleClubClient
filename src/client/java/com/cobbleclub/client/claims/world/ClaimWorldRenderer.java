@@ -1,28 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  com.cobbleclub.clubhouse.claims.protocol.BoxInfo
- *  com.cobbleclub.clubhouse.claims.protocol.ClaimsWorldMsg
- *  com.cobbleclub.clubhouse.claims.protocol.WorldBoxEntry
- *  com.cobbleclub.clubhouse.claims.protocol.WorldBoxType
- *  net.fabricmc.api.EnvType
- *  net.fabricmc.api.Environment
- *  net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
- *  net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
- *  net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
- *  net.minecraft.class_1921
- *  net.minecraft.class_1921$class_4688
- *  net.minecraft.class_238
- *  net.minecraft.class_290
- *  net.minecraft.class_293
- *  net.minecraft.class_293$class_5596
- *  net.minecraft.class_4587
- *  net.minecraft.class_4588
- *  net.minecraft.class_4597
- *  net.minecraft.class_4668
- *  net.minecraft.class_761
- */
 package com.cobbleclub.client.claims.world;
 
 import com.cobbleclub.clubhouse.claims.protocol.BoxInfo;
@@ -35,93 +10,117 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.util.math.Box;
-import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.render.RenderLayer.MultiPhaseParameters;
+import net.minecraft.client.render.RenderPhase;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.RenderPhase;
+import net.minecraft.client.render.VertexFormat.DrawMode;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.Box;
 
-@Environment(value=EnvType.CLIENT)
+@Environment(EnvType.CLIENT)
 public final class ClaimWorldRenderer {
-    private static final RenderLayer BORDER_BOX = RenderLayer.of((String)"cobbleclub_claim_border", (VertexFormat)VertexFormats.POSITION_COLOR, (VertexFormat.DrawMode)VertexFormat.DrawMode.TRIANGLE_STRIP, (int)1536, (RenderLayer.MultiPhaseParameters)RenderLayer.MultiPhaseParameters.builder().program(RenderPhase.COLOR_PROGRAM).cull(RenderPhase.DISABLE_CULLING).writeMaskState(RenderPhase.COLOR_MASK).transparency(RenderPhase.TRANSLUCENT_TRANSPARENCY).build(false));
-    private static volatile ClaimsWorldMsg snapshot;
-    private static volatile long snapshotAtMillis;
-    private static final float[] MAIN_RGB;
-    private static final float[] OTHER_RGB;
-    private static final float[] SUB_RGB;
-    private static final float[] EDIT_RGB;
-    private static final float[] CORNER_RGB;
-    private static final float[] DRAG_RGB;
-    private static final float[] DENIAL_RGB;
+   private static final RenderLayer BORDER_BOX;
+   private static volatile ClaimsWorldMsg snapshot;
+   private static volatile long snapshotAtMillis;
+   private static final float[] MAIN_RGB;
+   private static final float[] OTHER_RGB;
+   private static final float[] SUB_RGB;
+   private static final float[] EDIT_RGB;
+   private static final float[] CORNER_RGB;
+   private static final float[] DRAG_RGB;
+   private static final float[] DENIAL_RGB;
 
-    private ClaimWorldRenderer() {
-    }
+   private ClaimWorldRenderer() {
+   }
 
-    public static void init() {
-        WorldRenderEvents.AFTER_ENTITIES.register(ClaimWorldRenderer::render);
-        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
-            snapshot = null;
-        });
-    }
+   public static void init() {
+      WorldRenderEvents.AFTER_ENTITIES.register(ClaimWorldRenderer::render);
+      ClientPlayConnectionEvents.DISCONNECT.register((ClientPlayConnectionEvents.Disconnect)(handler, client) -> snapshot = null);
+   }
 
-    public static void accept(ClaimsWorldMsg msg) {
-        snapshot = msg.getGroups().isEmpty() ? null : msg;
-        snapshotAtMillis = System.currentTimeMillis();
-    }
+   public static void accept(ClaimsWorldMsg msg) {
+      snapshot = msg.getGroups().isEmpty() ? null : msg;
+      snapshotAtMillis = System.currentTimeMillis();
+   }
 
-    private static void render(WorldRenderContext context) {
-        ClaimsWorldMsg msg = snapshot;
-        if (msg != null && context.world() != null && context.matrixStack() != null && context.consumers() != null && context.world().getRegistryKey().getValue().toString().equals(msg.getDimension())) {
+   private static void render(WorldRenderContext context) {
+      ClaimsWorldMsg msg = snapshot;
+      if (msg != null && context.world() != null && context.matrixStack() != null && context.consumers() != null) {
+         if (context.world().getRegistryKey().getValue().toString().equals(msg.getDimension())) {
             long elapsedTicks = (System.currentTimeMillis() - snapshotAtMillis) / 50L;
             MatrixStack poseStack = context.matrixStack();
             VertexConsumerProvider consumers = context.consumers();
             poseStack.push();
+            // AFTER_ENTITIES supplies a matrix stack that is already in camera-relative world render
+            // space. Do NOT subtract the camera again here: doing so double-applies camera motion and
+            // makes claim walls slide/jitter with the player. Feed absolute world AABBs to WorldRenderer.
             VertexConsumer lines = consumers.getBuffer(RenderLayer.getLines());
             VertexConsumer quads = consumers.getBuffer(BORDER_BOX);
-            for (WorldBoxEntry entry : msg.getGroups()) {
-                if (entry == null || entry.getBox() == null) continue;
-                WorldBoxType type = entry.getType() != null ? entry.getType() : WorldBoxType.MAIN;
-                float alphaScale = 1.0f;
-                if (entry.getExpiresInTicks() != null) {
-                    long remaining = (long)entry.getExpiresInTicks().intValue() - elapsedTicks;
-                    if (remaining <= 0L) continue;
-                    alphaScale = Math.min(1.0f, (float)remaining / 40.0f);
-                }
-                BoxInfo box = entry.getBox();
-                double eps = 0.01;
-                Box aabb = new Box((double)box.getMinX() - eps, (double)box.getMinY() - eps, (double)box.getMinZ() - eps, (double)(box.getMaxX() + 1) + eps, (double)(box.getMaxY() + 1) + eps, (double)(box.getMaxZ() + 1) + eps);
-                float[] rgb = ClaimWorldRenderer.colorFor(type);
-                float pulse = type == WorldBoxType.DENIAL ? 0.75f + 0.25f * (float)Math.sin((double)System.currentTimeMillis() / 120.0) : 1.0f;
-                WorldRenderer.renderFilledBox((MatrixStack)poseStack, (VertexConsumer)quads, (double)aabb.minX, (double)aabb.minY, (double)aabb.minZ, (double)aabb.maxX, (double)aabb.maxY, (double)aabb.maxZ, (float)rgb[0], (float)rgb[1], (float)rgb[2], (float)(0.055f * alphaScale * pulse));
-                WorldRenderer.drawBox((MatrixStack)poseStack, (VertexConsumer)lines, (Box)aabb, (float)rgb[0], (float)rgb[1], (float)rgb[2], (float)(1.0f * alphaScale * pulse));
+
+            for(WorldBoxEntry entry : msg.getGroups()) {
+               if (entry != null && entry.getBox() != null) {
+                  WorldBoxType type = entry.getType() != null ? entry.getType() : WorldBoxType.MAIN;
+                  float alphaScale = 1.0F;
+                  if (entry.getExpiresInTicks() != null) {
+                     long remaining = (long)entry.getExpiresInTicks() - elapsedTicks;
+                     if (remaining <= 0L) {
+                        continue;
+                     }
+
+                     alphaScale = Math.min(1.0F, (float)remaining / 40.0F);
+                  }
+
+                  BoxInfo box = entry.getBox();
+                  // Keep the AABB in absolute world coordinates; the camera translation above is applied once.
+                  // A small outward expansion keeps the translucent wall/outline off block faces and prevents
+                  // z-fighting shimmer without visibly changing the claimed area.
+                  double eps = 0.01D;
+                  Box aabb = new Box(
+                        (double)box.getMinX() - eps,
+                        (double)box.getMinY() - eps,
+                        (double)box.getMinZ() - eps,
+                        (double)(box.getMaxX() + 1) + eps,
+                        (double)(box.getMaxY() + 1) + eps,
+                        (double)(box.getMaxZ() + 1) + eps);
+                  float[] rgb = colorFor(type);
+                  float pulse = type == WorldBoxType.DENIAL ? 0.75F + 0.25F * (float)Math.sin((double)System.currentTimeMillis() / (double)120.0F) : 1.0F;
+                  WorldRenderer.renderFilledBox(poseStack, quads, aabb.minX, aabb.minY, aabb.minZ, aabb.maxX, aabb.maxY, aabb.maxZ, rgb[0], rgb[1], rgb[2], 0.055F * alphaScale * pulse);
+                  WorldRenderer.drawBox(poseStack, lines, aabb, rgb[0], rgb[1], rgb[2], 1.0F * alphaScale * pulse);
+               }
             }
+
             poseStack.pop();
-        }
-    }
+         }
+      }
+   }
 
-    private static float[] colorFor(WorldBoxType type) {
-        return switch (type) {
-            case MAIN -> MAIN_RGB;
-            case OTHER -> OTHER_RGB;
-            case SUB -> SUB_RGB;
-            case EDIT -> EDIT_RGB;
-            case CORNER -> CORNER_RGB;
-            case DRAG -> DRAG_RGB;
-            case DENIAL -> DENIAL_RGB;
-        };
-    }
+   private static float[] colorFor(WorldBoxType type) {
+      float[] var10000;
+      switch (type) {
+         case MAIN -> var10000 = MAIN_RGB;
+         case OTHER -> var10000 = OTHER_RGB;
+         case SUB -> var10000 = SUB_RGB;
+         case EDIT -> var10000 = EDIT_RGB;
+         case CORNER -> var10000 = CORNER_RGB;
+         case DRAG -> var10000 = DRAG_RGB;
+         case DENIAL -> var10000 = DENIAL_RGB;
+         default -> throw new MatchException((String)null, (Throwable)null);
+      }
 
-    static {
-        MAIN_RGB = new float[]{1.0f, 0.78f, 0.24f};
-        OTHER_RGB = new float[]{0.14f, 0.54f, 0.78f};
-        SUB_RGB = new float[]{0.78f, 0.8f, 0.83f};
-        EDIT_RGB = new float[]{0.24f, 0.4f, 0.86f};
-        CORNER_RGB = new float[]{0.55f, 0.86f, 0.95f};
-        DRAG_RGB = new float[]{0.98f, 0.9f, 0.31f};
-        DENIAL_RGB = new float[]{1.0f, 0.35f, 0.25f};
-    }
+      return var10000;
+   }
+
+   static {
+      BORDER_BOX = RenderLayer.of("cobbleclub_claim_border", VertexFormats.POSITION_COLOR, DrawMode.TRIANGLE_STRIP, 1536, MultiPhaseParameters.builder().program(RenderPhase.COLOR_PROGRAM).cull(RenderPhase.DISABLE_CULLING).writeMaskState(RenderPhase.COLOR_MASK).transparency(RenderPhase.TRANSLUCENT_TRANSPARENCY).build(false));
+      MAIN_RGB = new float[]{1.0F, 0.78F, 0.24F};
+      OTHER_RGB = new float[]{0.14F, 0.54F, 0.78F};
+      SUB_RGB = new float[]{0.78F, 0.8F, 0.83F};
+      EDIT_RGB = new float[]{0.24F, 0.4F, 0.86F};
+      CORNER_RGB = new float[]{0.55F, 0.86F, 0.95F};
+      DRAG_RGB = new float[]{0.98F, 0.9F, 0.31F};
+      DENIAL_RGB = new float[]{1.0F, 0.35F, 0.25F};
+   }
 }
-
