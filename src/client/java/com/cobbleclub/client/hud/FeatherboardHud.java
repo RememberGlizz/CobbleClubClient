@@ -21,6 +21,7 @@ public final class FeatherboardHud {
     private static volatile int liveOnline = -1;
     private static volatile boolean enabled = true;
     private static final NumberFormat NUMBERS = NumberFormat.getIntegerInstance(Locale.US);
+    private static final float BOARD_SCALE = 0.5F;
 
     private FeatherboardHud() {
     }
@@ -61,16 +62,26 @@ public final class FeatherboardHud {
         int lineH = 10;
         int rows = 10;
         int height = 17 + rows * lineH + 7;
-        int x = client.getWindow().getScaledWidth() - width - 8;
-        int y = Math.max(28, (client.getWindow().getScaledHeight() - height) / 2);
 
+        // Render the exact same board design at half scale so all spacing, text,
+        // borders and proportions stay intact while taking up half the screen space.
+        int visualWidth = Math.round(width * BOARD_SCALE);
+        int visualHeight = Math.round(height * BOARD_SCALE);
+        int screenX = client.getWindow().getScaledWidth() - visualWidth - 8;
+        int screenY = Math.max(28, (client.getWindow().getScaledHeight() - visualHeight) / 2);
+
+        g.getMatrices().push();
+        g.getMatrices().translate((float)screenX, (float)screenY, 0.0F);
+        g.getMatrices().scale(BOARD_SCALE, BOARD_SCALE, 1.0F);
+
+        int x = 0;
+        int y = 0;
         g.fill(x - 1, y - 1, x + width + 1, y + height + 1, 0x22000000);
         g.fillGradient(x, y, x + width, y + height, 0x66181024, 0x660B101A);
         g.drawBorder(x, y, width, height, 0xCC8B5CF6);
         g.fill(x + 1, y + 1, x + width - 1, y + 2, 0xCCB784FF);
 
-        Text title = Text.literal("✦ COBBLECLUB ✦").formatted(Formatting.LIGHT_PURPLE, Formatting.BOLD);
-        g.drawCenteredTextWithShadow(font, title, x + width / 2, y + 5, 0xFFFFFF);
+        drawGradientTitle(g, font, "✦ COBBLECLUB ✦", x + width / 2, y + 5);
 
         int yy = y + 17;
         row(g, font, x, yy, "Player", s.playerName(), 0xFFFFFFFF); yy += lineH;
@@ -87,6 +98,42 @@ public final class FeatherboardHud {
         int healthColor = s.tps() >= 19.0f ? 0xFF75F59A : (s.tps() >= 17.0f ? 0xFFFFD166 : 0xFFFF6B6B);
         g.fill(x + 5, yy - 1, x + width - 5, yy, 0x338B5CF6);
         g.drawCenteredTextWithShadow(font, Text.literal(health), x + width / 2, yy + 2, healthColor);
+
+        g.getMatrices().pop();
+    }
+
+    private static void drawGradientTitle(DrawContext g, TextRenderer font, String text, int centerX, int y) {
+        Text[] glyphs = text.codePoints()
+                .mapToObj(cp -> Text.literal(new String(Character.toChars(cp))).formatted(Formatting.BOLD))
+                .toArray(Text[]::new);
+
+        int totalWidth = 0;
+        for (Text glyph : glyphs) {
+            totalWidth += font.getWidth(glyph);
+        }
+
+        int drawX = centerX - totalWidth / 2;
+        for (int i = 0; i < glyphs.length; i++) {
+            float t = glyphs.length <= 1 ? 0.0F : (float)i / (float)(glyphs.length - 1);
+            int color;
+            if (t < 0.5F) {
+                color = lerpColor(0xFF72E6FF, 0xFFB784FF, t * 2.0F);
+            } else {
+                color = lerpColor(0xFFB784FF, 0xFFFFD76A, (t - 0.5F) * 2.0F);
+            }
+            Text glyph = glyphs[i];
+            g.drawTextWithShadow(font, glyph, drawX, y, color);
+            drawX += font.getWidth(glyph);
+        }
+    }
+
+    private static int lerpColor(int from, int to, float t) {
+        t = Math.max(0.0F, Math.min(1.0F, t));
+        int a = (int)(((from >>> 24) & 0xFF) + (((to >>> 24) & 0xFF) - ((from >>> 24) & 0xFF)) * t);
+        int r = (int)(((from >>> 16) & 0xFF) + (((to >>> 16) & 0xFF) - ((from >>> 16) & 0xFF)) * t);
+        int g = (int)(((from >>> 8) & 0xFF) + (((to >>> 8) & 0xFF) - ((from >>> 8) & 0xFF)) * t);
+        int b = (int)((from & 0xFF) + ((to & 0xFF) - (from & 0xFF)) * t);
+        return (a << 24) | (r << 16) | (g << 8) | b;
     }
 
     private static void row(DrawContext g, TextRenderer font, int x, int y, String label, String value, int valueColor) {
