@@ -3,7 +3,8 @@ const navGroups=[
     ['Home','index.html','⌂'],
     ['Getting Started','getting-started.html','✦'],
     ['Custom Features','features.html','◆'],
-    ['Player Commands','commands.html','⌘']
+    ['Player Commands','commands.html','⌘'],
+    ['32-Badge Journey','trainer-pathway.html','⚔']
   ]],
   ['CobbleClub Systems',[
     ['Economy','economy.html','₽'],
@@ -29,7 +30,8 @@ const searchIndex=[
  ['Home','index.html','overview start vote server'],
  ['Getting Started','getting-started.html','starter first join new player kit claim wild rtp money gems'],
  ['Custom Features','features.html','club dashboard custom mod features systems pokedollars gems claims tags wardrobe shops styles'],
- ['Player Commands','commands.html','commands tpa sell daily bal pay rtp wild tags kits wiki features'],
+ ['Player Commands','commands.html','commands board tpa sell daily bal pay rtp wild tags kits wiki features'],
+ ['32-Badge Journey','trainer-pathway.html','rct trainers kanto johto hoenn sinnoh badges gyms brock misty surge erika koga sabrina blaine giovanni elite four champion progression'],
  ['Economy','economy.html','money pokedollars gems contracts sell catch rewards daily death pay balance'],
  ['Claims','claims.html','claim blocks trust permissions subclaim ban teleport map protect base buy gems'],
  ['Chest Shops','chest-shops.html','chestshop player shop sign price stock buy sell claim'],

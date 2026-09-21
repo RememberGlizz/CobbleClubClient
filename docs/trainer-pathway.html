@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="CobbleClub 32-badge RCT trainer journey.">
+<meta name="theme-color" content="#0f130f">
+<title>32-Badge Journey • CobbleClub Wiki</title>
+<link rel="icon" type="image/png" href="assets/server-icon.png">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+<header class="topbar"></header>
+<div class="layout">
+<aside class="sidebar"></aside>
+<main class="content">
+<div class="page-head">
+<div class="kicker">CobbleClub trainer progression</div>
+<h1>The 32-Badge Journey</h1>
+<p>This is the backbone of our long-term Pokémon progression: four full regions, 32 canonical gym badges, regional trainers, leagues and a difficulty curve that grows with the player instead of resetting every eight badges.</p>
+</div>
+
+<div class="badge-road">
+<div class="badge-region"><strong>Kanto</strong><span>Badges 1–8</span><small>Current live pathway</small></div>
+<div class="badge-region"><strong>Johto</strong><span>Badges 9–16</span><small>Builds on Kanto completion</small></div>
+<div class="badge-region"><strong>Hoenn</strong><span>Badges 17–24</span><small>Higher overall difficulty</small></div>
+<div class="badge-region"><strong>Sinnoh</strong><span>Badges 25–32</span><small>Hardest core region</small></div>
+</div>
+<div class="progression-line"></div>
+
+<section class="section">
+<div class="section-kicker">Region 1</div>
+<h2>Kanto — badges 1 through 8</h2>
+<p>Kanto is the introduction to the full run. It should feel like a proper Pokémon campaign: Brock starts manageable, each gym asks more of the player, and the Indigo League is a meaningful step up without pretending it is the end of all 32 badges.</p>
+<div class="table-wrap"><table class="table">
+<tr><th>#</th><th>Leader</th><th>Badge</th><th>Difficulty role</th></tr>
+<tr><td>1</td><td><strong>Brock</strong></td><td>Boulder Badge</td><td>Easy → early-mid introduction</td></tr>
+<tr><td>2</td><td><strong>Misty</strong></td><td>Cascade Badge</td><td>Early-mid</td></tr>
+<tr><td>3</td><td><strong>Lt. Surge</strong></td><td>Thunder Badge</td><td>Early-mid+</td></tr>
+<tr><td>4</td><td><strong>Erika</strong></td><td>Rainbow Badge</td><td>Mid-game</td></tr>
+<tr><td>5</td><td><strong>Koga</strong></td><td>Soul Badge</td><td>Mid-game tactical</td></tr>
+<tr><td>6</td><td><strong>Sabrina</strong></td><td>Marsh Badge</td><td>Mid-hard</td></tr>
+<tr><td>7</td><td><strong>Blaine</strong></td><td>Volcano Badge</td><td>Harder Kanto test</td></tr>
+<tr><td>8</td><td><strong>Giovanni</strong></td><td>Earth Badge</td><td>Hardest Kanto gym</td></tr>
+</table></div>
+</section>
+
+<section class="section">
+<div class="section-kicker">How gyms work</div>
+<h2>Trainer paths, not single boss fights</h2>
+<p>Each Kanto gym has themed prerequisite trainer battles before the leader. RCT handles the battle teams, AI, progression requirements and level-cap flow. CobbleClub adds the server-specific reward and announcement layer around those wins.</p>
+<div class="feature-grid">
+<div class="feature-card"><span class="mini-badge">RCT</span><h3>Progression gates</h3><p>Required trainers lead into the gym leader instead of letting players skip straight to every badge.</p></div>
+<div class="feature-card"><span class="mini-badge">Levels</span><h3>Natural cap growth</h3><p>The next required trainer drives the practical level cap so the player grows with the route.</p></div>
+<div class="feature-card"><span class="mini-badge">Difficulty</span><h3>Gradual AI ramp</h3><p>Early trainers are forgiving. Switching, status, recovery and item use become more important later.</p></div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-kicker">Kanto League</div>
+<h2>After Giovanni</h2>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><div><h3>Lorelei</h3><p>The first Elite Four step and the start of full-team endgame-style Kanto battles.</p></div></div>
+<div class="step"><div class="step-num">2</div><div><h3>Bruno</h3><p>More pressure, stronger coverage and a deeper team.</p></div></div>
+<div class="step"><div class="step-num">3</div><div><h3>Agatha</h3><p>Status, disruption and stronger tactical play.</p></div></div>
+<div class="step"><div class="step-num">4</div><div><h3>Lance</h3><p>The hardest Elite Four battle in the Kanto set.</p></div></div>
+<div class="step"><div class="step-num">5</div><div><h3>Champion Blue</h3><p>Kanto completion, Hall of Fame milestone and the transition point toward the next region.</p></div></div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-kicker">Rewards</div>
+<h2>Badges and first-clear rewards</h2>
+<p>Gym leaders award the correct Kanto badge. CobbleverseBadges is the preferred item source, with compatible fallback handling for CobblemonPokemonBadges-style items.</p>
+<div class="split">
+<div class="panel"><h3>First-clear rewards</h3><ul class="clean-list"><li>PokéDollars</li><li>Gems</li><li>Rare Candy</li><li>Correct gym badge</li><li>League/Champion bonuses</li><li>Kanto League Trophy at Champion completion</li></ul></div>
+<div class="panel"><h3>Safe delivery</h3><p>If the player's inventory is full, the reward drops directly in front of them. Only that player can pick it up for the first <strong>20 seconds</strong>, and they receive an inventory-full message so the reward is not forgotten.</p></div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-kicker">Server moments</div>
+<h2>Major victory announcements</h2>
+<p>Major progression wins can announce the player, the opponent they defeated and the Pokémon party they used. Gym clears can also announce the badge earned, while Champion completion receives a Hall of Fame-style message.</p>
+</section>
+
+<section class="section">
+<div class="section-kicker">Where this is going</div>
+<h2>Kanto is only the first quarter</h2>
+<div class="callout good"><strong>Important balancing rule</strong><div>Giovanni is the end of Kanto, not the end of CobbleClub's trainer progression. Johto should start approachable for a Kanto graduate, then Hoenn and Sinnoh continue raising the overall ceiling. The full difficulty curve is designed across all 32 badges.</div></div>
+<p>The long-term goal is for every region to bring its own appropriate Pokémon pool, trainer themes, gym leaders, canonical badges and league progression so the journey feels like a connected Pokémon series inside Minecraft.</p>
+</section>
+
+<footer class="footer">
+<span>COBBLECLUB WIKI</span>
+<span>32-badge progression • Minecraft 1.21.1 • Cobblemon 1.8</span>
+</footer>
+</main>
+</div>
+<script src="assets/wiki.js"></script>
+<script>shell("32-Badge Journey");</script>
+</body>
+</html>
