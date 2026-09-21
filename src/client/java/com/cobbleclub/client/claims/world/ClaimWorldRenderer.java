@@ -23,6 +23,8 @@ import net.minecraft.util.math.Box;
 @Environment(EnvType.CLIENT)
 public final class ClaimWorldRenderer {
    private static final RenderLayer BORDER_BOX;
+   private static final RenderLayer BORDER_LINES;
+   private static final double MAX_BORDER_DISTANCE = 192.0D;
    private static volatile ClaimsWorldMsg snapshot;
    private static volatile long snapshotAtMillis;
    private static final float[] MAIN_RGB;
@@ -57,8 +59,13 @@ public final class ClaimWorldRenderer {
             // AFTER_ENTITIES supplies a matrix stack that is already in camera-relative world render
             // space. Do NOT subtract the camera again here: doing so double-applies camera motion and
             // makes claim walls slide/jitter with the player. Feed absolute world AABBs to WorldRenderer.
-            VertexConsumer lines = consumers.getBuffer(RenderLayer.getLines());
+            // The filled wall keeps normal depth behavior so it blends naturally with the world.
+            // The outline uses a dedicated ALWAYS-depth layer so claim edges remain readable through
+            // buildings, terrain and foliage instead of vanishing exactly when players need them.
+            VertexConsumer lines = consumers.getBuffer(BORDER_LINES);
             VertexConsumer quads = consumers.getBuffer(BORDER_BOX);
+            double cameraX = context.camera().getPos().x;
+            double cameraZ = context.camera().getPos().z;
 
             for(WorldBoxEntry entry : msg.getGroups()) {
                if (entry != null && entry.getBox() != null) {
@@ -85,9 +92,18 @@ public final class ClaimWorldRenderer {
                         (double)(box.getMaxX() + 1) + eps,
                         (double)(box.getMaxY() + 1) + eps,
                         (double)(box.getMaxZ() + 1) + eps);
+                  // Do not render every claim in the dimension through walls. Keep nearby boundaries
+                  // permanently readable while culling claims that are well outside the player's area.
+                  double dx = cameraX < aabb.minX ? aabb.minX - cameraX : (cameraX > aabb.maxX ? cameraX - aabb.maxX : 0.0D);
+                  double dz = cameraZ < aabb.minZ ? aabb.minZ - cameraZ : (cameraZ > aabb.maxZ ? cameraZ - aabb.maxZ : 0.0D);
+                  if (dx * dx + dz * dz > MAX_BORDER_DISTANCE * MAX_BORDER_DISTANCE) {
+                     continue;
+                  }
+
                   float[] rgb = colorFor(type);
                   float pulse = type == WorldBoxType.DENIAL ? 0.75F + 0.25F * (float)Math.sin((double)System.currentTimeMillis() / (double)120.0F) : 1.0F;
-                  WorldRenderer.renderFilledBox(poseStack, quads, aabb.minX, aabb.minY, aabb.minZ, aabb.maxX, aabb.maxY, aabb.maxZ, rgb[0], rgb[1], rgb[2], 0.055F * alphaScale * pulse);
+                  float fillAlpha = type == WorldBoxType.MAIN ? 0.085F : 0.045F;
+                  WorldRenderer.renderFilledBox(poseStack, quads, aabb.minX, aabb.minY, aabb.minZ, aabb.maxX, aabb.maxY, aabb.maxZ, rgb[0], rgb[1], rgb[2], fillAlpha * alphaScale * pulse);
                   WorldRenderer.drawBox(poseStack, lines, aabb, rgb[0], rgb[1], rgb[2], 1.0F * alphaScale * pulse);
                }
             }
@@ -115,6 +131,15 @@ public final class ClaimWorldRenderer {
 
    static {
       BORDER_BOX = RenderLayer.of("cobbleclub_claim_border", VertexFormats.POSITION_COLOR, DrawMode.TRIANGLE_STRIP, 1536, MultiPhaseParameters.builder().program(RenderPhase.COLOR_PROGRAM).cull(RenderPhase.DISABLE_CULLING).writeMaskState(RenderPhase.COLOR_MASK).transparency(RenderPhase.TRANSLUCENT_TRANSPARENCY).build(false));
+      BORDER_LINES = RenderLayer.of("cobbleclub_claim_border_lines", VertexFormats.LINES, DrawMode.LINES, 512, MultiPhaseParameters.builder()
+            .program(RenderPhase.LINES_PROGRAM)
+            .lineWidth(RenderPhase.FULL_LINE_WIDTH)
+            .layering(RenderPhase.VIEW_OFFSET_Z_LAYERING)
+            .transparency(RenderPhase.TRANSLUCENT_TRANSPARENCY)
+            .depthTest(RenderPhase.ALWAYS_DEPTH_TEST)
+            .cull(RenderPhase.DISABLE_CULLING)
+            .writeMaskState(RenderPhase.COLOR_MASK)
+            .build(false));
       MAIN_RGB = new float[]{1.0F, 0.78F, 0.24F};
       OTHER_RGB = new float[]{0.14F, 0.54F, 0.78F};
       SUB_RGB = new float[]{0.78F, 0.8F, 0.83F};
