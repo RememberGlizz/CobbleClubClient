@@ -22,6 +22,7 @@
  */
 package com.cobbleclub.client;
 
+import java.util.Locale;
 import com.cobbleclub.client.battle.BattleClientInit;
 import com.cobbleclub.client.claims.ClaimsNetworking;
 import com.cobbleclub.client.hud.FeatherboardHud;
