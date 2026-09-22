@@ -172,16 +172,16 @@ public final class LeaderboardService {
         if (event == null || event.getPlayer() == null || event.getPokemon() == null) {
             return;
         }
-        if (!event.getPokemon().getShiny()) {
-            return;
-        }
         ServerPlayerEntity player = event.getPlayer();
         PlayerDataStore.PlayerData data = PlayerDataStore.get(player.getUuid());
         data.normalize();
         data.lastKnownName = player.getGameProfile().getName();
-        data.shinyPokemonCatches = LeaderboardService.safeIncrement(data.shinyPokemonCatches);
+        data.pokemonCatches = LeaderboardService.safeIncrement(data.pokemonCatches);
+        if (event.getPokemon().getShiny()) {
+            data.shinyPokemonCatches = LeaderboardService.safeIncrement(data.shinyPokemonCatches);
+            LAST_RENDER.remove(Type.SHINIES.id);
+        }
         ++data.revision;
-        LAST_RENDER.remove(Type.SHINIES.id);
     }
 
     public static void onBattleFainted(BattleFaintedEvent event) {
