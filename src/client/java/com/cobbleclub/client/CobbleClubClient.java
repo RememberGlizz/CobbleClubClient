@@ -44,9 +44,12 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.util.Identifier;
 import net.minecraft.resource.ResourceType;
@@ -62,6 +65,8 @@ import org.slf4j.LoggerFactory;
 public class CobbleClubClient
 implements ClientModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger((String)"cobbleclub");
+    private static final long RECOMMENDED_MEMORY_BYTES = 8L * 1024L * 1024L * 1024L;
+    private static boolean memoryWarningShown;
 
     public void onInitializeClient() {
         ResourceType packType = ResourceType.CLIENT_RESOURCES;
@@ -86,6 +91,27 @@ implements ClientModInitializer {
         ClientModHandshake.init();
         ManagedBorderClient.init();
         BattleClientInit.init();
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (!memoryWarningShown && client.player != null && client.world != null) {
+                memoryWarningShown = true;
+                long maxMemory = Runtime.getRuntime().maxMemory();
+                if (maxMemory < RECOMMENDED_MEMORY_BYTES) {
+                    double allocatedGb = maxMemory / (1024.0D * 1024.0D * 1024.0D);
+                    client.player.sendMessage(
+                            Text.literal(String.format(Locale.ROOT,
+                                    "⚠ CobbleClub recommends 8 GB RAM. Your launcher currently allows about %.1f GB.",
+                                    allocatedGb))
+                                    .formatted(Formatting.GOLD, Formatting.BOLD),
+                            false
+                    );
+                    client.player.sendMessage(
+                            Text.literal("Increase it in your Modrinth instance settings under Java / Memory for the best experience.")
+                                    .formatted(Formatting.YELLOW),
+                            false
+                    );
+                }
+            }
+        });
         RegisterShaderEvent.EVENT.register(event -> {
             CobbleClubRenderTypes.teraFire = event.create(Identifier.of((String)"cobbleclub", (String)"tera_crystal_fire"), VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, true);
             CobbleClubRenderTypes.teraWater = event.create(Identifier.of((String)"cobbleclub", (String)"tera_crystal_water"), VertexFormats.POSITION_COLOR_TEXTURE_OVERLAY_LIGHT_NORMAL, true);
