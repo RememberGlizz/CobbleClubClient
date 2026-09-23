@@ -57,23 +57,23 @@ extends Screen {
     private static final int SIDEBAR_W = 100;
     private static final int CAT_ROW_H = 15;
     private static final int SEARCH_CAP = 108;
-    private static final int PANEL_TOP = -199614136;
-    private static final int PANEL_BOTTOM = -200601562;
-    private static final int PANEL_BORDER_OUT = -16447985;
-    private static final int PANEL_BORDER_IN = -13747610;
-    private static final int HEADER_TOP = -14405538;
-    private static final int HEADER_BOTTOM = -15459782;
-    private static final int ACCENT = -6467875;
-    private static final int TITLE_COLOR = -2053377;
-    private static final int MUTED_TEXT = -7035976;
+    private static final int PANEL_TOP = -196589496;
+    private static final int PANEL_BOTTOM = -198036942;
+    private static final int PANEL_BORDER_OUT = -15658735;
+    private static final int PANEL_BORDER_IN = -7434610;
+    private static final int HEADER_TOP = -10855846;
+    private static final int HEADER_BOTTOM = -12632257;
+    private static final int ACCENT = -4342339;
+    private static final int TITLE_COLOR = -723724;
+    private static final int MUTED_TEXT = -5197648;
     private static final int SELECTED = -12474273;
     private static final int STAR = -10934;
-    private static final int CONTENT_BG = -15723477;
-    private static final int SLOT_BASE = -15064506;
-    private static final int PREVIEW_TOP = -14998448;
-    private static final int PREVIEW_BOTTOM = -16315880;
-    private static final int SCROLL_TRACK = -15986650;
-    private static final int SCROLL_THUMB = -10862962;
+    private static final int CONTENT_BG = -14671840;
+    private static final int SLOT_BASE = -13421773;
+    private static final int PREVIEW_TOP = -13421773;
+    private static final int PREVIEW_BOTTOM = -15198184;
+    private static final int SCROLL_TRACK = -14671840;
+    private static final int SCROLL_THUMB = -8947849;
     private static final float MIN_ZOOM = 0.5f;
     private static final float MAX_ZOOM = 2.6f;
     private static final float ZOOM_STEP = 1.12f;
@@ -394,19 +394,19 @@ extends Screen {
         int left = this.panelLeft();
         int top = this.panelTop();
         g.fill(left - 3, top - 3, left + 400 + 3, top + 222 + 3, 0x55000000);
-        g.fillGradient(left, top, left + 400, top + 222, -199614136, -200601562);
-        g.drawBorder(left - 1, top - 1, 402, 224, -16447985);
-        g.drawBorder(left, top, 400, 222, -13747610);
-        g.fillGradient(left, top, left + 400, top + 18, -14405538, -15459782);
-        g.fill(left, top + 18, left + 400, top + 19, -6467875);
-        g.drawCenteredTextWithShadow(this.textRenderer, this.getTitle(), left + 200, top + 5, -2053377);
+        g.fillGradient(left, top, left + 400, top + 222, -196589496, -198036942);
+        g.drawBorder(left - 1, top - 1, 402, 224, -15658735);
+        g.drawBorder(left, top, 400, 222, -7434610);
+        g.fillGradient(left, top, left + 400, top + 18, -10855846, -12632257);
+        g.fill(left, top + 18, left + 400, top + 19, -4342339);
+        g.drawCenteredTextWithShadow(this.textRenderer, this.getTitle(), left + 200, top + 5, -723724);
         int px0 = this.previewX0();
         int py0 = this.previewY0();
         int px1 = this.previewX1();
         int py1 = this.previewY1();
-        g.fillGradient(px0, py0, px1, py1, -14998448, -16315880);
+        g.fillGradient(px0, py0, px1, py1, -13421773, -15198184);
         Starfield.draw(g, px0, py0, px1, py1, now, 34, 91L, 0.85f);
-        g.drawBorder(px0 - 1, py0 - 1, px1 - px0 + 2, py1 - py0 + 2, -13747610);
+        g.drawBorder(px0 - 1, py0 - 1, px1 - px0 + 2, py1 - py0 + 2, -7434610);
         if (shown != null) {
             PokemonPreviewRenderer.render(g, px0, py0, px1, py1, this.yaw, this.pitch, this.zoom, shown.species(), this.withShiny(shown.aspects()), this.idleFly.contains(shown.species()), partialTick);
         }
@@ -414,9 +414,9 @@ extends Screen {
         int sty = py0 + 2;
         boolean shinyHover = PreviewUi.inRect(mouseX, mouseY, stx, sty, 18, 18);
         g.fill(stx, sty, stx + 18, sty + 18, this.shiny ? -856185284 : (shinyHover ? 0x66FFFFFF : 0x66000000));
-        g.drawBorder(stx, sty, 18, 18, this.shiny ? -10934 : -13747610);
+        g.drawBorder(stx, sty, 18, 18, this.shiny ? -10934 : -7434610);
         g.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)"\u2728"), stx + 9, sty + 5, this.shiny ? -14674944 : -10934);
-        g.drawText(this.textRenderer, (Text)Text.literal((String)"Drag \u2022 Scroll"), px0, py1 + 4, -7035976, false);
+        g.drawText(this.textRenderer, (Text)Text.literal((String)"Drag \u2022 Scroll"), px0, py1 + 4, -5197648, false);
         this.renderCategorySidebar(g, mouseX, mouseY);
         this.renderGrid(g, mouseX, mouseY);
         for (Element child : this.children()) {
@@ -427,8 +427,8 @@ extends Screen {
         int sortY = this.searchY();
         boolean sortHover = PreviewUi.inRect(mouseX, mouseY, this.sortX(), sortY, 42, 12);
         g.fill(this.sortX(), sortY, this.sortX() + 42, sortY + 12, sortHover ? -14274990 : -15328200);
-        g.drawBorder(this.sortX(), sortY, 42, 12, this.sortMode == 0 ? -13747610 : -6467875);
-        g.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)this.sortLabel()), this.sortX() + 21, sortY + 2, this.sortMode == 0 ? -7035976 : -2053377);
+        g.drawBorder(this.sortX(), sortY, 42, 12, this.sortMode == 0 ? -7434610 : -4342339);
+        g.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)this.sortLabel()), this.sortX() + 21, sortY + 2, this.sortMode == 0 ? -5197648 : -723724);
         if (sortHover) {
             Tooltips.render(g, this.textRenderer, (Text)Text.literal((String)("Sort: " + this.sortLabel())), mouseX, mouseY);
         } else if (shinyHover) {
@@ -444,8 +444,8 @@ extends Screen {
         int x = this.sidebarX();
         int y0 = this.previewY0();
         int y1 = this.previewY1();
-        g.fill(x - 1, y0 - 1, x + 100 + 1, y1 + 1, -15723477);
-        g.drawBorder(x - 1, y0 - 1, 102, y1 - y0 + 2, -13747610);
+        g.fill(x - 1, y0 - 1, x + 100 + 1, y1 + 1, -14671840);
+        g.drawBorder(x - 1, y0 - 1, 102, y1 - y0 + 2, -7434610);
         boolean searching = !this.search.getText().isEmpty();
         int rows = this.visibleCatRows();
         int max = this.maxCatScroll();
@@ -460,9 +460,9 @@ extends Screen {
             int n = hoverBg = crateRow ? -14411202 : -14936272;
             g.fill(x, ry, x + 100, ry + 15 - 1, isActive ? -14410694 : (hover ? hoverBg : base));
             if (isActive) {
-                g.fill(x, ry, x + 2, ry + 15 - 1, -6467875);
+                g.fill(x, ry, x + 2, ry + 15 - 1, -4342339);
             }
-            int tint = isActive ? -1 : (hover ? -2962968 : -7035976);
+            int tint = isActive ? -1 : (hover ? -1710619 : -5197648);
             Text styled = this.tabs.get(idx).styled();
             if (styled != null) {
                 g.drawText(this.textRenderer, styled, x + 5, ry + 3, -1, false);
@@ -477,10 +477,10 @@ extends Screen {
         if (max > 0) {
             int trackX = x + 100 - 3;
             int h = y1 - y0;
-            g.fill(trackX, y0, trackX + 3, y1, -15986650);
+            g.fill(trackX, y0, trackX + 3, y1, -14671840);
             int thumbH = Math.max(10, h * rows / (max + rows));
             int thumbY = y0 + (h - thumbH) * this.categoryScroll / max;
-            g.fill(trackX, thumbY, trackX + 3, thumbY + thumbH, -10862962);
+            g.fill(trackX, thumbY, trackX + 3, thumbY + thumbH, -8947849);
         }
     }
 
@@ -490,11 +490,11 @@ extends Screen {
         int rows = this.visibleRows();
         int gridW = 140;
         int gridH = rows * 20;
-        g.fill(x - 2, y - 2, x + gridW + 2, y + gridH + 2, -15723477);
-        g.drawBorder(x - 2, y - 2, gridW + 4, gridH + 4, -13747610);
+        g.fill(x - 2, y - 2, x + gridW + 2, y + gridH + 2, -14671840);
+        g.drawBorder(x - 2, y - 2, gridW + 4, gridH + 4, -7434610);
         if (this.view.isEmpty()) {
             String msg = this.search.getText().isEmpty() ? "Nothing here yet." : "No matches.";
-            g.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)msg), x + gridW / 2, y + gridH / 2 - 4, -7035976);
+            g.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)msg), x + gridW / 2, y + gridH / 2 - 4, -5197648);
         } else {
             int first;
             g.enableScissor(x, y, x + gridW, y + gridH);
@@ -502,7 +502,7 @@ extends Screen {
                 SkinEntry e = this.view.get(i);
                 int cellX = x + (i - first) % 7 * 20;
                 int cellY = y + (i - first) / 7 * 20;
-                g.fill(cellX + 1, cellY + 1, cellX + 20 - 1, cellY + 20 - 1, -15064506);
+                g.fill(cellX + 1, cellY + 1, cellX + 20 - 1, cellY + 20 - 1, -13421773);
                 ItemStack stack = this.stackFor(e);
                 if (!stack.isEmpty()) {
                     g.drawItem(stack, cellX + 2, cellY + 2);
@@ -517,10 +517,10 @@ extends Screen {
             int maxScroll = this.maxScrollRow();
             if (maxScroll > 0) {
                 int trackX = x + gridW + 2;
-                g.fill(trackX, y, trackX + 4, y + gridH, -15986650);
+                g.fill(trackX, y, trackX + 4, y + gridH, -14671840);
                 int thumbH = Math.max(10, gridH * rows / (maxScroll + rows));
                 int thumbY = y + (gridH - thumbH) * this.scrollRow / maxScroll;
-                g.fill(trackX, thumbY, trackX + 4, thumbY + thumbH, -10862962);
+                g.fill(trackX, thumbY, trackX + 4, thumbY + thumbH, -8947849);
             }
         }
     }
