@@ -124,6 +124,7 @@ public final class PlayerDataStore {
         public float spawnReturnHealth;
         public int spawnReturnFoodLevel;
         public float spawnReturnSaturation;
+        public float spawnReturnExhaustion;
 
         public int revision;
 
@@ -182,6 +183,7 @@ public final class PlayerDataStore {
             this.spawnReturnHealth = Math.max(0.0F, this.spawnReturnHealth);
             this.spawnReturnFoodLevel = Math.max(0, Math.min(20, this.spawnReturnFoodLevel));
             this.spawnReturnSaturation = Math.max(0.0F, Math.min(20.0F, this.spawnReturnSaturation));
+            this.spawnReturnExhaustion = Math.max(0.0F, this.spawnReturnExhaustion);
             if (this.ownedCosmetics.remove("gengar_grin_mask")) {
                 this.ownedCosmetics.add("gengar-hat");
             }
