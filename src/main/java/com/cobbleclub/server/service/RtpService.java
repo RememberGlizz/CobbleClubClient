@@ -724,7 +724,7 @@ public final class RtpService {
             }
             int caught = 0;
             for (var species : PokemonSpecies.INSTANCE.getImplemented()) {
-                if (pokedex.getHighestKnowledgeForSpecies(species.getResourceIdentifier()) == PokedexEntryProgress.CAUGHT) {
+                if ("CAUGHT".equalsIgnoreCase(pokedex.getHighestKnowledgeForSpecies(species.getResourceIdentifier()).name())) {
                     ++caught;
                 }
             }
