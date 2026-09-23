@@ -67,23 +67,23 @@ extends Screen {
     private static final int FORM_COLS = 7;
     private static final int MAX_ROWS = 9;
     private static final int SEARCH_CAP = 108;
-    private static final int PANEL_TOP = -199614136;
-    private static final int PANEL_BOTTOM = -200601562;
-    private static final int PANEL_BORDER_OUT = -16447985;
-    private static final int PANEL_BORDER_IN = -13747610;
-    private static final int HEADER_TOP = -14405538;
-    private static final int HEADER_BOTTOM = -15459782;
-    private static final int DEFAULT_ACCENT = -6467875;
-    private static final int TITLE_COLOR = -2053377;
+    private static final int PANEL_TOP = -196589496;
+    private static final int PANEL_BOTTOM = -198036942;
+    private static final int PANEL_BORDER_OUT = -15658735;
+    private static final int PANEL_BORDER_IN = -7434610;
+    private static final int HEADER_TOP = -10855846;
+    private static final int HEADER_BOTTOM = -12632257;
+    private static final int DEFAULT_ACCENT = -4342339;
+    private static final int TITLE_COLOR = -723724;
     private static final int SELECTED = -1;
     private static final int TIER_GREEN = -10688932;
     private static final int TIER_BLUE = -11094273;
     private static final int TIER_RED = -893860;
     private static final int NO_HIGHLIGHT = 0;
     private static final int ODDS_NEUTRAL = -3554586;
-    private static final int SLOT_BASE = -15064506;
-    private static final int PREVIEW_TOP = -14998448;
-    private static final int PREVIEW_BOTTOM = -16315880;
+    private static final int SLOT_BASE = -13421773;
+    private static final int PREVIEW_TOP = -13421773;
+    private static final int PREVIEW_BOTTOM = -15198184;
     private static final float MIN_ZOOM = 0.5f;
     private static final float MAX_ZOOM = 2.6f;
     private static final float ZOOM_STEP = 1.12f;
@@ -180,7 +180,7 @@ extends Screen {
                 // empty catch block
             }
         }
-        return -6467875;
+        return -4342339;
     }
 
     private static String oddsStr(double chance) {
@@ -494,19 +494,19 @@ extends Screen {
         this.renderBackground(g, mouseX, mouseY, partialTick);
         int left = this.panelLeft();
         int top = this.panelTop();
-        g.fill(left - 1, top - 1, left + 384 + 1, top + 220 + 1, -16447985);
-        g.fillGradient(left, top, left + 384, top + 220, -199614136, -200601562);
-        g.drawBorder(left, top, 384, 220, -13747610);
-        g.fillGradient(left, top, left + 384, top + 18, -14405538, -15459782);
+        g.fill(left - 1, top - 1, left + 384 + 1, top + 220 + 1, -15658735);
+        g.fillGradient(left, top, left + 384, top + 220, -196589496, -198036942);
+        g.drawBorder(left, top, 384, 220, -7434610);
+        g.fillGradient(left, top, left + 384, top + 18, -10855846, -12632257);
         g.fill(left, top + 18, left + 384, top + 19, this.accent);
-        g.drawCenteredTextWithShadow(this.textRenderer, this.getTitle(), left + 192, top + 5, -2053377);
+        g.drawCenteredTextWithShadow(this.textRenderer, this.getTitle(), left + 192, top + 5, -723724);
         int px0 = this.previewX0();
         int py0 = this.previewY0();
         int px1 = this.previewX1();
         int py1 = this.previewY1();
-        g.fillGradient(px0, py0, px1, py1, -14998448, -16315880);
+        g.fillGradient(px0, py0, px1, py1, -13421773, -15198184);
         Starfield.draw(g, px0, py0, px1, py1, now, 34, 91L, 0.85f);
-        g.drawBorder(px0 - 1, py0 - 1, px1 - px0 + 2, py1 - py0 + 2, -13747610);
+        g.drawBorder(px0 - 1, py0 - 1, px1 - px0 + 2, py1 - py0 + 2, -7434610);
         PrizeEntry shown = this.shownEntry();
         List<PokemonFormCatalog.FormEntry> forms = this.formsFor(shown);
         if (!this.dragging) {
@@ -550,11 +550,11 @@ extends Screen {
             for (int i = 0; i < forms.size(); ++i) {
                 int[] p = this.formTilePos(i, forms.size());
                 boolean sel = i == this.selectedForm;
-                g.fill(p[0], p[1], p[0] + 20 - 1, p[1] + 20 - 1, -15064506);
+                g.fill(p[0], p[1], p[0] + 20 - 1, p[1] + 20 - 1, -13421773);
                 if (sel) {
                     g.fill(p[0], p[1], p[0] + 20 - 1, p[1] + 20 - 1, 0x40FFFFFF);
                 }
-                int border = !sel && i != this.hoveredForm ? -13747610 : -1;
+                int border = !sel && i != this.hoveredForm ? -7434610 : -1;
                 g.drawBorder(p[0], p[1], 19, 19, border);
                 g.drawItem(this.formStack(forms.get(i)), p[0] + 2, p[1] + 2);
             }
@@ -589,7 +589,7 @@ extends Screen {
                 PrizeEntry e = this.view.get(index);
                 boolean sel = index == this.selectedEntry || this.wornArmor.containsValue(e);
                 boolean hov = index == this.hoveredEntry;
-                g.fill(cx, ly, cx + 20 - 1, ly + 20 - 1, -15064506);
+                g.fill(cx, ly, cx + 20 - 1, ly + 20 - 1, -13421773);
                 if (sel) {
                     g.fill(cx, ly, cx + 20 - 1, ly + 20 - 1, 0x40FFFFFF);
                 }
