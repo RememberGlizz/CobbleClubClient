@@ -75,10 +75,13 @@ public final class LeaderboardService {
     private static final int STARTUP_DEDUPE_WINDOW_TICKS = 6000;
     private static final int LIMIT = 10;
     private static final String ROOT_TAG = "cobbleclub_leaderboard";
-    private static final int BOARD_BACKGROUND = 1426721296;
+    private static final int BOARD_BACKGROUND = 0;
+    private static final int EDGE_ANIMATION_INTERVAL_TICKS = 8;
     private static Path storePath;
     private static int tickCounter;
     private static int startupTicks;
+    private static int edgeAnimationTicks;
+    private static int edgePhase;
 
     private LeaderboardService() {
     }
@@ -98,6 +101,8 @@ public final class LeaderboardService {
         LAST_RENDER.clear();
         tickCounter = 0;
         startupTicks = 0;
+        edgeAnimationTicks = 0;
+        edgePhase = 0;
         boolean migrated = false;
         try {
             StoreFile file;
@@ -156,6 +161,13 @@ public final class LeaderboardService {
         if (BOARDS.isEmpty()) {
             return;
         }
+
+        if (++edgeAnimationTicks >= EDGE_ANIMATION_INTERVAL_TICKS) {
+            edgeAnimationTicks = 0;
+            edgePhase = (edgePhase + 1) & 3;
+            LeaderboardService.animateEdges(server);
+        }
+
         if (++startupTicks >= 100 && startupTicks <= 6000 && startupTicks % 20 == 0) {
             LeaderboardService.syncOnlineNames(server);
             LeaderboardService.refreshAll(server);
@@ -292,8 +304,9 @@ public final class LeaderboardService {
         }
         try {
             List<Entry> entries = LeaderboardService.entries(type, 10);
-            String textJson = LeaderboardService.boardTextJson(type, entries);
-            String signature = placement.dimension + "|" + placement.x + "|" + placement.y + "|" + placement.z + "|" + placement.yaw + "|" + textJson;
+            String signatureText = LeaderboardService.boardTextJson(type, entries, 0);
+            String textJson = LeaderboardService.boardTextJson(type, entries, edgePhase);
+            String signature = placement.dimension + "|" + placement.x + "|" + placement.y + "|" + placement.z + "|" + placement.yaw + "|" + signatureText;
             if (signature.equals(LAST_RENDER.get(type.id))) {
                 return;
             }
@@ -325,37 +338,107 @@ public final class LeaderboardService {
     }
 
     private static void summonBoard(MinecraftServer server, Type type, Placement placement, String textJson) {
-        String nbt = "{Tags:[\"cobbleclub_leaderboard\",\"" + LeaderboardService.boardTag(type) + "\"],billboard:\"fixed\",brightness:{block:15,sky:15},view_range:2.0f,shadow:1b,see_through:0b,background:1426721296,default_background:0b,alignment:\"center\",line_width:420,width:0.0f,height:0.0f,Invulnerable:1b,NoGravity:1b,Rotation:[" + String.format(Locale.ROOT, "%.2ff", Float.valueOf(placement.yaw)) + ",0.0f],transformation:[1.35f,0.0f,0.0f,0.0f,0.0f,1.35f,0.0f,0.0f,0.0f,0.0f,1.35f,0.0f,0.0f,0.0f,0.0f,1.0f],text:'" + LeaderboardService.snbtSingleQuoted(textJson) + "'}";
+        String nbt = "{Tags:[\"cobbleclub_leaderboard\",\"" + LeaderboardService.boardTag(type) + "\"],billboard:\"fixed\",brightness:{block:15,sky:15},view_range:2.0f,shadow:1b,see_through:0b,background:" + BOARD_BACKGROUND + ",default_background:0b,alignment:\"center\",line_width:460,width:0.0f,height:0.0f,Invulnerable:1b,NoGravity:1b,Rotation:[" + String.format(Locale.ROOT, "%.2ff", Float.valueOf(placement.yaw)) + ",0.0f],transformation:[1.35f,0.0f,0.0f,0.0f,0.0f,1.35f,0.0f,0.0f,0.0f,0.0f,1.35f,0.0f,0.0f,0.0f,0.0f,1.0f],text:'" + LeaderboardService.snbtSingleQuoted(textJson) + "'}";
         String command = "execute in " + placement.dimension + " run summon minecraft:text_display " + LeaderboardService.fmt(placement.x) + " " + LeaderboardService.fmt(placement.y + 4.1) + " " + LeaderboardService.fmt(placement.z) + " " + nbt;
         LeaderboardService.executeSilent(server, command);
     }
 
-    private static String boardTextJson(Type type, List<Entry> entries) {
-        StringBuilder json = new StringBuilder(2048);
+    private static void animateEdges(MinecraftServer server) {
+        if (server == null) {
+            return;
+        }
+        for (Type type : Type.values()) {
+            Placement placement = BOARDS.get(type.id);
+            if (placement == null || !LeaderboardService.placementChunkLoaded(server, placement)) {
+                continue;
+            }
+            try {
+                String textJson = LeaderboardService.boardTextJson(type, LeaderboardService.entries(type, 10), edgePhase);
+                String command = "execute in " + placement.dimension
+                        + " run data merge entity @e[type=minecraft:text_display,tag="
+                        + LeaderboardService.boardTag(type)
+                        + ",limit=1] {text:'"
+                        + LeaderboardService.snbtSingleQuoted(textJson)
+                        + "'}";
+                LeaderboardService.executeSilent(server, command);
+            }
+            catch (Exception error) {
+                CobbleClubServer.LOGGER.debug("Could not animate {} leaderboard edge", type.id, error);
+            }
+        }
+    }
+
+    private static String boardTextJson(Type type, List<Entry> entries, int phase) {
+        StringBuilder json = new StringBuilder(3072);
         json.append("{\"text\":\"\",\"extra\":[");
         boolean first = true;
-        first = LeaderboardService.appendComponent(json, first, "\u2726  " + type.title + "  \u2726\n", type.titleColor, true);
-        first = LeaderboardService.appendComponent(json, first, type.subtitle + "\n", "#A9A9B8", false);
-        first = LeaderboardService.appendComponent(json, first, "\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\n", "#6B5E8E", false);
+
+        first = LeaderboardService.appendEdgeLeft(json, first, phase, 0);
+        first = LeaderboardService.appendComponent(json, first, "\u2726  " + type.title + "  \u2726", type.titleColor, true);
+        first = LeaderboardService.appendEdgeRight(json, first, phase, 0, true);
+
+        first = LeaderboardService.appendEdgeLeft(json, first, phase, 1);
+        first = LeaderboardService.appendComponent(json, first, type.subtitle, "#A9A9B8", false);
+        first = LeaderboardService.appendEdgeRight(json, first, phase, 1, true);
+
+        first = LeaderboardService.appendComponent(json, first, "\u00b7  \u25ab \u25aa  ", "#34343D", false);
+        first = LeaderboardService.appendComponent(json, first, "\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501", "#73737F", false);
+        first = LeaderboardService.appendComponent(json, first, "  \u25aa \u25ab  \u00b7\n\n", "#34343D", false);
+
         for (int i = 0; i < 10; ++i) {
             String row;
             boolean bold;
             int rank = i + 1;
             String color = rank == 1 ? "#FFD700" : (rank == 2 ? "#C0C0C0" : (rank == 3 ? "#CD7F32" : "#F5F5F5"));
-            boolean bl = bold = rank <= 3;
+            bold = rank <= 3;
             if (i < entries.size()) {
                 Entry entry = entries.get(i);
-                row = LeaderboardService.rankPrefix(rank) + "  " + LeaderboardService.trimName(entry.name) + "   \u2022   " + LeaderboardService.formatValue(type, entry.value) + "\n";
+                row = LeaderboardService.rankPrefix(rank) + "  " + LeaderboardService.trimName(entry.name) + "   \u2022   " + LeaderboardService.formatValue(type, entry.value);
             } else {
-                row = LeaderboardService.rankPrefix(rank) + "  \u2014\n";
+                row = LeaderboardService.rankPrefix(rank) + "  \u2014";
                 color = "#666672";
                 bold = false;
             }
+            first = LeaderboardService.appendEdgeLeft(json, first, phase, i + 2);
             first = LeaderboardService.appendComponent(json, first, row, color, bold);
+            first = LeaderboardService.appendEdgeRight(json, first, phase, i + 2, true);
         }
-        first = LeaderboardService.appendComponent(json, first, "\nLIVE  \u2022  AUTO-UPDATES", "#7F7F8D", false);
+
+        first = LeaderboardService.appendEdgeLeft(json, first, phase, 12);
+        first = LeaderboardService.appendComponent(json, first, "LIVE  \u2022  AUTO-UPDATES", "#7F7F8D", false);
+        first = LeaderboardService.appendEdgeRight(json, first, phase, 12, false);
         json.append("]}");
         return json.toString();
+    }
+
+    private static boolean appendEdgeLeft(StringBuilder json, boolean first, int phase, int row) {
+        int p = (phase + row) & 3;
+        String far = switch (p) {
+            case 0 -> "\u00b7 ";
+            case 1 -> "  ";
+            case 2 -> "\u00b7  ";
+            default -> " \u00b7";
+        };
+        String mid = (p == 1 || p == 3) ? "\u25ab " : " \u25ab ";
+        String near = (p == 2) ? "\u25aa  " : "\u25aa ";
+        first = LeaderboardService.appendComponent(json, first, far, "#2E2E36", false);
+        first = LeaderboardService.appendComponent(json, first, mid, "#4A4A55", false);
+        return LeaderboardService.appendComponent(json, first, near, "#747481", false);
+    }
+
+    private static boolean appendEdgeRight(StringBuilder json, boolean first, int phase, int row, boolean newline) {
+        int p = (phase + row) & 3;
+        String near = (p == 0) ? "  \u25aa" : " \u25aa";
+        String mid = (p == 1 || p == 3) ? " \u25ab" : "  \u25ab";
+        String far = switch (p) {
+            case 0 -> " \u00b7";
+            case 1 -> "  ";
+            case 2 -> "  \u00b7";
+            default -> "\u00b7 ";
+        };
+        first = LeaderboardService.appendComponent(json, first, near, "#747481", false);
+        first = LeaderboardService.appendComponent(json, first, mid, "#4A4A55", false);
+        return LeaderboardService.appendComponent(json, first, far + (newline ? "\n" : ""), "#2E2E36", false);
     }
 
     private static boolean appendComponent(StringBuilder json, boolean first, String text, String color, boolean bold) {
