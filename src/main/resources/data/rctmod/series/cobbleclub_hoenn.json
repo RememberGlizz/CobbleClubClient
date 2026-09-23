@@ -4,6 +4,8 @@
   "difficulty": 7,
   "initialLevelCap": 82,
   "relativeLevelCap": 0,
-  "requiredSeries": [],
+  "requiredSeries": [
+    "cobbleclub_johto"
+  ],
   "hideTrainerIdentities": false
 }
