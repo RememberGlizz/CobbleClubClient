@@ -232,6 +232,10 @@ public class ClaimsScreen extends Screen {
     }
 
     private void layout() {
+        // The map uses a compact detail card; My Claims uses the full owner card.
+        // This context lets the detail panel keep map actions fixed and hide Warps
+        // from the compact overlay without changing the full claims layout.
+        this.detailPanel.setViewContext(this.tab == ClaimsScreen.Tab.MAP, this.tab == ClaimsScreen.Tab.CLAIMS);
         this.mapView.setBounds(this.contentLeft(), this.mapTop(), this.contentRightEdge(), this.contentBottom());
         this.listPanel.setBounds(this.contentLeft(), this.contentTop(), this.contentRightEdge(), this.contentBottom());
         int detailBottom = Math.min(this.contentBottom(), this.contentTop() + this.detailPanel.desiredHeight());
