@@ -7,7 +7,8 @@ More information about the mod can be found on the selected versions README.MD
 
 THANKS FOR YOUR SUPPORT <3 Have Fun!
 
-<img width="100" height="100" alt="CobbleClub3-Modrinth-192" src="https://github.com/user-attachments/assets/aef1f820-a2e3-4e41-9665-a57a4b20d971" /> <img width="100" height="100" alt="639243287037053305" src="https://github.com/user-attachments/assets/0b297734-cb01-49a0-9c75-9c307ed0b56b" /> <img width="100" height="100" alt="cobblemon-mew-pink-blue-final" src="https://github.com/user-attachments/assets/395104e9-56b4-412a-b137-b4fe0b0abf69" />
+<img width="100" height="100" alt="CobbleClub3-Modrinth-192" src="https://github.com/user-attachments/assets/aef1f820-a2e3-4e41-9665-a57a4b20d971" /> <img width="100" height="100" alt="Untitled_2_-removebg-previewwll" src="https://github.com/user-attachments/assets/c4b3cca3-49c4-4263-9647-b312abcfe51c" />
+ <img width="100" height="100" alt="cobblemon-mew-pink-blue-final" src="https://github.com/user-attachments/assets/395104e9-56b4-412a-b137-b4fe0b0abf69" />
 
 
 
