@@ -262,12 +262,12 @@ public final class SellScreen
         int top = this.top();
         int detailX = this.detailX();
         g.fill(left - 3, top - 3, left + 360 + 3, top + 220 + 3, 0x55000000);
-        g.fillGradient(left, top, left + 360, top + 220, -199614136, -200601562);
-        g.drawBorder(left - 1, top - 1, 362, 222, -16447985);
-        g.drawBorder(left, top, 360, 220, -13747610);
-        g.fillGradient(left, top, left + 360, top + 21, -14405538, -15459782);
-        g.fill(left, top + 21, left + 360, top + 22, -6467875);
-        g.drawCenteredTextWithShadow(this.textRenderer, this.getTitle(), left + 180, top + 6, -2053377);
+        g.fillGradient(left, top, left + 360, top + 220, -196589496, -198036942);
+        g.drawBorder(left - 1, top - 1, 362, 222, -15658735);
+        g.drawBorder(left, top, 360, 220, -7434610);
+        g.fillGradient(left, top, left + 360, top + 21, -10855846, -12632257);
+        g.fill(left, top + 21, left + 360, top + 22, -4342339);
+        g.drawCenteredTextWithShadow(this.textRenderer, this.getTitle(), left + 180, top + 6, -723724);
         String balanceLine = "Balance: " + this.state.balanceText;
         int balanceTextWidth = Math.max(1, this.textRenderer.getWidth(balanceLine));
         int balanceMaxWidth = 116;
@@ -276,7 +276,7 @@ public final class SellScreen
         g.getMatrices().push();
         g.getMatrices().translate((float)balanceRight, (float)(top + 28), 0.0f);
         g.getMatrices().scale(balanceScale, balanceScale, 1.0f);
-        g.drawTextWithShadow(this.textRenderer, balanceLine, -balanceTextWidth, 0, -2053377);
+        g.drawTextWithShadow(this.textRenderer, balanceLine, -balanceTextWidth, 0, -723724);
         g.getMatrices().pop();
         this.renderTabs(g, mouseX, mouseY);
         this.renderCatalog(g, mouseX, mouseY);
@@ -296,7 +296,7 @@ public final class SellScreen
             g.drawCenteredTextWithShadow(this.textRenderer, notice, left + 119, top + 207, color);
         } else {
             String footer = this.filtered().size() + " sellable item" + (this.filtered().size() == 1 ? "" : "s");
-            g.drawCenteredTextWithShadow(this.textRenderer, footer + " \u2022 Scroll", left + 119, top + 207, -7035976);
+            g.drawCenteredTextWithShadow(this.textRenderer, footer + " \u2022 Scroll", left + 119, top + 207, -5197648);
         }
     }
 
@@ -322,9 +322,9 @@ public final class SellScreen
             boolean hover = PreviewUi.inRect(mouseX, mouseY, x, y, tab.width, 17);
             g.fill(x, y, x + tab.width, y + 17, active ? -14410694 : (hover ? -14936272 : -15528414));
             if (active) {
-                g.fill(x, y + 16, x + tab.width, y + 17, -6467875);
+                g.fill(x, y + 16, x + tab.width, y + 17, -4342339);
             }
-            g.drawCenteredTextWithShadow(this.textRenderer, tab.label, x + tab.width / 2, y + 5, active ? -1 : -7035976);
+            g.drawCenteredTextWithShadow(this.textRenderer, tab.label, x + tab.width / 2, y + 5, active ? -1 : -5197648);
             x += tab.width + 3;
         }
     }
@@ -334,11 +334,11 @@ public final class SellScreen
         int gridY = this.gridY();
         int gridW = 222;
         int gridH = 118;
-        g.fill(gridX - 2, gridY - 2, gridX + gridW + 2, gridY + gridH + 2, -15723477);
-        g.drawBorder(gridX - 2, gridY - 2, gridW + 4, gridH + 4, -13747610);
+        g.fill(gridX - 2, gridY - 2, gridX + gridW + 2, gridY + gridH + 2, -14671840);
+        g.drawBorder(gridX - 2, gridY - 2, gridW + 4, gridH + 4, -7434610);
         List<SellState.ItemEntry> items = this.pageItems();
         if (items.isEmpty()) {
-            g.drawCenteredTextWithShadow(this.textRenderer, "owned".equals(this.category) ? "No sellable items in inventory" : "No items match your search", gridX + gridW / 2, gridY + gridH / 2 - 4, -7035976);
+            g.drawCenteredTextWithShadow(this.textRenderer, "owned".equals(this.category) ? "No sellable items in inventory" : "No items match your search", gridX + gridW / 2, gridY + gridH / 2 - 4, -5197648);
         }
         for (int i = 0; i < items.size(); ++i) {
             SellState.ItemEntry entry = items.get(i);
@@ -348,23 +348,23 @@ public final class SellScreen
             int y = gridY + row * 40;
             boolean selected = entry.id.equals(this.selectedId);
             boolean hover = PreviewUi.inRect(mouseX, mouseY, x, y, 54, 38);
-            g.fillGradient(x, y, x + 54, y + 38, selected ? -15048389 : -15064506, -16315880);
-            g.drawBorder(x, y, 54, 38, selected ? -12474273 : (hover ? -6467875 : -13747610));
+            g.fillGradient(x, y, x + 54, y + 38, selected ? -15048389 : -13421773, -15198184);
+            g.drawBorder(x, y, 54, 38, selected ? -12474273 : (hover ? -4342339 : -7434610));
             ItemStack stack = entry.stack();
             if (!stack.isEmpty()) {
                 PreviewUi.renderScaledItem(g, stack, x + 3, y + 7, 1.05f);
             }
-            g.drawText(this.textRenderer, this.textRenderer.trimToWidth(entry.displayName(), 33), x + 21, y + 4, -2962968, false);
+            g.drawText(this.textRenderer, this.textRenderer.trimToWidth(entry.displayName(), 33), x + 21, y + 4, -1710619, false);
             g.drawText(this.textRenderer, this.state.shortMoney(entry.price), x + 21, y + 15, -12474273, false);
-            g.drawText(this.textRenderer, "x" + entry.count, x + 21, y + 27, entry.count > 0 ? -1 : -7035976, false);
+            g.drawText(this.textRenderer, "x" + entry.count, x + 21, y + 27, entry.count > 0 ? -1 : -5197648, false);
         }
         int max = this.maxScrollRow();
         if (max > 0) {
             int trackX = gridX + gridW + 4;
-            g.fill(trackX, gridY, trackX + 2, gridY + gridH, -15723477);
+            g.fill(trackX, gridY, trackX + 2, gridY + gridH, -14671840);
             int thumbH = Math.max(12, gridH * 3 / (3 + max));
             int thumbY = gridY + (gridH - thumbH) * this.scrollRow / max;
-            g.fill(trackX, thumbY, trackX + 2, thumbY + thumbH, -6467875);
+            g.fill(trackX, thumbY, trackX + 2, thumbY + thumbH, -4342339);
         }
     }
 
@@ -373,13 +373,26 @@ public final class SellScreen
         int y = this.top() + 43;
         int w = 114;
         int h = 157;
-        g.fillGradient(x, y, x + w, y + h, -14998448, -16315880);
-        g.drawBorder(x, y, w, h, -13747610);
-        g.drawTextWithShadow(this.textRenderer, "SELECTED ITEM", x + 8, y + 7, -6467875);
+        g.fillGradient(x, y, x + w, y + h, -13421773, -15198184);
+        g.drawBorder(x, y, w, h, -7434610);
+        g.fill(x + 1, y + 1, x + w - 1, y + 2, 0xFF777777);
+        g.fill(x + 1, y + 1, x + 2, y + h - 1, 0xFF666666);
+        g.fill(x + 1, y + h - 2, x + w - 1, y + h - 1, 0xFF202020);
+        g.fill(x + w - 2, y + 1, x + w - 1, y + h - 1, 0xFF202020);
+        g.drawTextWithShadow(this.textRenderer, "SELECTED ITEM", x + 8, y + 7, -4342339);
+
+        // Recessed quantity-control well. Same coordinates and controls, only a cleaner
+        // vanilla-style frame around the area requested for the sell-menu touch-up.
+        g.fill(x + 5, y + 73, x + w - 5, y + 143, 0xFF202020);
+        g.fill(x + 6, y + 74, x + w - 6, y + 142, 0xFF353535);
+        g.fill(x + 6, y + 74, x + w - 6, y + 75, 0xFF171717);
+        g.fill(x + 6, y + 74, x + 7, y + 142, 0xFF171717);
+        g.fill(x + 6, y + 141, x + w - 6, y + 142, 0xFF676767);
+        g.fill(x + w - 7, y + 74, x + w - 6, y + 142, 0xFF676767);
         SellState.ItemEntry selected = this.selected();
         if (selected == null) {
-            g.drawCenteredTextWithShadow(this.textRenderer, "Pick an item", x + w / 2, y + 52, -7035976);
-            g.drawCenteredTextWithShadow(this.textRenderer, "from the catalog", x + w / 2, y + 65, -7035976);
+            g.drawCenteredTextWithShadow(this.textRenderer, "Pick an item", x + w / 2, y + 52, -5197648);
+            g.drawCenteredTextWithShadow(this.textRenderer, "from the catalog", x + w / 2, y + 65, -5197648);
             return;
         }
         ItemStack stack = selected.stack();
@@ -388,21 +401,21 @@ public final class SellScreen
         }
         g.drawTextWithShadow(this.textRenderer, this.textRenderer.trimToWidth(selected.displayName(), 72), x + 35, y + 25, -1);
         g.drawTextWithShadow(this.textRenderer, this.state.shortMoney(selected.price) + " each", x + 35, y + 38, -12474273);
-        g.drawTextWithShadow(this.textRenderer, "Have: " + selected.count, x + 35, y + 51, selected.count > 0 ? -2962968 : -2734768);
-        g.drawTextWithShadow(this.textRenderer, "Amount", x + 7, y + 65, -2962968);
+        g.drawTextWithShadow(this.textRenderer, "Have: " + selected.count, x + 35, y + 51, selected.count > 0 ? -1710619 : -2734768);
+        g.drawTextWithShadow(this.textRenderer, "Amount", x + 7, y + 65, -1710619);
         int amount = this.quantity();
         long total = amount > 0 ? SellScreen.safeMultiply(selected.price, amount) : 0L;
         String totalText = "Total: " + this.state.shortMoney(total);
-        int totalColor = -2053377;
+        int totalColor = -723724;
         if (amount > selected.count) {
             totalText = "Not enough items";
             totalColor = -2734768;
         } else if (selected.count == 0) {
             totalText = "None in inventory";
-            totalColor = -7035976;
+            totalColor = -5197648;
         } else if (this.pending) {
             totalText = "Processing...";
-            totalColor = -7035976;
+            totalColor = -5197648;
         }
         g.drawTextWithShadow(this.textRenderer, totalText, x + 7, y + 130, totalColor);
     }
