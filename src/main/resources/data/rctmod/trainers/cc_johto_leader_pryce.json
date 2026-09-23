@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Pryce",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.89,
+      "switchBias": 0.78,
+      "itemBias": 0.9,
+      "maxSelectMargin": 0.094
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 2
+    }
+  ],
+  "team": [
+    {
+      "species": "dewgong",
+      "level": 76,
+      "moveset": [
+        "icebeam",
+        "surf",
+        "rest",
+        "aurorabeam"
+      ],
+      "nature": "calm"
+    },
+    {
+      "species": "weavile",
+      "level": 78,
+      "moveset": [
+        "icepunch",
+        "nightslash",
+        "brickbreak",
+        "quickattack"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "mamoswine",
+      "level": 79,
+      "moveset": [
+        "earthquake",
+        "iciclecrash",
+        "rockslide",
+        "iceshard"
+      ],
+      "nature": "adamant",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

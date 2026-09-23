@@ -1,0 +1,38 @@
+{
+  "name": "Ecruteak Sage Ren",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.6,
+      "switchBias": 0.45999999999999996,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.38
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "drowzee",
+      "level": 65,
+      "moveset": [
+        "psychic",
+        "hypnosis",
+        "headbutt"
+      ]
+    },
+    {
+      "species": "haunter",
+      "level": 66,
+      "moveset": [
+        "shadowball",
+        "suckerpunch",
+        "confuseray"
+      ]
+    }
+  ]
+}

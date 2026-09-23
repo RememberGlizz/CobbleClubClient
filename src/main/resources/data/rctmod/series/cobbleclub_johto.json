@@ -1,0 +1,9 @@
+{
+  "title": "CobbleClub · Johto Journey",
+  "description": "Eight Johto badges. Stronger teams. A true post-Kanto continuation.",
+  "difficulty": 6,
+  "initialLevelCap": 60,
+  "relativeLevelCap": 0,
+  "requiredSeries": [],
+  "hideTrainerIdentities": false
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Goldenrod Lass Piper",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.57,
+      "switchBias": 0.42,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.41000000000000003
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "wigglytuff",
+      "level": 62,
+      "moveset": [
+        "bodyslam",
+        "sing",
+        "playrough"
+      ]
+    },
+    {
+      "species": "snubbull",
+      "level": 63,
+      "moveset": [
+        "playrough",
+        "bite",
+        "charm"
+      ]
+    }
+  ]
+}

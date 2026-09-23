@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Chuck",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.8300000000000001,
+      "switchBias": 0.7,
+      "itemBias": 0.9,
+      "maxSelectMargin": 0.13
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "primeape",
+      "level": 70,
+      "moveset": [
+        "closecombat",
+        "rockslide",
+        "rage",
+        "focusenergy"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "heracross",
+      "level": 72,
+      "moveset": [
+        "closecombat",
+        "megahorn",
+        "aerialace",
+        "bulkup"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "poliwrath",
+      "level": 73,
+      "moveset": [
+        "waterfall",
+        "brickbreak",
+        "icepunch",
+        "hypnosis"
+      ],
+      "nature": "adamant",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

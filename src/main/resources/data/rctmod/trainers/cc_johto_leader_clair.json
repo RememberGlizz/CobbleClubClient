@@ -1,0 +1,71 @@
+{
+  "name": "Gym Leader Clair",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.92,
+      "switchBias": 0.8200000000000001,
+      "itemBias": 0.9,
+      "maxSelectMargin": 0.07600000000000001
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 2
+    }
+  ],
+  "team": [
+    {
+      "species": "dragonair",
+      "level": 80,
+      "moveset": [
+        "dragonrush",
+        "thunderwave",
+        "aquatail",
+        "slam"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "gyarados",
+      "level": 81,
+      "moveset": [
+        "waterfall",
+        "icefang",
+        "crunch",
+        "dragondance"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "kingdra",
+      "level": 82,
+      "moveset": [
+        "hydropump",
+        "dragonpulse",
+        "icebeam",
+        "smokescreen"
+      ],
+      "nature": "modest"
+    },
+    {
+      "species": "dragonite",
+      "level": 83,
+      "moveset": [
+        "dragonclaw",
+        "firepunch",
+        "thunderpunch",
+        "roost"
+      ],
+      "nature": "adamant",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

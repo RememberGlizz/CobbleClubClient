@@ -1,0 +1,38 @@
+{
+  "name": "Mahogany Boarder Finn",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.69,
+      "switchBias": 0.5800000000000001,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.29000000000000004
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "piloswine",
+      "level": 74,
+      "moveset": [
+        "earthquake",
+        "icefang",
+        "rockslide"
+      ]
+    },
+    {
+      "species": "cloyster",
+      "level": 75,
+      "moveset": [
+        "iciclespear",
+        "razorshell",
+        "protect"
+      ]
+    }
+  ]
+}

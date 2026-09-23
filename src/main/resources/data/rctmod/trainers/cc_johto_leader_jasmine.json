@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Jasmine",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.8600000000000001,
+      "switchBias": 0.74,
+      "itemBias": 0.9,
+      "maxSelectMargin": 0.11200000000000002
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "magneton",
+      "level": 73,
+      "moveset": [
+        "thunderbolt",
+        "flashcannon",
+        "thunderwave",
+        "triattack"
+      ],
+      "nature": "modest"
+    },
+    {
+      "species": "skarmory",
+      "level": 75,
+      "moveset": [
+        "steelwing",
+        "aerialace",
+        "spikes",
+        "sandattack"
+      ],
+      "nature": "impish"
+    },
+    {
+      "species": "steelix",
+      "level": 76,
+      "moveset": [
+        "earthquake",
+        "ironhead",
+        "rockslide",
+        "sandstorm"
+      ],
+      "nature": "impish",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

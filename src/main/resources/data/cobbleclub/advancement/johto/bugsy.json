@@ -1,0 +1,15 @@
+{
+  "criteria": {
+    "first_defeat": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "trainer_ids": [
+          "cc_johto_leader_bugsy"
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "function": "cobbleclub:johto/reward_bugsy"
+  }
+}

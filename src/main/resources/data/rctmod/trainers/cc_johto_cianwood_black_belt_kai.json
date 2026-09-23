@@ -1,0 +1,38 @@
+{
+  "name": "Cianwood Black Belt Kai",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.63,
+      "switchBias": 0.5,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.35
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "machoke",
+      "level": 68,
+      "moveset": [
+        "brickbreak",
+        "rockslide",
+        "bulkup"
+      ]
+    },
+    {
+      "species": "hitmonlee",
+      "level": 69,
+      "moveset": [
+        "highjumpkick",
+        "rockslide",
+        "meditate"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Olivine Sailor Bram",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.6599999999999999,
+      "switchBias": 0.54,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.32
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "magneton",
+      "level": 71,
+      "moveset": [
+        "discharge",
+        "flashcannon",
+        "supersonic"
+      ]
+    },
+    {
+      "species": "kingler",
+      "level": 72,
+      "moveset": [
+        "crabhammer",
+        "stomp",
+        "protect"
+      ]
+    }
+  ]
+}

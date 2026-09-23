@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Morty",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.8,
+      "switchBias": 0.66,
+      "itemBias": 0.9,
+      "maxSelectMargin": 0.14800000000000002
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "haunter",
+      "level": 67,
+      "moveset": [
+        "shadowball",
+        "hypnosis",
+        "dreameater",
+        "suckerpunch"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "mismagius",
+      "level": 69,
+      "moveset": [
+        "shadowball",
+        "psychic",
+        "confuseray",
+        "powergem"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "gengar",
+      "level": 70,
+      "moveset": [
+        "shadowball",
+        "sludgebomb",
+        "hypnosis",
+        "darkpulse"
+      ],
+      "nature": "timid",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

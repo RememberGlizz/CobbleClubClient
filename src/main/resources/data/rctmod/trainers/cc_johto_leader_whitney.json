@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Whitney",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.77,
+      "switchBias": 0.62,
+      "itemBias": 0.9,
+      "maxSelectMargin": 0.166
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "clefable",
+      "level": 64,
+      "moveset": [
+        "moonblast",
+        "psychic",
+        "sing",
+        "softboiled"
+      ],
+      "nature": "bold"
+    },
+    {
+      "species": "girafarig",
+      "level": 66,
+      "moveset": [
+        "psychic",
+        "stomp",
+        "thunderbolt",
+        "agility"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "miltank",
+      "level": 67,
+      "moveset": [
+        "bodyslam",
+        "rollout",
+        "milkdrink",
+        "attract"
+      ],
+      "nature": "impish",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

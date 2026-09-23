@@ -1,0 +1,15 @@
+{
+  "criteria": {
+    "first_defeat": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "trainer_ids": [
+          "cc_johto_leader_morty"
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "function": "cobbleclub:johto/reward_morty"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Goldenrod Beauty Mara",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.57,
+      "switchBias": 0.42,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.41000000000000003
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "clefairy",
+      "level": 62,
+      "moveset": [
+        "moonblast",
+        "sing",
+        "metronome"
+      ]
+    },
+    {
+      "species": "teddiursa",
+      "level": 63,
+      "moveset": [
+        "slash",
+        "feintattack",
+        "charm"
+      ]
+    }
+  ]
+}

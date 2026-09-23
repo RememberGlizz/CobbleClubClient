@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Falkner",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.7100000000000001,
+      "switchBias": 0.54,
+      "itemBias": 0.9,
+      "maxSelectMargin": 0.202
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "pidgey",
+      "level": 58,
+      "moveset": [
+        "aerialace",
+        "sandattack",
+        "quickattack",
+        "roost"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "noctowl",
+      "level": 60,
+      "moveset": [
+        "airslash",
+        "psychic",
+        "hypnosis",
+        "roost"
+      ],
+      "nature": "calm"
+    },
+    {
+      "species": "pidgeot",
+      "level": 61,
+      "moveset": [
+        "bravebird",
+        "aerialace",
+        "featherdance",
+        "quickattack"
+      ],
+      "nature": "jolly",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

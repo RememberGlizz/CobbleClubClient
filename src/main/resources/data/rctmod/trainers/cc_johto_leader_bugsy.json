@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Bugsy",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.74,
+      "switchBias": 0.58,
+      "itemBias": 0.9,
+      "maxSelectMargin": 0.184
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "beedrill",
+      "level": 61,
+      "moveset": [
+        "xscissor",
+        "poisonjab",
+        "focusenergy",
+        "agility"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "heracross",
+      "level": 63,
+      "moveset": [
+        "brickbreak",
+        "aerialace",
+        "bulkup",
+        "nightshade"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "scyther",
+      "level": 64,
+      "moveset": [
+        "xscissor",
+        "aerialace",
+        "swordsdance",
+        "quickattack"
+      ],
+      "nature": "jolly",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

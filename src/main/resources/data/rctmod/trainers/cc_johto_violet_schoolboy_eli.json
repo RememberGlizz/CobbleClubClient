@@ -1,0 +1,38 @@
+{
+  "name": "Violet Schoolboy Eli",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.51,
+      "switchBias": 0.33999999999999997,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.47
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "mareep",
+      "level": 56,
+      "moveset": [
+        "thundershock",
+        "cottonspore",
+        "charge"
+      ]
+    },
+    {
+      "species": "sentret",
+      "level": 57,
+      "moveset": [
+        "quickattack",
+        "slam",
+        "defensecurl"
+      ]
+    }
+  ]
+}

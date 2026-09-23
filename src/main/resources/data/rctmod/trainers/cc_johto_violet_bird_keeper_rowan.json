@@ -1,0 +1,38 @@
+{
+  "name": "Violet Bird Keeper Rowan",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.51,
+      "switchBias": 0.33999999999999997,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.47
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "hoothoot",
+      "level": 56,
+      "moveset": [
+        "airslash",
+        "hypnosis",
+        "confusion"
+      ]
+    },
+    {
+      "species": "fearow",
+      "level": 57,
+      "moveset": [
+        "aerialace",
+        "furyattack",
+        "focusenergy"
+      ]
+    }
+  ]
+}

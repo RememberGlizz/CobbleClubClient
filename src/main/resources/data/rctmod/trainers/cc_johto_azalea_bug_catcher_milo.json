@@ -1,0 +1,38 @@
+{
+  "name": "Azalea Bug Catcher Milo",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.54,
+      "switchBias": 0.38,
+      "itemBias": 0.65,
+      "maxSelectMargin": 0.44
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "ledian",
+      "level": 59,
+      "moveset": [
+        "machpunch",
+        "silverwind",
+        "reflect"
+      ]
+    },
+    {
+      "species": "ariados",
+      "level": 60,
+      "moveset": [
+        "poisonjab",
+        "shadowsneak",
+        "spiderweb"
+      ]
+    }
+  ]
+}
