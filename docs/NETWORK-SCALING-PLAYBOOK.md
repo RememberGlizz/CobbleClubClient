@@ -29,21 +29,23 @@ If the Resource world remains a separate public gameplay world, create `resource
 
 ## 2. Recommended starter hardware
 
-The best-value starting shape is one high-clock dedicated machine running the five logical Minecraft backends as separate processes/containers.
+The best-value starting shape is one DDR4-based dedicated machine running the five logical Minecraft backends as separate processes/containers. A used Ryzen 9 5950X/128 GB DDR4 system is the preferred low-cost starting point; a used Milan EPYC system is preferred when significantly more physical cores, ECC memory and future shard density are worth the extra platform cost.
 
-Recommended target:
-- AMD Ryzen 9 9950X-class CPU or better
-- 128 GB RAM
+Recommended DDR4-first target:
+- **Budget/value:** Ryzen 9 5950X (16 cores / 32 threads) + 128 GB DDR4
+- **Enterprise/future scaling:** AMD EPYC Milan-class CPU (for example 24–32 physical cores) + 128–256 GB ECC DDR4 RDIMM
 - 2x NVMe SSD in RAID1/mirror
-- 1 Gbps networking
+- 1 Gbps networking minimum
 - Toronto/Canada-East location when available
 - DDoS protection
 - Ubuntu 24.04 LTS
 - Java 21
 
-A cheaper 64 GB machine can be used for development/soft launch, but 128 GB leaves much healthier OS/page-cache and JVM headroom.
+CobbleClub does **not** require DDR5. For this multi-JVM Minecraft workload, CPU core performance, physical core count, storage latency and stable capacity matter more than paying for a DDR5 platform. DDR4 also makes used AM4 and Milan EPYC systems especially attractive.
 
-Suggested initial memory caps on a 128 GB machine:
+128 GB is the preferred starting capacity. A 64 GB machine can be used for development/soft launch, but 128 GB leaves much healthier OS/page-cache and JVM headroom.
+
+Suggested initial memory caps on a 128 GB DDR4 machine:
 - Velocity: 1 GB
 - spawn-1: 6–8 GB
 - red-1: 12–16 GB
