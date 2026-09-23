@@ -108,6 +108,9 @@ public final class RtpService {
         if (player == null) {
             return 0;
         }
+        if (BattleGuard.blockTeleport(player)) {
+            return 0;
+        }
         String target = RtpService.normalizeTarget(requested);
         if (target == null) {
             player.sendMessage(Text.literal("Usage: /rtp [purple|red|orange|yellow|resource|blue|pink|green|cyan]").formatted(Formatting.RED), false);
