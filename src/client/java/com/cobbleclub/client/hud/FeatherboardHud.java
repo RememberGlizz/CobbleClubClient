@@ -100,6 +100,20 @@ public final class FeatherboardHud {
         g.drawCenteredTextWithShadow(font, Text.literal(health), x + width / 2, yy + 2, healthColor);
 
         g.getMatrices().pop();
+
+        float hintScale = 0.5F;
+        int hintCenterX = screenX + visualWidth / 2;
+        int hintY = screenY + visualHeight + 3;
+        g.getMatrices().push();
+        g.getMatrices().scale(hintScale, hintScale, 1.0F);
+        g.drawCenteredTextWithShadow(
+                font,
+                Text.literal("/board"),
+                Math.round(hintCenterX / hintScale),
+                Math.round(hintY / hintScale),
+                0x668E93A0
+        );
+        g.getMatrices().pop();
     }
 
     private static void drawGradientTitle(DrawContext g, TextRenderer font, String text, int centerX, int y) {
@@ -161,7 +175,14 @@ public final class FeatherboardHud {
 
     private static String rankName(String rank) {
         if (rank == null || rank.isBlank()) return "Newb";
-        return Character.toUpperCase(rank.charAt(0)) + rank.substring(1).toLowerCase(Locale.ROOT);
+        StringBuilder out = new StringBuilder();
+        for (String part : rank.replace('-', '_').split("_+")) {
+            if (part.isBlank()) continue;
+            if (!out.isEmpty()) out.append(' ');
+            out.append(Character.toUpperCase(part.charAt(0)));
+            if (part.length() > 1) out.append(part.substring(1).toLowerCase(Locale.ROOT));
+        }
+        return out.isEmpty() ? "Newb" : out.toString();
     }
 
     private static int rankColor(String rank) {

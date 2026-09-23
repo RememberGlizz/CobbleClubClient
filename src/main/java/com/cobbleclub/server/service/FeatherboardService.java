@@ -62,12 +62,14 @@ public final class FeatherboardService {
             int total = (int)Math.min(Integer.MAX_VALUE, totalLong);
             int remaining = Math.max(0, total - used);
 
-            String rank = data.lastTagRank == null || data.lastTagRank.isBlank() ? "newb" : data.lastTagRank;
+            String activeTag = data.activeTag == null || data.activeTag.isBlank()
+                    ? RankAccessService.defaultTag(player)
+                    : data.activeTag;
             String world = player.getServerWorld().getRegistryKey().getValue().toString();
 
             Payloads.FeatherboardState state = new Payloads.FeatherboardState(
                     player.getGameProfile().getName(),
-                    rank,
+                    activeTag,
                     world,
                     Math.max(0L, data.balance),
                     Math.max(0L, data.gems),

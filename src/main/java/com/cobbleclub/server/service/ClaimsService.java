@@ -204,6 +204,13 @@ public final class ClaimsService {
         if (message.getAction() == ClaimsActionType.SCREEN_CLOSED) {
             return;
         }
+        List<String> deletedClaimMembers = List.of();
+        if (message.getAction() == ClaimsActionType.DELETE) {
+            ClaimsStore.ClaimData deleting = ClaimsService.find(message.getClaimId());
+            if (deleting != null) {
+                deletedClaimMembers = List.copyOf(deleting.trusted.keySet());
+            }
+        }
         try {
             result = ClaimsService.apply(player, message);
         }
@@ -217,6 +224,9 @@ public final class ClaimsService {
         ClaimsService.sendState(player, message.getNonce(), result);
         ClaimsService.sendWorld(player);
         ClaimsService.sendWarpState(player);
+        if (result.changed && message.getAction() == ClaimsActionType.DELETE && !deletedClaimMembers.isEmpty()) {
+            ClaimsService.refreshDeletedClaimMembers(player.getServer(), player.getUuidAsString(), deletedClaimMembers);
+        }
     }
 
     public static void handleMapRequest(ServerPlayerEntity player, String json) {
@@ -784,6 +794,28 @@ public final class ClaimsService {
         }
         ClaimsStateMsg state = new ClaimsStateMsg(1, Math.max(1, revision), ClaimsService.budget(player), ClaimsService.visibleDetails(player), ClaimsService.mapClaims(player), new ActionFeedback(nonce, result.ok, ClaimsService.textJson(result.message, result.ok ? "green" : "red")));
         ServerPlayNetworking.send((ServerPlayerEntity)player, (CustomPayload)new Payloads.ClaimsState(ClaimsScreenProtocol.INSTANCE.encode((Object)state)));
+    }
+
+    private static void refreshDeletedClaimMembers(MinecraftServer server, String deletingPlayerUuid, List<String> memberUuids) {
+        if (server == null || memberUuids == null || memberUuids.isEmpty()) {
+            return;
+        }
+        for (String uuidText : memberUuids) {
+            if (uuidText == null || uuidText.equals(deletingPlayerUuid)) {
+                continue;
+            }
+            try {
+                ServerPlayerEntity member = server.getPlayerManager().getPlayer(UUID.fromString(uuidText));
+                if (member == null) {
+                    continue;
+                }
+                ClaimsService.sendState(member, 0, Result.ok(false, "Claims refreshed."));
+                ClaimsService.sendWorld(member);
+                ClaimsService.sendWarpState(member);
+            }
+            catch (IllegalArgumentException ignored) {
+            }
+        }
     }
 
     public static void syncWorldSnapshots(MinecraftServer server) {

@@ -30,6 +30,10 @@ package com.cobbleclub.server.service;
 import com.cobbleclub.server.CobbleClubServer;
 import com.cobbleclub.server.world.ManagedBorderService;
 import com.cobbleclub.server.world.ManagedWorldService;
+import com.cobblemon.mod.common.Cobblemon;
+import com.cobblemon.mod.common.api.pokedex.PokedexEntryProgress;
+import com.cobblemon.mod.common.api.pokedex.PokedexManager;
+import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
@@ -73,7 +77,7 @@ public final class RtpService {
     private static final int MAX_Y = 256;
     private static final double BORDER_MARGIN = 32.0;
     private static final long WARMUP_TICKS = 0L;
-    private static final long COOLDOWN_TICKS = 6000L;
+    private static final long BASE_COOLDOWN_SECONDS = 300L;
     private static final long SEARCH_GRACE_TICKS = 240L;
     private static final int MAX_ATTEMPTS = 12;
     private static final int MAX_ACTIVE_CHUNK_REQUESTS = 3;
@@ -184,7 +188,7 @@ public final class RtpService {
                 }
                 RtpService.removePending(player.getUuid());
                 if (!RtpService.teleportPrepared(player, pending.target, targetWorld, safe)) continue;
-                COOLDOWNS.put(player.getUuid(), serverTick + 6000L);
+                COOLDOWNS.put(player.getUuid(), serverTick + RtpService.cooldownSeconds(player) * 20L);
                 continue;
             }
             if (serverTick >= pending.searchDeadline) {
@@ -696,6 +700,42 @@ public final class RtpService {
         }
         catch (IOException error) {
             CobbleClubServer.LOGGER.error("Could not save the RTP landing cache", error);
+        }
+    }
+
+    private static long cooldownSeconds(ServerPlayerEntity player) {
+        long rankReduction = switch (RankAccessService.premiumRank(player)) {
+            case "ace" -> 30L;
+            case "champion" -> 60L;
+            case "master" -> 90L;
+            case "legend" -> 120L;
+            default -> 0L;
+        };
+        long dexReduction = RtpService.pokedexCooldownReduction(player);
+        return Math.max(1L, BASE_COOLDOWN_SECONDS - rankReduction - dexReduction);
+    }
+
+    private static long pokedexCooldownReduction(ServerPlayerEntity player) {
+        try {
+            PokedexManager pokedex = Cobblemon.INSTANCE.getPlayerDataManager().getPokedexData(player);
+            int total = PokemonSpecies.INSTANCE.getImplemented().size();
+            if (total <= 0) {
+                return 0L;
+            }
+            int caught = 0;
+            for (var species : PokemonSpecies.INSTANCE.getImplemented()) {
+                if (pokedex.getHighestKnowledgeForSpecies(species.getResourceIdentifier()) == PokedexEntryProgress.CAUGHT) {
+                    ++caught;
+                }
+            }
+            if (caught >= total) {
+                return 20L;
+            }
+            return (long)caught * 2L >= (long)total ? 10L : 0L;
+        }
+        catch (Exception error) {
+            CobbleClubServer.LOGGER.warn("Could not read Pokédex completion for RTP cooldown bonus for {}", player.getGameProfile().getName(), error);
+            return 0L;
         }
     }
 

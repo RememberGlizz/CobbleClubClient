@@ -38,7 +38,8 @@ public final class KitsScreen extends Screen {
                     "6× Ultra Balls",
                     "32× Steak",
                     "1× PC",
-                    "1× Healing Machine"
+                    "1× Healing Machine",
+                    "RTP Dex bonus: −10s at 50% · −20s complete"
             },
             "ace",
             new String[]{
@@ -47,7 +48,9 @@ public final class KitsScreen extends Screen {
                     "6× Rare Candy",
                     "6× Ultra Balls",
                     "12× Quick Balls",
-                    "50× XP Bottles"
+                    "50× XP Bottles",
+                    "RTP cooldown: −30 seconds",
+                    "Dex bonus: −10s at 50% · −20s complete"
             },
             "champion",
             new String[]{
@@ -57,7 +60,9 @@ public final class KitsScreen extends Screen {
                     "8× Rare Candy",
                     "8× Ultra Balls",
                     "16× Quick Balls",
-                    "64× XP Bottles"
+                    "64× XP Bottles",
+                    "RTP cooldown: −60 seconds",
+                    "Dex bonus: −10s at 50% · −20s complete"
             },
             "master",
             new String[]{
@@ -68,7 +73,9 @@ public final class KitsScreen extends Screen {
                     "1× Vote Crate Key",
                     "16× Rare Candy",
                     "32× Quick Balls",
-                    "96× XP Bottles"
+                    "96× XP Bottles",
+                    "RTP cooldown: −90 seconds",
+                    "Dex bonus: −10s at 50% · −20s complete"
             },
             "legend",
             new String[]{
@@ -78,7 +85,9 @@ public final class KitsScreen extends Screen {
                     "3× Vote Crate Keys",
                     "46× Rare Candy",
                     "46× Quick Balls",
-                    "178× XP Bottles"
+                    "178× XP Bottles",
+                    "RTP cooldown: −120 seconds",
+                    "Dex bonus: −10s at 50% · −20s complete"
             }
     );
 
