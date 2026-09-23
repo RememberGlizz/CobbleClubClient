@@ -20,7 +20,7 @@ jobs:
           java-version: '21'
       - name: Validate claim UI fixes
         run: |
-          grep -q "MatrixStack poseStack = new MatrixStack()" src/client/java/com/cobbleclub/client/claims/world/ClaimWorldRenderer.java
+          grep -q "poseStack.translate(-cameraX, -cameraY, -cameraZ)" src/client/java/com/cobbleclub/client/claims/world/ClaimWorldRenderer.java
           grep -q "public static boolean toggleEnabled()" src/client/java/com/cobbleclub/client/claims/world/ClaimWorldRenderer.java
           grep -q "Border: ON" src/client/java/com/cobbleclub/client/claims/panel/ClaimDetailPanel.java
           grep -q "private int clipBottom" src/client/java/com/cobbleclub/client/claims/panel/ClaimDetailPanel.java
