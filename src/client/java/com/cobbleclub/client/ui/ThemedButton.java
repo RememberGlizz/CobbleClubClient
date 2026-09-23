@@ -87,12 +87,12 @@ public final class ThemedButton extends ButtonWidget {
                 0xFF9DD5A7
         ),
         BLUE(
-                0xFF45627A,
-                0xFF52738E,
-                0xFF7F9CB3,
-                0xFF273B4A,
-                0xFF17212A,
-                0xFFA9C8DF
+                0xFF5D6165,
+                0xFF73787D,
+                0xFFADB1B5,
+                0xFF303336,
+                0xFF181A1C,
+                0xFFE4E6E8
         ),
         RED(
                 0xFF75484B,
