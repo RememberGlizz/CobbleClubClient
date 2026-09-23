@@ -23,6 +23,7 @@ package com.cobbleclub.client.claims.panel;
 
 import com.cobbleclub.client.claims.ClaimsNetworking;
 import com.cobbleclub.client.claims.ClaimsState;
+import com.cobbleclub.client.claims.world.ClaimWorldRenderer;
 import com.cobbleclub.client.ui.ClubScrollbar;
 import com.cobbleclub.client.ui.PreviewUi;
 import com.cobbleclub.client.ui.ThemedButton;
@@ -87,6 +88,7 @@ public final class ClaimDetailPanel {
     private ThemedButton transferButton;
     private ThemedButton deleteButton;
     private ThemedButton leaveClaimButton;
+    private ThemedButton borderToggleButton;
     private Tooltip deleteDenyTooltip;
     private TextFieldWidget trustBox;
     private ThemedButton trustButton;
@@ -234,6 +236,15 @@ public final class ClaimDetailPanel {
         add.accept((ClickableWidget)this.deleteButton);
         this.leaveClaimButton = new ThemedButton(0, 0, 56, 18, (Text)Text.literal((String)"Leave"), ThemedButton.Variant.RED, b -> this.leaveClaimClicked());
         add.accept((ClickableWidget)this.leaveClaimButton);
+        this.borderToggleButton = new ThemedButton(0, 0, 78, 18,
+                Text.literal(ClaimWorldRenderer.isEnabled() ? "Border: ON" : "Border: OFF"),
+                ThemedButton.Variant.BLUE,
+                b -> {
+                    boolean on = ClaimWorldRenderer.toggleEnabled();
+                    b.setMessage(Text.literal(on ? "Border: ON" : "Border: OFF"));
+                    PreviewUi.playClick();
+                });
+        add.accept((ClickableWidget)this.borderToggleButton);
         this.trustBox = new TextFieldWidget(this.font, 0, 0, 100, 16, (Text)Text.literal((String)"Trust player"));
         this.trustBox.setMaxLength(16);
         this.trustBox.setPlaceholder((Text)Text.literal((String)"Player name...").formatted(Formatting.DARK_GRAY));
@@ -429,7 +440,7 @@ public final class ClaimDetailPanel {
         }
 
         int buttonX = contentX;
-        boolean showTeleport = info && (trustedView || this.adminView() || this.state.adminBypass);
+        boolean showTeleport = info && (owner || trustedView || this.adminView() || this.state.adminBypass);
         int actionY = this.compactMapMode
                 ? this.y1 - 24
                 : Math.min(infoY + layout.buttonRowY(), this.y1 - 24);
@@ -453,6 +464,20 @@ public final class ClaimDetailPanel {
             buttonX += deleteW + gap;
         }
         this.place((ClickableWidget)this.leaveClaimButton, buttonX, actionY, leaveW, trustedView);
+        if (trustedView) {
+            buttonX += leaveW + gap;
+        }
+
+        // Only the full My Claims owner view gets the local border toggle.
+        // It never sends anything to the server and never changes another player.
+        boolean showBorderToggle = info && owner && !this.compactMapMode && this.warpsAllowed;
+        this.place((ClickableWidget)this.borderToggleButton, buttonX, actionY, 78, showBorderToggle);
+        if (showBorderToggle) {
+            this.borderToggleButton.setMessage(Text.literal(
+                    ClaimWorldRenderer.isEnabled() ? "Border: ON" : "Border: OFF"
+            ));
+        }
+
         this.place((ClickableWidget)this.transferBox, contentX, infoY + layout.transferRowY(), contentW - 76, info && owner);
         this.place((ClickableWidget)this.transferButton, this.x1 - 6 - 70, infoY + layout.transferRowY(), 70, info && owner);
         boolean subSection = info && owner && layout.subNameRowY() >= 0;
@@ -614,6 +639,15 @@ public final class ClaimDetailPanel {
         return this.subTab == SubTab.MEMBERS ? this.memberListTop(claim) : this.contentTop();
     }
 
+    private int clipBottom(ClaimDetailEntry claim) {
+        // The compact map card has a real, non-scrolling footer for its action
+        // buttons. Scrolled content is clipped above it so text can never slide
+        // underneath Teleport/Delete.
+        return this.compactMapMode && this.subTab == SubTab.INFO
+                ? Math.max(this.clipTop(claim) + 1, this.y1 - 30)
+                : this.y1 - 1;
+    }
+
     private void saveRename() {
         String trimmed;
         ClaimDetailEntry claim = this.claim();
@@ -768,7 +802,8 @@ public final class ClaimDetailPanel {
                 }
                 tabX += w;
             }
-            g.enableScissor(this.x0 + 1, this.clipTop(claim), this.x1 - 1, this.y1 - 1);
+            int clipBottom = this.clipBottom(claim);
+            g.enableScissor(this.x0 + 1, this.clipTop(claim), this.x1 - 1, clipBottom);
             switch (this.subTab.ordinal()) {
                 case 0: {
                     this.renderInfo(g, claim, mouseX, mouseY);
@@ -792,7 +827,14 @@ public final class ClaimDetailPanel {
                 }
             }
             g.disableScissor();
-            ClubScrollbar.draw(g, this.x1 - 5, this.clipTop(claim), this.y1 - 4, this.scroll, this.maxScroll(claim));
+
+            if (this.compactMapMode && this.subTab == SubTab.INFO) {
+                // Dedicated fixed footer: this does not move when detail content scrolls.
+                g.fill(this.x0 + 1, clipBottom, this.x1 - 1, this.y1 - 1, 0xEE2A2A2A);
+                g.fill(this.x0 + 1, clipBottom, this.x1 - 1, clipBottom + 1, -13747610);
+            }
+
+            ClubScrollbar.draw(g, this.x1 - 5, this.clipTop(claim), clipBottom - 3, this.scroll, this.maxScroll(claim));
         }
     }
 
@@ -1216,7 +1258,7 @@ public final class ClaimDetailPanel {
     }
 
     private int maxScroll(ClaimDetailEntry claim) {
-        return Math.max(0, this.contentHeight(claim) - (this.y1 - this.clipTop(claim) - 4));
+        return Math.max(0, this.contentHeight(claim) - (this.clipBottom(claim) - this.clipTop(claim) - 3));
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
@@ -1236,7 +1278,7 @@ public final class ClaimDetailPanel {
                 }
                 return true;
             }
-            if (!(mouseY < (double)this.contentTop()) && !(mouseY >= (double)this.y1)) {
+            if (!(mouseY < (double)this.contentTop()) && mouseY < (double)this.clipBottom(claim)) {
                 if (this.subTab == SubTab.INFO) {
                     return this.infoClicked(claim, mouseX, mouseY);
                 }
@@ -1389,7 +1431,7 @@ public final class ClaimDetailPanel {
 
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollY) {
         ClaimDetailEntry claim = this.claim();
-        if (claim != null && this.contains(mouseX, mouseY)) {
+        if (claim != null && this.contains(mouseX, mouseY) && mouseY < (double)this.clipBottom(claim)) {
             this.scroll = MathHelper.clamp((int)(this.scroll - (int)(scrollY * 20.0)), (int)0, (int)this.maxScroll(claim));
             return true;
         }
