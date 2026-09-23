@@ -12,6 +12,7 @@
     "ShaderInstanceMixin",
     "InventoryScreenMixin",
     "ChatHudCompactMixin",
+    "SpawnVitalsHudMixin",
     "PokemonClientDelegateMixin",
     "battle.BattleMessageHandlerMixin",
     "battle.SwitchTileMixin",
