@@ -30,6 +30,7 @@ package com.cobbleclub.server.world;
 import com.cobbleclub.server.CobbleClubServer;
 import com.cobbleclub.server.service.PermissionService;
 import com.cobbleclub.server.service.RtpService;
+import com.cobbleclub.server.service.BattleGuard;
 import com.cobbleclub.server.world.ManagedBorderService;
 import com.cobbleclub.server.world.ManagedWorldService;
 import com.cobbleclub.server.world.WildPayloads;
@@ -102,6 +103,9 @@ implements ModInitializer {
     }
 
     private static int openWild(ServerPlayerEntity player) {
+        if (BattleGuard.blockCommand(player, "wild")) {
+            return 0;
+        }
         if (!ServerPlayNetworking.canSend((ServerPlayerEntity)player, WildPayloads.Open.ID)) {
             player.sendMessage((Text)Text.literal((String)"The matching CobbleClub client mod is required to open /wild.").formatted(Formatting.RED), false);
             return 0;
