@@ -31,7 +31,6 @@ import com.cobbleclub.server.CobbleClubServer;
 import com.cobbleclub.server.world.ManagedBorderService;
 import com.cobbleclub.server.world.ManagedWorldService;
 import com.cobblemon.mod.common.Cobblemon;
-import com.cobblemon.mod.common.api.pokedex.PokedexEntryProgress;
 import com.cobblemon.mod.common.api.pokedex.PokedexManager;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.google.gson.Gson;

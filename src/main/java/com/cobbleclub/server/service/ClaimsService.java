@@ -809,13 +809,28 @@ public final class ClaimsService {
                 if (member == null) {
                     continue;
                 }
-                ClaimsService.sendState(member, 0, Result.ok(false, "Claims refreshed."));
+                ClaimsService.sendStateRefresh(member);
                 ClaimsService.sendWorld(member);
                 ClaimsService.sendWarpState(member);
             }
             catch (IllegalArgumentException ignored) {
             }
         }
+    }
+
+    private static void sendStateRefresh(ServerPlayerEntity player) {
+        if (player == null || !ServerPlayNetworking.canSend(player, Payloads.ClaimsState.ID)) {
+            return;
+        }
+        ClaimsStateMsg state = new ClaimsStateMsg(
+                1,
+                Math.max(1, revision),
+                ClaimsService.budget(player),
+                ClaimsService.visibleDetails(player),
+                ClaimsService.mapClaims(player),
+                null
+        );
+        ServerPlayNetworking.send(player, (CustomPayload)new Payloads.ClaimsState(ClaimsScreenProtocol.INSTANCE.encode((Object)state)));
     }
 
     public static void syncWorldSnapshots(MinecraftServer server) {
