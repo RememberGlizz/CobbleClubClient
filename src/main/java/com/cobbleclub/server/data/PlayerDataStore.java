@@ -117,6 +117,14 @@ public final class PlayerDataStore {
         public Map<String, Long> kitCooldownReductions = new LinkedHashMap<String, Long>();
         public Set<String> rctMilestones = new HashSet<String>();
         public Set<String> claimedContractRewards = new HashSet<String>();
+
+        // Temporary spawn sanctuary state. These values are the player's real
+        // vitals from immediately before entering minecraft:overworld.
+        public boolean spawnVitalsCaptured;
+        public float spawnReturnHealth;
+        public int spawnReturnFoodLevel;
+        public float spawnReturnSaturation;
+
         public int revision;
 
         public void normalize() {
@@ -171,6 +179,9 @@ public final class PlayerDataStore {
             this.shinyPokemonCatches = Math.max(0L, this.shinyPokemonCatches);
             this.pokemonDefeats = Math.max(0L, this.pokemonDefeats);
             this.claimBlockPurchases = Math.max(0, this.claimBlockPurchases);
+            this.spawnReturnHealth = Math.max(0.0F, this.spawnReturnHealth);
+            this.spawnReturnFoodLevel = Math.max(0, Math.min(20, this.spawnReturnFoodLevel));
+            this.spawnReturnSaturation = Math.max(0.0F, Math.min(20.0F, this.spawnReturnSaturation));
             if (this.ownedCosmetics.remove("gengar_grin_mask")) {
                 this.ownedCosmetics.add("gengar-hat");
             }
