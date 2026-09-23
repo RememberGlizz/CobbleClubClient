@@ -34,10 +34,15 @@ public final class Starfield {
             return;
         }
 
-        g.fill(x0, y0, x1, y1, 0xFF232323);
+        // Full-screen calls are the backdrop behind a menu. Leave those transparent
+        // so the normal Minecraft world/background remains visible instead of being
+        // replaced by an opaque charcoal sheet.
+        if (x0 == 0 && y0 == 0) {
+            return;
+        }
 
-        // A very light, static stone-like dither. No animation and no colored
-        // stars; this keeps menus calm and close to vanilla Minecraft.
+        // Embedded preview panes keep the restrained stone texture.
+        g.fill(x0, y0, x1, y1, 0xFF232323);
         Random random = new Random(seed);
         int speckles = Math.max(24, Math.min(180, count));
         for (int i = 0; i < speckles; ++i) {
