@@ -24,7 +24,7 @@ import net.minecraft.util.math.Box;
 public final class ClaimWorldRenderer {
    private static final RenderLayer BORDER_BOX;
    private static final RenderLayer BORDER_LINES;
-   private static final double MAX_BORDER_DISTANCE = 192.0D;
+   private static final double MAX_BORDER_DISTANCE = 256.0D;
    private static volatile ClaimsWorldMsg snapshot;
    private static volatile long snapshotAtMillis;
    private static final float[] MAIN_RGB;
@@ -56,15 +56,14 @@ public final class ClaimWorldRenderer {
             MatrixStack poseStack = context.matrixStack();
             VertexConsumerProvider consumers = context.consumers();
             poseStack.push();
-            // AFTER_ENTITIES supplies a matrix stack that is already in camera-relative world render
-            // space. Do NOT subtract the camera again here: doing so double-applies camera motion and
-            // makes claim walls slide/jitter with the player. Feed absolute world AABBs to WorldRenderer.
-            // The filled wall keeps normal depth behavior so it blends naturally with the world.
-            // The outline uses a dedicated ALWAYS-depth layer so claim edges remain readable through
-            // buildings, terrain and foliage instead of vanishing exactly when players need them.
+            // Fabric's shared world consumers expect camera-relative vertex coordinates.
+            // Keep the matrix stack untouched and subtract the camera exactly once from the
+            // claim AABB. That makes the border stay locked to world coordinates instead of
+            // following the player or being rendered far outside the visible frame.
             VertexConsumer lines = consumers.getBuffer(BORDER_LINES);
             VertexConsumer quads = consumers.getBuffer(BORDER_BOX);
             double cameraX = context.camera().getPos().x;
+            double cameraY = context.camera().getPos().y;
             double cameraZ = context.camera().getPos().z;
 
             for(WorldBoxEntry entry : msg.getGroups()) {
@@ -81,30 +80,38 @@ public final class ClaimWorldRenderer {
                   }
 
                   BoxInfo box = entry.getBox();
-                  // Keep the AABB in absolute world coordinates; the camera translation above is applied once.
-                  // A small outward expansion keeps the translucent wall/outline off block faces and prevents
-                  // z-fighting shimmer without visibly changing the claimed area.
-                  double eps = 0.01D;
-                  Box aabb = new Box(
+                  // A small outward expansion keeps the translucent wall/outline off block
+                  // faces and prevents z-fighting shimmer without changing claim ownership.
+                  double eps = 0.0125D;
+                  Box worldBox = new Box(
                         (double)box.getMinX() - eps,
                         (double)box.getMinY() - eps,
                         (double)box.getMinZ() - eps,
                         (double)(box.getMaxX() + 1) + eps,
                         (double)(box.getMaxY() + 1) + eps,
                         (double)(box.getMaxZ() + 1) + eps);
-                  // Do not render every claim in the dimension through walls. Keep nearby boundaries
-                  // permanently readable while culling claims that are well outside the player's area.
-                  double dx = cameraX < aabb.minX ? aabb.minX - cameraX : (cameraX > aabb.maxX ? cameraX - aabb.maxX : 0.0D);
-                  double dz = cameraZ < aabb.minZ ? aabb.minZ - cameraZ : (cameraZ > aabb.maxZ ? cameraZ - aabb.maxZ : 0.0D);
+
+                  // Cull only claims that are genuinely far away. Every nearby player's claim
+                  // remains visible regardless of ownership/trust relation.
+                  double dx = cameraX < worldBox.minX ? worldBox.minX - cameraX : (cameraX > worldBox.maxX ? cameraX - worldBox.maxX : 0.0D);
+                  double dz = cameraZ < worldBox.minZ ? worldBox.minZ - cameraZ : (cameraZ > worldBox.maxZ ? cameraZ - worldBox.maxZ : 0.0D);
                   if (dx * dx + dz * dz > MAX_BORDER_DISTANCE * MAX_BORDER_DISTANCE) {
                      continue;
                   }
 
+                  Box renderBox = new Box(
+                        worldBox.minX - cameraX,
+                        worldBox.minY - cameraY,
+                        worldBox.minZ - cameraZ,
+                        worldBox.maxX - cameraX,
+                        worldBox.maxY - cameraY,
+                        worldBox.maxZ - cameraZ);
+
                   float[] rgb = colorFor(type);
                   float pulse = type == WorldBoxType.DENIAL ? 0.75F + 0.25F * (float)Math.sin((double)System.currentTimeMillis() / (double)120.0F) : 1.0F;
-                  float fillAlpha = type == WorldBoxType.MAIN ? 0.085F : 0.045F;
-                  WorldRenderer.renderFilledBox(poseStack, quads, aabb.minX, aabb.minY, aabb.minZ, aabb.maxX, aabb.maxY, aabb.maxZ, rgb[0], rgb[1], rgb[2], fillAlpha * alphaScale * pulse);
-                  WorldRenderer.drawBox(poseStack, lines, aabb, rgb[0], rgb[1], rgb[2], 1.0F * alphaScale * pulse);
+                  float fillAlpha = type == WorldBoxType.MAIN ? 0.10F : 0.060F;
+                  WorldRenderer.renderFilledBox(poseStack, quads, renderBox.minX, renderBox.minY, renderBox.minZ, renderBox.maxX, renderBox.maxY, renderBox.maxZ, rgb[0], rgb[1], rgb[2], fillAlpha * alphaScale * pulse);
+                  WorldRenderer.drawBox(poseStack, lines, renderBox, rgb[0], rgb[1], rgb[2], 1.0F * alphaScale * pulse);
                }
             }
 
@@ -130,7 +137,7 @@ public final class ClaimWorldRenderer {
    }
 
    static {
-      BORDER_BOX = RenderLayer.of("cobbleclub_claim_border", VertexFormats.POSITION_COLOR, DrawMode.TRIANGLE_STRIP, 1536, MultiPhaseParameters.builder().program(RenderPhase.COLOR_PROGRAM).cull(RenderPhase.DISABLE_CULLING).writeMaskState(RenderPhase.COLOR_MASK).transparency(RenderPhase.TRANSLUCENT_TRANSPARENCY).build(false));
+      BORDER_BOX = RenderLayer.of("cobbleclub_claim_border", VertexFormats.POSITION_COLOR, DrawMode.TRIANGLE_STRIP, 1536, MultiPhaseParameters.builder().program(RenderPhase.COLOR_PROGRAM).cull(RenderPhase.DISABLE_CULLING).writeMaskState(RenderPhase.COLOR_MASK).transparency(RenderPhase.TRANSLUCENT_TRANSPARENCY).depthTest(RenderPhase.ALWAYS_DEPTH_TEST).build(false));
       BORDER_LINES = RenderLayer.of("cobbleclub_claim_border_lines", VertexFormats.LINES, DrawMode.LINES, 512, MultiPhaseParameters.builder()
             .program(RenderPhase.LINES_PROGRAM)
             .lineWidth(RenderPhase.FULL_LINE_WIDTH)
