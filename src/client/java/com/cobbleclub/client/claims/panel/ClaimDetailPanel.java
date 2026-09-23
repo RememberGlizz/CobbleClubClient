@@ -113,6 +113,8 @@ public final class ClaimDetailPanel {
     private String leaveTitleText;
     private String leaveSubtitleText;
     private ClaimsState.PermRow hoveredPermTooltip;
+    private boolean compactMapMode;
+    private boolean warpsAllowed;
 
     public ClaimDetailPanel(ClaimsState state, TextRenderer font, Consumer<ClaimDetailEntry> showOnMap, Consumer<ClaimDetailEntry> teleport, ConfirmRequest confirm) {
         this.state = state;
@@ -174,6 +176,15 @@ public final class ClaimDetailPanel {
             this.infoSubId = null;
         }
         this.syncEditBoxValues();
+    }
+
+    public void setViewContext(boolean compactMapMode, boolean warpsAllowed) {
+        this.compactMapMode = compactMapMode;
+        this.warpsAllowed = warpsAllowed;
+        if (!this.warpsVisibleForCurrentClaim() && this.subTab == SubTab.WARPS) {
+            this.subTab = SubTab.INFO;
+            this.scroll = 0;
+        }
     }
 
     public void setBounds(int x0, int y0, int x1, int y1) {
@@ -410,28 +421,38 @@ public final class ClaimDetailPanel {
         InfoLayout layout = visible ? this.infoLayout(claim) : InfoLayout.EMPTY;
         this.place((ClickableWidget)this.renameBox, contentX, infoY + layout.nameRowY(), contentW - 54, info && owner);
         this.place((ClickableWidget)this.saveNameButton, this.x1 - 6 - 48, infoY + layout.nameRowY(), 48, info && owner);
-        boolean showMap = info && this.state.isOnMap(this.claimId);
+        boolean showMap = info && !this.compactMapMode && this.state.isOnMap(this.claimId);
         boolean trustedView = info && visible && !claim.isOwner() && !this.adminView();
         boolean bl = showDelete = info && owner;
         if (showDelete) {
             this.deleteButton.setTooltip(this.canDelete(claim) ? null : this.deleteDenyTooltip());
         }
+
         int buttonX = contentX;
         boolean showTeleport = info && (trustedView || this.adminView() || this.state.adminBypass);
-        int actionY = Math.min(infoY + layout.buttonRowY(), this.y1 - 24);
-        this.place((ClickableWidget)this.teleportButton, contentX, actionY, 70, showTeleport);
+        int actionY = this.compactMapMode
+                ? this.y1 - 24
+                : Math.min(infoY + layout.buttonRowY(), this.y1 - 24);
+
+        int teleportW = this.compactMapMode ? 62 : 70;
+        int mapW = this.compactMapMode ? 40 : 46;
+        int deleteW = this.compactMapMode ? 50 : 56;
+        int leaveW = this.compactMapMode ? 50 : 56;
+        int gap = 4;
+
+        this.place((ClickableWidget)this.teleportButton, buttonX, actionY, teleportW, showTeleport);
         if (showTeleport) {
-            buttonX = contentX + 74;
+            buttonX += teleportW + gap;
         }
-        this.place((ClickableWidget)this.mapButton, buttonX, actionY, 46, showMap);
+        this.place((ClickableWidget)this.mapButton, buttonX, actionY, mapW, showMap);
         if (showMap) {
-            buttonX += 50;
+            buttonX += mapW + gap;
         }
-        this.place((ClickableWidget)this.deleteButton, buttonX, actionY, 56, showDelete);
+        this.place((ClickableWidget)this.deleteButton, buttonX, actionY, deleteW, showDelete);
         if (showDelete) {
-            buttonX += 60;
+            buttonX += deleteW + gap;
         }
-        this.place((ClickableWidget)this.leaveClaimButton, buttonX, actionY, 56, trustedView);
+        this.place((ClickableWidget)this.leaveClaimButton, buttonX, actionY, leaveW, trustedView);
         this.place((ClickableWidget)this.transferBox, contentX, infoY + layout.transferRowY(), contentW - 76, info && owner);
         this.place((ClickableWidget)this.transferButton, this.x1 - 6 - 70, infoY + layout.transferRowY(), 70, info && owner);
         boolean subSection = info && owner && layout.subNameRowY() >= 0;
@@ -449,7 +470,7 @@ public final class ClaimDetailPanel {
         this.place((ClickableWidget)this.leaveTitleBox, contentX, msgY + 76, contentW, visible && this.subTab == SubTab.MESSAGES && canMessages);
         this.place((ClickableWidget)this.leaveSubtitleBox, contentX, msgY + 108, contentW, visible && this.subTab == SubTab.MESSAGES && canMessages);
         this.place((ClickableWidget)this.saveMessagesButton, contentX, msgY + 130, 60, visible && this.subTab == SubTab.MESSAGES && canMessages);
-        boolean warps = visible && this.subTab == SubTab.WARPS && owner;
+        boolean warps = visible && this.subTab == SubTab.WARPS && owner && this.warpsAllowed;
         int warpY = this.contentTop() - this.scroll;
         this.place((ClickableWidget)this.warpNameBox, contentX, warpY + 34, contentW - 54, warps);
         this.place((ClickableWidget)this.warpNameSaveButton, this.x1 - 6 - 48, warpY + 34, 48, warps);
@@ -486,6 +507,7 @@ public final class ClaimDetailPanel {
             y += 12;
         }
         boolean owner = claim.isOwner() && !this.adminView();
+        boolean trustedView = !claim.isOwner() && !this.adminView();
         int nameLabelY = -1;
         int nameRowY = -1;
         int buttonRowY = -1;
@@ -500,7 +522,13 @@ public final class ClaimDetailPanel {
             nameRowY = nameLabelY + 12;
             y = nameRowY + 22;
         }
-        if (owner || this.state.isOnMap(this.claimId) || this.adminView()) {
+        // Trusted claims need their own action row too. Previously an off-world
+        // trusted claim left buttonRowY at -1, which pushed Teleport/Leave up into
+        // the header area. Give that row real space and a little separation.
+        if (trustedView) {
+            y += 8;
+        }
+        if (owner || trustedView || this.state.isOnMap(this.claimId) || this.adminView()) {
             buttonRowY = y;
             y += 24;
         }
@@ -731,6 +759,7 @@ public final class ClaimDetailPanel {
             SubTab hoveredTab = stripHover ? this.subTabAt(mouseX) : null;
             int tabX = this.x0 + 4;
             for (SubTab tab : SubTab.values()) {
+                if (!this.tabVisible(tab, claim)) continue;
                 int w = this.tabWidth(tab);
                 boolean active = tab == this.subTab;
                 g.drawTextWithShadow(this.font, this.tabLabel(tab), tabX + 4, this.headerBottom() + 3, active ? -2053377 : (tab == hoveredTab ? -1 : -7035976));
@@ -781,9 +810,20 @@ public final class ClaimDetailPanel {
         return this.font.getWidth(this.tabLabel(tab)) + 8;
     }
 
+    private boolean warpsVisibleForCurrentClaim() {
+        ClaimDetailEntry claim = this.claim();
+        return claim != null && this.warpsAllowed && !this.compactMapMode && claim.isOwner() && !this.adminView();
+    }
+
+    private boolean tabVisible(SubTab tab, ClaimDetailEntry claim) {
+        return tab != SubTab.WARPS || (claim != null && this.warpsAllowed && !this.compactMapMode && claim.isOwner() && !this.adminView());
+    }
+
     private SubTab subTabAt(double mouseX) {
+        ClaimDetailEntry claim = this.claim();
         int tabX = this.x0 + 4;
         for (SubTab tab : SubTab.values()) {
+            if (!this.tabVisible(tab, claim)) continue;
             int w = this.tabWidth(tab);
             if (mouseX >= (double)tabX && mouseX < (double)(tabX + w)) {
                 return tab;
