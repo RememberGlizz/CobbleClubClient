@@ -43,6 +43,7 @@ public final class SpawnVitalsService {
                 data.spawnReturnHealth = Math.max(0.0F, player.getHealth());
                 data.spawnReturnFoodLevel = hunger.getFoodLevel();
                 data.spawnReturnSaturation = hunger.getSaturationLevel();
+                data.spawnReturnExhaustion = hunger.getExhaustion();
                 data.spawnVitalsCaptured = true;
                 ++data.revision;
                 PlayerDataStore.save();
@@ -60,6 +61,11 @@ public final class SpawnVitalsService {
             if (hunger.getSaturationLevel() < 20.0F) {
                 hunger.setSaturationLevel(20.0F);
             }
+            // Discard spawn movement exhaustion while keeping the pre-spawn
+            // exhaustion stored separately for exact restoration.
+            if (hunger.getExhaustion() != 0.0F) {
+                hunger.setExhaustion(0.0F);
+            }
             return;
         }
 
@@ -75,11 +81,13 @@ public final class SpawnVitalsService {
                 0.0F,
                 Math.min((float)hunger.getFoodLevel(), data.spawnReturnSaturation)
         ));
+        hunger.setExhaustion(Math.max(0.0F, data.spawnReturnExhaustion));
 
         data.spawnVitalsCaptured = false;
         data.spawnReturnHealth = 0.0F;
         data.spawnReturnFoodLevel = 0;
         data.spawnReturnSaturation = 0.0F;
+        data.spawnReturnExhaustion = 0.0F;
         ++data.revision;
         PlayerDataStore.save();
     }
