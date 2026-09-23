@@ -9,6 +9,7 @@ import com.cobbleclub.server.network.ServerNetworking;
 import com.cobbleclub.server.service.CatalogService;
 import com.cobbleclub.server.service.ClaimPresenceService;
 import com.cobbleclub.server.service.ClaimsService;
+import com.cobbleclub.server.service.ClaimBlocksAdminService;
 import com.cobbleclub.server.service.ClubItems;
 import com.cobbleclub.server.service.CosmeticVisualService;
 import com.cobbleclub.server.service.CrateService;
@@ -186,6 +187,7 @@ public final class CobbleClubServer
             LeaderboardService.registerCommands(dispatcher);
             PondService.registerCommands(dispatcher);
             LaunchService.registerCommands(dispatcher);
+            ClaimBlocksAdminService.registerCommands(dispatcher);
             dispatcher.register(CommandManager.literal("cobbleclubrctinternal")
                     .then(CommandManager.literal("kanto")
                             .then(CommandManager.argument("milestone", StringArgumentType.word())
