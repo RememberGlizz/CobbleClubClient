@@ -25,6 +25,7 @@ import net.minecraft.util.Identifier;
 
 public final class ContractsService {
     private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
+    private static final Set<String> READY_RCT_REGIONS = Set.of("Kanto", "Johto", "Hoenn", "Sinnoh");
 
     private static final List<MilestoneDef> MILESTONES = List.of(
             new MilestoneDef("milestone:catch_25", "Collector I", "Catch 25 Pokémon.", Metric.CATCHES, 25L, 2000L, 2L, null, 0),
@@ -286,7 +287,7 @@ public final class ContractsService {
     }
 
     private static JourneyStatus journeyStatus(PlayerDataStore.PlayerData data, JourneyDef def) {
-        boolean regionReady = "Kanto".equals(def.region);
+        boolean regionReady = READY_RCT_REGIONS.contains(def.region);
         boolean previousClaimed = def.requiresClaim == null || data.claimedContractRewards.contains(def.requiresClaim);
         boolean objectives = data.pokemonCatches >= def.requiredCatches
                 && data.pokemonDefeats >= def.requiredDefeats
