@@ -110,23 +110,25 @@ public final class SellScreen
         this.searchField.setText(previousSearch);
         this.addDrawableChild(this.searchField);
         this.sortButton = this.addDrawableChild(new ThemedButton(this.left() + 156, top + 44, 73, 17, Text.literal(this.sortMode.label), ThemedButton.Variant.BLUE, b -> this.cycleSort()));
-        this.amountField = new TextFieldWidget(this.textRenderer, detailX + 7, top + 119, 108, 17, Text.literal("Amount"));
+        this.amountField = new TextFieldWidget(this.textRenderer, detailX + 7, top + 119, 100, 17, Text.literal("Amount"));
         this.amountField.setMaxLength(5);
         this.amountField.setTextPredicate(value -> value.matches("\\d*"));
         this.amountField.setPlaceholder(Text.literal("Amount"));
         this.amountField.setText("1");
         this.addDrawableChild(this.amountField);
-        this.oneButton = this.addDrawableChild(new ThemedButton(detailX + 7, top + 139, 20, 15, Text.literal("1"), b -> this.setAmount(1)));
-        this.sixteenButton = this.addDrawableChild(new ThemedButton(detailX + 30, top + 139, 23, 15, Text.literal("16"), b -> this.setAmount(16)));
-        this.thirtyTwoButton = this.addDrawableChild(new ThemedButton(detailX + 56, top + 139, 23, 15, Text.literal("32"), b -> this.setAmount(32)));
-        this.halfButton = this.addDrawableChild(new ThemedButton(detailX + 82, top + 139, 33, 15, Text.literal("Half"), b -> this.setHalfAmount()));
-        this.allButton = this.addDrawableChild(new ThemedButton(detailX + 7, top + 157, 108, 15, Text.literal("All"), ThemedButton.Variant.BLUE, b -> this.setAllAmount()));
-        this.sellButton = this.addDrawableChild(new ThemedButton(detailX + 7, top + 184, 108, 15, Text.literal("Sell"), ThemedButton.Variant.GREEN, b -> this.sellSelected()));
-        this.addDrawableChild(new ThemedButton(detailX + 7, top + 202, 52, 14, Text.literal("Refresh"), b -> {
+        // Keep the whole quantity/action cluster centered inside the 114px detail well.
+        // 100px content width leaves a clean 7px inset on both sides.
+        this.oneButton = this.addDrawableChild(new ThemedButton(detailX + 7, top + 139, 18, 15, Text.literal("1"), b -> this.setAmount(1)));
+        this.sixteenButton = this.addDrawableChild(new ThemedButton(detailX + 28, top + 139, 22, 15, Text.literal("16"), b -> this.setAmount(16)));
+        this.thirtyTwoButton = this.addDrawableChild(new ThemedButton(detailX + 53, top + 139, 22, 15, Text.literal("32"), b -> this.setAmount(32)));
+        this.halfButton = this.addDrawableChild(new ThemedButton(detailX + 78, top + 139, 29, 15, Text.literal("Half"), b -> this.setHalfAmount()));
+        this.allButton = this.addDrawableChild(new ThemedButton(detailX + 7, top + 157, 100, 15, Text.literal("All"), ThemedButton.Variant.BLUE, b -> this.setAllAmount()));
+        this.sellButton = this.addDrawableChild(new ThemedButton(detailX + 7, top + 184, 100, 15, Text.literal("Sell"), ThemedButton.Variant.GREEN, b -> this.sellSelected()));
+        this.addDrawableChild(new ThemedButton(detailX + 7, top + 202, 48, 14, Text.literal("Refresh"), b -> {
             this.pending = true;
             SellNetworking.refresh();
         }));
-        this.addDrawableChild(new ThemedButton(detailX + 63, top + 202, 52, 14, Text.literal("Close"), b -> this.close()));
+        this.addDrawableChild(new ThemedButton(detailX + 59, top + 202, 48, 14, Text.literal("Close"), b -> this.close()));
         this.invalidateFilter();
     }
 
