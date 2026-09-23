@@ -71,26 +71,26 @@ public class WardrobeScreen extends Screen {
     private static final float MAX_ZOOM = 2.6f;
     private static final float DEFAULT_ZOOM = 0.82f;
     private static final float ZOOM_STEP = 1.12f;
-    private static final int PANEL_TOP = -199614136;
-    private static final int PANEL_BOTTOM = -200601562;
-    private static final int PANEL_BORDER_OUT = -16447985;
-    private static final int PANEL_BORDER_IN = -13747610;
-    private static final int HEADER_TOP = -14405538;
-    private static final int HEADER_BOTTOM = -15459782;
-    private static final int ACCENT = -6467875;
+    private static final int PANEL_TOP = -196589496;
+    private static final int PANEL_BOTTOM = -198036942;
+    private static final int PANEL_BORDER_OUT = -15658735;
+    private static final int PANEL_BORDER_IN = -7434610;
+    private static final int HEADER_TOP = -10855846;
+    private static final int HEADER_BOTTOM = -12632257;
+    private static final int ACCENT = -4342339;
     private static final int ACCENT_DIM = -9815394;
     private static final int STARLIGHT = -535702;
     private static final int EQUIPPED = -12474273;
-    private static final int TITLE_COLOR = -2053377;
-    private static final int MUTED_TEXT = -7035976;
-    private static final int PREVIEW_TOP = -14998448;
-    private static final int PREVIEW_BOTTOM = -16315880;
-    private static final int SLOT_BASE = -15064506;
+    private static final int TITLE_COLOR = -723724;
+    private static final int MUTED_TEXT = -5197648;
+    private static final int PREVIEW_TOP = -13421773;
+    private static final int PREVIEW_BOTTOM = -15198184;
+    private static final int SLOT_BASE = -13421773;
     private static final int SLOT_SHADOW = -16118238;
-    private static final int SLOT_LIGHT = -13747610;
-    private static final int CONTENT_BG = -15723477;
-    private static final int SCROLL_TRACK = -15986650;
-    private static final int SCROLL_THUMB = -10862962;
+    private static final int SLOT_LIGHT = -7434610;
+    private static final int CONTENT_BG = -14671840;
+    private static final int SCROLL_TRACK = -14671840;
+    private static final int SCROLL_THUMB = -8947849;
     private static final int EQUIPPED_FILL = 675391583;
     private static final int SELECTED_FILL = 681397981;
     private final WardrobeState state = WardrobeState.get();
@@ -287,12 +287,12 @@ public class WardrobeScreen extends Screen {
         int bottom = top + 224;
         Starfield.draw(guiGraphics, 0, 0, this.width, this.height, Util.getMeasuringTimeMs(), 44, 1337L, 0.5f);
         guiGraphics.fill(left - 3, top - 3, right + 3, bottom + 3, 0x55000000);
-        guiGraphics.fillGradient(left, top, right, bottom, -199614136, -200601562);
-        guiGraphics.fillGradient(left, top, right, top + 18, -14405538, -15459782);
+        guiGraphics.fillGradient(left, top, right, bottom, -196589496, -198036942);
+        guiGraphics.fillGradient(left, top, right, top + 18, -10855846, -12632257);
         guiGraphics.fill(left, top + 17, right, top + 18, -9815394);
-        guiGraphics.drawBorder(left, top, 416, 224, -16447985);
-        guiGraphics.drawBorder(left + 1, top + 1, 414, 222, -13747610);
-        guiGraphics.drawCenteredTextWithShadow(this.textRenderer, this.title, left + 208, top + 5, -2053377);
+        guiGraphics.drawBorder(left, top, 416, 224, -15658735);
+        guiGraphics.drawBorder(left + 1, top + 1, 414, 222, -7434610);
+        guiGraphics.drawCenteredTextWithShadow(this.textRenderer, this.title, left + 208, top + 5, -723724);
     }
 
     @Override
@@ -320,13 +320,13 @@ public class WardrobeScreen extends Screen {
         int py0 = this.previewY0();
         int px1 = this.previewX1();
         int py1 = this.previewY1();
-        guiGraphics.fillGradient(px0, py0, px1, py1, -14998448, -16315880);
+        guiGraphics.fillGradient(px0, py0, px1, py1, -13421773, -15198184);
         guiGraphics.enableScissor(px0, py0, px1, py1);
         Starfield.draw(guiGraphics, px0, py0, px1, py1, now, 34, 91L, 0.85f);
         guiGraphics.disableScissor();
         guiGraphics.fillGradient(px0, py1 - 46, px1, py1, 0, 0x66000000);
         guiGraphics.fill(px0, py0, px1, py0 + 1, 0x1AFFFFFF);
-        guiGraphics.drawBorder(px0, py0, px1 - px0, py1 - py0, -16447985);
+        guiGraphics.drawBorder(px0, py0, px1 - px0, py1 - py0, -15658735);
         this.preview.updateEquipment(this.state);
         WardrobeGlowEntry outlineGlow = this.state.outlineGlow();
         int glowColor = !this.state.isHidden() && outlineGlow != null ? WardrobeScreen.glowColor(outlineGlow) : -1;
@@ -356,8 +356,8 @@ public class WardrobeScreen extends Screen {
     }
 
     private void renderContentPanel(DrawContext g, int x, int y, int gridW, int gridH) {
-        g.fill(x - 2, y - 2, x + gridW + 2, y + gridH + 2, -15723477);
-        WardrobeScreen.insetBevel(g, x - 2, y - 2, x + gridW + 2, y + gridH + 2, -16118238, -13747610);
+        g.fill(x - 2, y - 2, x + gridW + 2, y + gridH + 2, -14671840);
+        WardrobeScreen.insetBevel(g, x - 2, y - 2, x + gridW + 2, y + gridH + 2, -16118238, -7434610);
     }
 
     private void renderGrid(DrawContext guiGraphics, int mouseX, int mouseY) {
@@ -384,8 +384,8 @@ public class WardrobeScreen extends Screen {
             int sy0 = cellY + 1;
             int sx1 = cellX + 24 - 1;
             int sy1 = cellY + 24 - 1;
-            guiGraphics.fill(sx0, sy0, sx1, sy1, WardrobeScreen.withAlpha(-15064506, reveal));
-            WardrobeScreen.insetBevel(guiGraphics, sx0, sy0, sx1, sy1, -16118238, -13747610);
+            guiGraphics.fill(sx0, sy0, sx1, sy1, WardrobeScreen.withAlpha(-13421773, reveal));
+            WardrobeScreen.insetBevel(guiGraphics, sx0, sy0, sx1, sy1, -16118238, -7434610);
             boolean hoveredCell = reveal >= 1.0f && mouseX >= cellX && mouseX < cellX + 24 && mouseY >= cellY && mouseY < cellY + 24;
             float f = hoverT = hoveredCell ? WardrobeScreen.easeOut(Math.min(1.0f, (float)(now - this.hoverAnimStart) / 120.0f)) : 0.0f;
             if (hoveredCell) {
@@ -406,17 +406,17 @@ public class WardrobeScreen extends Screen {
             }
             if (!entry.getId().equals(this.state.getSelected(this.activeSlot))) continue;
             guiGraphics.fill(sx0, sy0, sx1, sy1, 681397981);
-            guiGraphics.drawBorder(cellX, cellY, 24, 24, WardrobeScreen.withPulse(-6467875, pulse));
+            guiGraphics.drawBorder(cellX, cellY, 24, 24, WardrobeScreen.withPulse(-4342339, pulse));
         }
         guiGraphics.disableScissor();
         int maxScroll = this.maxScrollRow();
         if (maxScroll > 0) {
             int trackX = x + gridW + 2;
-            guiGraphics.fill(trackX, y, trackX + 4, y + gridH, -15986650);
+            guiGraphics.fill(trackX, y, trackX + 4, y + gridH, -14671840);
             int thumbH = Math.max(10, gridH * 6 / (maxScroll + 6));
             int thumbY = y + (gridH - thumbH) * this.scrollRow / maxScroll;
-            guiGraphics.fill(trackX, thumbY, trackX + 4, thumbY + thumbH, -10862962);
-            guiGraphics.fill(trackX + 1, thumbY + 1, trackX + 2, thumbY + thumbH - 1, -6467875);
+            guiGraphics.fill(trackX, thumbY, trackX + 4, thumbY + thumbH, -8947849);
+            guiGraphics.fill(trackX + 1, thumbY + 1, trackX + 2, thumbY + thumbH - 1, -4342339);
         }
     }
 
@@ -465,7 +465,7 @@ public class WardrobeScreen extends Screen {
                 this.tabIndicatorW += (targetW - this.tabIndicatorW) * factor;
             }
             int by = active.getY() + active.getHeight();
-            guiGraphics.fill((int)this.tabIndicatorX, by - 1, (int)(this.tabIndicatorX + this.tabIndicatorW), by + 1, -6467875);
+            guiGraphics.fill((int)this.tabIndicatorX, by - 1, (int)(this.tabIndicatorX + this.tabIndicatorW), by + 1, -4342339);
         }
     }
 
@@ -477,10 +477,10 @@ public class WardrobeScreen extends Screen {
             for (DyeColor dye : DyeColor.values()) {
                 int x = this.gridX() + dye.ordinal() * 10;
                 int color = dye.getFireworkColor() & 0xFFFFFF;
-                guiGraphics.fill(x - 1, y - 1, x + 9, y + 9, -16447985);
+                guiGraphics.fill(x - 1, y - 1, x + 9, y + 9, -15658735);
                 guiGraphics.fill(x, y, x + 8, y + 8, 0xFF000000 | color);
                 if (current == null || current != color) continue;
-                guiGraphics.drawBorder(x - 1, y - 1, 10, 10, -6467875);
+                guiGraphics.drawBorder(x - 1, y - 1, 10, 10, -4342339);
             }
         }
     }
@@ -503,7 +503,7 @@ public class WardrobeScreen extends Screen {
         int rows = this.visibleRows();
         int gridH = rows * 24;
         if (glows.isEmpty()) {
-            guiGraphics.drawCenteredTextWithShadow(this.textRenderer, Text.literal("No glows available"), x + gridW / 2, y + gridH / 2 - 4, -7035976);
+            guiGraphics.drawCenteredTextWithShadow(this.textRenderer, Text.literal("No glows available"), x + gridW / 2, y + gridH / 2 - 4, -5197648);
         } else {
             int firstIndex;
             long now = Util.getMeasuringTimeMs();
@@ -521,8 +521,8 @@ public class WardrobeScreen extends Screen {
                 int sy0 = cellY + 1;
                 int sx1 = cellX + 24 - 1;
                 int sy1 = cellY + 24 - 1;
-                guiGraphics.fill(sx0, sy0, sx1, sy1, WardrobeScreen.withAlpha(-15064506, reveal));
-                WardrobeScreen.insetBevel(guiGraphics, sx0, sy0, sx1, sy1, -16118238, -13747610);
+                guiGraphics.fill(sx0, sy0, sx1, sy1, WardrobeScreen.withAlpha(-13421773, reveal));
+                WardrobeScreen.insetBevel(guiGraphics, sx0, sy0, sx1, sy1, -16118238, -7434610);
                 boolean hoveredCell = reveal >= 1.0f && mouseX >= cellX && mouseX < cellX + 24 && mouseY >= cellY && mouseY < cellY + 24;
                 int chipAlpha = Math.round(255.0f * reveal) << 24;
                 guiGraphics.fill(cellX + 4, cellY + 4, cellX + 24 - 4, cellY + 24 - 4, chipAlpha | WardrobeScreen.glowColor(glow));
@@ -540,11 +540,11 @@ public class WardrobeScreen extends Screen {
             int maxScroll = this.maxScrollRow();
             if (maxScroll > 0) {
                 int trackX = x + gridW + 2;
-                guiGraphics.fill(trackX, y, trackX + 4, y + gridH, -15986650);
+                guiGraphics.fill(trackX, y, trackX + 4, y + gridH, -14671840);
                 int thumbH = Math.max(10, gridH * 6 / (maxScroll + 6));
                 int thumbY = y + (gridH - thumbH) * this.scrollRow / maxScroll;
-                guiGraphics.fill(trackX, thumbY, trackX + 4, thumbY + thumbH, -10862962);
-                guiGraphics.fill(trackX + 1, thumbY + 1, trackX + 2, thumbY + thumbH - 1, -6467875);
+                guiGraphics.fill(trackX, thumbY, trackX + 4, thumbY + thumbH, -8947849);
+                guiGraphics.fill(trackX + 1, thumbY + 1, trackX + 2, thumbY + thumbH - 1, -4342339);
             }
         }
     }
@@ -609,17 +609,17 @@ public class WardrobeScreen extends Screen {
         if (!presets.isEmpty()) {
             int y = this.presetStripY();
             int stripX = this.presetStripX();
-            g.drawText(this.textRenderer, Text.literal("Presets"), this.panelLeft() + 10, y + 4, -7035976, false);
+            g.drawText(this.textRenderer, Text.literal("Presets"), this.panelLeft() + 10, y + 4, -5197648, false);
             for (int i = 0; i < presets.size(); ++i) {
                 boolean hov;
                 WardrobePresetSummary p = presets.get(i);
                 int tx = stripX + i * 18;
                 hov = mouseX >= tx && mouseX < tx + 16 && mouseY >= y && mouseY < y + 16;
-                int bg = p.getLocked() ? -15462626 : (p.getFilled() ? -14405546 : -15199710);
+                int bg = p.getLocked() ? -15462626 : (p.getFilled() ? -12105913 : -15199710);
                 g.fill(tx, y, tx + 16, y + 16, bg);
                 g.fill(tx, y, tx + 16, y + 1, -13161134);
                 g.fill(tx, y + 16 - 1, tx + 16, y + 16, -16119790);
-                int tc = p.getLocked() ? -10857360 : (p.getFilled() ? -2053377 : -7035976);
+                int tc = p.getLocked() ? -10857360 : (p.getFilled() ? -723724 : -5197648);
                 g.drawCenteredTextWithShadow(this.textRenderer, String.valueOf(p.getIndex()), tx + 8, y + 4, tc);
                 if (p.getLocked()) {
                     this.renderLockPip(g, tx + 16 - 6, y + 1);
@@ -627,7 +627,7 @@ public class WardrobeScreen extends Screen {
                     g.drawBorder(tx, y, 16, 16, -2131242134);
                 }
                 if (!hov || p.getLocked()) continue;
-                g.drawBorder(tx, y, 16, 16, -6467875);
+                g.drawBorder(tx, y, 16, 16, -4342339);
             }
         }
     }
@@ -942,7 +942,7 @@ public class WardrobeScreen extends Screen {
             if (!selected) {
                 g.fill(x0, y1 - 1, x1, y1, -16118238);
             }
-            int tc = selected ? -2053377 : (hover ? -3418650 : -7035976);
+            int tc = selected ? -723724 : (hover ? -3418650 : -5197648);
             g.drawCenteredTextWithShadow(WardrobeScreen.this.textRenderer, this.getMessage(), (x0 + x1) / 2, y0 + (this.getHeight() - 8) / 2, tc);
         }
     }
