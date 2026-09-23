@@ -456,9 +456,9 @@ extends Screen {
             boolean isActive = idx == this.activeTab && !searching;
             boolean hover = PreviewUi.inRect(mouseX, mouseY, x, ry, 100, 15);
             boolean crateRow = this.tabs.get(idx).crate();
-            int base = crateRow ? -15068366 : -15528414;
-            int n = hoverBg = crateRow ? -14411202 : -14936272;
-            g.fill(x, ry, x + 100, ry + 15 - 1, isActive ? -14410694 : (hover ? hoverBg : base));
+            int base = crateRow ? -15068366 : -13290187;
+            int n = hoverBg = crateRow ? -14411202 : -12105913;
+            g.fill(x, ry, x + 100, ry + 15 - 1, isActive ? -11184811 : (hover ? hoverBg : base));
             if (isActive) {
                 g.fill(x, ry, x + 2, ry + 15 - 1, -4342339);
             }
