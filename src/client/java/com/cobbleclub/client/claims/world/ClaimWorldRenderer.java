@@ -27,6 +27,7 @@ public final class ClaimWorldRenderer {
    private static final double MAX_BORDER_DISTANCE = 256.0D;
    private static volatile ClaimsWorldMsg snapshot;
    private static volatile long snapshotAtMillis;
+   private static volatile boolean enabled = true;
    private static final float[] MAIN_RGB;
    private static final float[] OTHER_RGB;
    private static final float[] SUB_RGB;
@@ -48,18 +49,31 @@ public final class ClaimWorldRenderer {
       snapshotAtMillis = System.currentTimeMillis();
    }
 
+   public static boolean isEnabled() {
+      return enabled;
+   }
+
+   public static boolean toggleEnabled() {
+      enabled = !enabled;
+      return enabled;
+   }
+
    private static void render(WorldRenderContext context) {
       ClaimsWorldMsg msg = snapshot;
-      if (msg != null && context.world() != null && context.matrixStack() != null && context.consumers() != null) {
+      if (!enabled) {
+         return;
+      }
+      if (msg != null && context.world() != null && context.consumers() != null) {
          if (context.world().getRegistryKey().getValue().toString().equals(msg.getDimension())) {
             long elapsedTicks = (System.currentTimeMillis() - snapshotAtMillis) / 50L;
-            MatrixStack poseStack = context.matrixStack();
+
+            // IMPORTANT: do not reuse WorldRenderer's live MatrixStack here. At AFTER_ENTITIES
+            // it already contains vanilla camera/view transforms, which caused our previous
+            // camera-relative AABB to be transformed a second time and visually follow the
+            // player. A fresh identity stack plus one camera subtraction gives stable,
+            // absolute world placement.
+            MatrixStack poseStack = new MatrixStack();
             VertexConsumerProvider consumers = context.consumers();
-            poseStack.push();
-            // Fabric's shared world consumers expect camera-relative vertex coordinates.
-            // Keep the matrix stack untouched and subtract the camera exactly once from the
-            // claim AABB. That makes the border stay locked to world coordinates instead of
-            // following the player or being rendered far outside the visible frame.
             VertexConsumer lines = consumers.getBuffer(BORDER_LINES);
             VertexConsumer quads = consumers.getBuffer(BORDER_BOX);
             double cameraX = context.camera().getPos().x;
@@ -115,7 +129,6 @@ public final class ClaimWorldRenderer {
                }
             }
 
-            poseStack.pop();
          }
       }
    }
