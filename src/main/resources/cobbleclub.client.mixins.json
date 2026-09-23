@@ -11,6 +11,7 @@
     "PokemonRendererMixin",
     "ShaderInstanceMixin",
     "InventoryScreenMixin",
+    "ChatHudCompactMixin",
     "PokemonClientDelegateMixin",
     "battle.BattleMessageHandlerMixin",
     "battle.SwitchTileMixin",
