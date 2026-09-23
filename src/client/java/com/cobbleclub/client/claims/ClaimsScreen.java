@@ -332,9 +332,9 @@ public class ClaimsScreen extends Screen {
         this.renderBackground(g, mouseX, mouseY, partialTick);
         Starfield.draw(g, 0, 0, this.width, this.height, Util.getMeasuringTimeMs(), 44, 9241L, 0.5F);
         g.fill(this.panelLeft() - 3, this.panelTop() - 3, this.panelRight() + 3, this.panelBottom() + 3, 1426063360);
-        g.fillGradient(this.panelLeft(), this.panelTop(), this.panelRight(), this.panelBottom(), -199614136, -200601562);
-        g.drawBorder(this.panelLeft() - 1, this.panelTop() - 1, this.panelW() + 2, this.panelH() + 2, -16447985);
-        g.drawBorder(this.panelLeft(), this.panelTop(), this.panelW(), this.panelH(), -13747610);
+        g.fillGradient(this.panelLeft(), this.panelTop(), this.panelRight(), this.panelBottom(), -196589496, -198036942);
+        g.drawBorder(this.panelLeft() - 1, this.panelTop() - 1, this.panelW() + 2, this.panelH() + 2, -15658735);
+        g.drawBorder(this.panelLeft(), this.panelTop(), this.panelW(), this.panelH(), -7434610);
         this.renderHeader(g, mouseX, mouseY);
         if (this.tab == ClaimsScreen.Tab.MAP) {
             this.renderActionBar(g);
@@ -376,20 +376,20 @@ public class ClaimsScreen extends Screen {
         g.getMatrices().translate(0.0F, 0.0F, 400.0F);
         g.fill(0, 0, this.width, this.height, -1342177280);
         g.fill(x - 3, y - 3, x + w + 3, y + h + 3, 1426063360);
-        g.fillGradient(x, y, x + w, y + h, -199614136, -200601562);
-        g.drawBorder(x - 1, y - 1, w + 2, h + 2, -16447985);
-        g.drawBorder(x, y, w, h, -6467875);
+        g.fillGradient(x, y, x + w, y + h, -196589496, -198036942);
+        g.drawBorder(x - 1, y - 1, w + 2, h + 2, -15658735);
+        g.drawBorder(x, y, w, h, -4342339);
     }
 
     private void renderConfirmDialog(DrawContext g, int mouseX, int mouseY) {
         int x = this.confirmLeft();
         int y = this.confirmTop();
         this.beginModal(g, x, y, 300, 118);
-        g.drawCenteredTextWithShadow(this.textRenderer, this.confirmTitle, x + 150, y + 12, -2053377);
+        g.drawCenteredTextWithShadow(this.textRenderer, this.confirmTitle, x + 150, y + 12, -723724);
         int msgY = y + 34;
 
         for(OrderedText line : this.textRenderer.wrapLines(this.confirmMessage, 276)) {
-            g.drawCenteredTextWithShadow(this.textRenderer, line, x + 150, msgY, -2962968);
+            g.drawCenteredTextWithShadow(this.textRenderer, line, x + 150, msgY, -1710619);
             msgY += 11;
         }
 
@@ -402,14 +402,14 @@ public class ClaimsScreen extends Screen {
     }
 
     private void drawConfirmButton(DrawContext g, int x, int y, int w, String label, int accent, boolean hover) {
-        g.fill(x, y, x + w, y + 20, hover ? -14405546 : -15064506);
+        g.fill(x, y, x + w, y + 20, hover ? -12105913 : -13421773);
         g.drawBorder(x, y, w, 20, accent);
         g.drawCenteredTextWithShadow(this.textRenderer, label, x + w / 2, y + 6, hover ? -1 : accent);
     }
 
     private void renderHeader(DrawContext g, int mouseX, int mouseY) {
-        g.fillGradient(this.panelLeft(), this.panelTop(), this.panelRight(), this.panelTop() + 24, -14405538, -15459782);
-        g.fill(this.panelLeft(), this.panelTop() + 24, this.panelRight(), this.panelTop() + 24 + 1, -6467875);
+        g.fillGradient(this.panelLeft(), this.panelTop(), this.panelRight(), this.panelTop() + 24, -10855846, -12632257);
+        g.fill(this.panelLeft(), this.panelTop() + 24, this.panelRight(), this.panelTop() + 24 + 1, -4342339);
         BudgetInfo budget = this.state.budget();
         int remaining = this.state.effectiveRemaining();
         int color = remaining <= 0 ? -2734768 : (remaining < budget.getTotal() / 10 ? -2054081 : -12474273);
@@ -433,8 +433,8 @@ public class ClaimsScreen extends Screen {
         this.budgetTextLeft = showBudget ? this.budgetTextRight() - this.textRenderer.getWidth(text) : this.budgetTextRight();
         boolean buyHover = showBudget && this.state.canBuyBlocks && this.overBudgetText((double)mouseX, (double)mouseY);
         if (showBudget && this.state.canBuyBlocks) {
-            g.fill(this.budgetTextLeft - 4, this.panelTop() + 5, this.budgetTextRight() + 4, this.panelTop() + 19, buyHover ? -14405546 : -15064506);
-            g.drawBorder(this.budgetTextLeft - 4, this.panelTop() + 5, this.budgetTextRight() - this.budgetTextLeft + 8, 14, buyHover ? -6467875 : -13747610);
+            g.fill(this.budgetTextLeft - 4, this.panelTop() + 5, this.budgetTextRight() + 4, this.panelTop() + 19, buyHover ? -12105913 : -13421773);
+            g.drawBorder(this.budgetTextLeft - 4, this.panelTop() + 5, this.budgetTextRight() - this.budgetTextLeft + 8, 14, buyHover ? -4342339 : -7434610);
         }
 
         if (showBudget) {
@@ -444,7 +444,7 @@ public class ClaimsScreen extends Screen {
             int titleLeft = this.tabsRight() + 6;
             int titleSpan = this.helpButtonLeft() - 6 - titleLeft;
             if (titleSpan >= this.textRenderer.getWidth(this.state.title)) {
-                g.drawCenteredTextWithShadow(this.textRenderer, this.state.title, titleLeft + titleSpan / 2, this.panelTop() + 8, -2053377);
+                g.drawCenteredTextWithShadow(this.textRenderer, this.state.title, titleLeft + titleSpan / 2, this.panelTop() + 8, -723724);
             }
         }
 
@@ -452,7 +452,7 @@ public class ClaimsScreen extends Screen {
                 : (this.tab == ClaimsScreen.Tab.CLAIMS ? this.claimsTabButton
                 : (this.tab == ClaimsScreen.Tab.TRUSTED ? this.trustedTabButton : this.warpsTabButton));
         if (active != null) {
-            g.fill(active.getX() + 2, this.panelTop() + 24 - 2, active.getX() + active.getWidth() - 2, this.panelTop() + 24 - 1, -2053377);
+            g.fill(active.getX() + 2, this.panelTop() + 24 - 2, active.getX() + active.getWidth() - 2, this.panelTop() + 24 - 1, -723724);
         }
 
     }
@@ -528,19 +528,19 @@ public class ClaimsScreen extends Screen {
         int maxScroll = Math.max(0, lines.size() * 11 - (bodyBottom - bodyTop));
         this.helpScroll = MathHelper.clamp(this.helpScroll, 0, maxScroll);
         this.beginModal(g, x, y, w, h);
-        g.drawCenteredTextWithShadow(this.textRenderer, this.state.screenText("help_title"), x + w / 2, y + 7, -2053377);
-        g.fill(x + 1, bodyTop - 4, x + w - 1, bodyTop - 3, -6467875);
+        g.drawCenteredTextWithShadow(this.textRenderer, this.state.screenText("help_title"), x + w / 2, y + 7, -723724);
+        g.fill(x + 1, bodyTop - 4, x + w - 1, bodyTop - 3, -4342339);
         g.enableScissor(x + 1, bodyTop, x + w - 1, bodyBottom);
         int lineY = bodyTop - this.helpScroll;
 
         for(OrderedText line : lines) {
-            g.drawTextWithShadow(this.textRenderer, line, x + 12, lineY, -2962968);
+            g.drawTextWithShadow(this.textRenderer, line, x + 12, lineY, -1710619);
             lineY += 11;
         }
 
         g.disableScissor();
         ClubScrollbar.draw(g, x + w - 6, bodyTop, bodyBottom, this.helpScroll, maxScroll);
-        this.drawConfirmButton(g, x + (w - 90) / 2, y + h - 24, 90, "Got it", -6467875, this.helpCloseAt((double)mouseX, (double)mouseY));
+        this.drawConfirmButton(g, x + (w - 90) / 2, y + h - 24, 90, "Got it", -4342339, this.helpCloseAt((double)mouseX, (double)mouseY));
         g.getMatrices().pop();
     }
 
@@ -585,8 +585,8 @@ public class ClaimsScreen extends Screen {
         int x1 = this.contentRightEdge();
         int y0 = this.contentTop();
         ChunkSelection selection = this.mapView.selection();
-        g.fill(x0, y0, x1, y0 + 22, selection.isActive() ? -14405538 : -15459782);
-        g.drawBorder(x0, y0, x1 - x0, 22, -13747610);
+        g.fill(x0, y0, x1, y0 + 22, selection.isActive() ? -10855846 : -12632257);
+        g.drawBorder(x0, y0, x1 - x0, 22, -7434610);
         int textY = y0 + 7;
         int textLeft = x0 + 6;
         int textRight = (selection.isActive() ? this.selectionButtonsLeft() : x1) - 6;
@@ -595,7 +595,7 @@ public class ClaimsScreen extends Screen {
             // When a claim detail panel is open, do not draw the map help text underneath it.
             // This avoids text bleed-through on some GUI scales/render paths.
             if (!this.detailVisible()) {
-                g.drawTextWithShadow(this.textRenderer, "Click a chunk or Shift+drag to start a claim", textLeft, textY, -7035976);
+                g.drawTextWithShadow(this.textRenderer, "Click a chunk or Shift+drag to start a claim", textLeft, textY, -5197648);
             }
             g.disableScissor();
         } else {
@@ -645,8 +645,8 @@ public class ClaimsScreen extends Screen {
     private void renderStatusStrip(DrawContext g, int mouseX, int mouseY) {
         int fy1 = this.panelBottom() - 1;
         int fy0 = fy1 - 14 - 2;
-        g.fill(this.panelLeft() + 1, fy0, this.panelRight() - 1, fy1, -15459782);
-        g.fill(this.panelLeft() + 1, fy0, this.panelRight() - 1, fy0 + 1, -13747610);
+        g.fill(this.panelLeft() + 1, fy0, this.panelRight() - 1, fy1, -12632257);
+        g.fill(this.panelLeft() + 1, fy0, this.panelRight() - 1, fy0 + 1, -7434610);
         int y = fy0 + 6;
         String left;
         if (this.mapView.contains((double)mouseX, (double)mouseY)) {
@@ -657,11 +657,11 @@ public class ClaimsScreen extends Screen {
             left = this.state.playerX + ", " + this.state.playerZ;
         }
 
-        g.drawTextWithShadow(this.textRenderer, left, this.contentLeft() + 2, y, -7035976);
+        g.drawTextWithShadow(this.textRenderer, left, this.contentLeft() + 2, y, -5197648);
         // Keep the useful live coordinates and zoom indicator, but remove the static
         // movement-help text so long coordinates never overlap it.
         String zoom = "Zoom " + this.mapView.zoomLabel();
-        g.drawTextWithShadow(this.textRenderer, zoom, this.panelRight() - 8 - this.textRenderer.getWidth(zoom), y, -7035976);
+        g.drawTextWithShadow(this.textRenderer, zoom, this.panelRight() - 8 - this.textRenderer.getWidth(zoom), y, -5197648);
     }
 
     private void renderBanner(DrawContext g) {
@@ -769,11 +769,11 @@ public class ClaimsScreen extends Screen {
         int top = this.contentTop();
         int bottom = this.contentBottom();
         g.fill(left, top, right, bottom, 0x99101620);
-        g.drawBorder(left, top, right - left, bottom - top, -13747610);
+        g.drawBorder(left, top, right - left, bottom - top, -7434610);
 
         List<ClaimsNetworking.PublicWarp> warps = this.visiblePublicWarps();
         if (warps.isEmpty()) {
-            g.drawCenteredTextWithShadow(this.textRenderer, Text.literal("No public claim warps are active."), (left + right) / 2, top + 18, -7035976);
+            g.drawCenteredTextWithShadow(this.textRenderer, Text.literal("No public claim warps are active."), (left + right) / 2, top + 18, -5197648);
             return;
         }
 
@@ -784,8 +784,8 @@ public class ClaimsScreen extends Screen {
             int rowH = this.publicWarpRowHeight() - 2;
             if (y + rowH >= top && y < bottom) {
                 boolean hover = mouseX >= left + 4 && mouseX < right - 4 && mouseY >= y && mouseY < y + rowH;
-                g.fill(left + 4, y, right - 4, y + rowH, hover ? -14405546 : -15064506);
-                g.drawBorder(left + 4, y, right - left - 8, rowH, hover ? -6467875 : -13747610);
+                g.fill(left + 4, y, right - 4, y + rowH, hover ? -12105913 : -13421773);
+                g.drawBorder(left + 4, y, right - left - 8, rowH, hover ? -4342339 : -7434610);
                 String name = warp.name() == null || warp.name().isBlank() ? warp.claimName() : warp.name();
                 g.drawTextWithShadow(this.textRenderer, Text.literal(name).formatted(Formatting.LIGHT_PURPLE), left + 10, y + 5, -1);
                 String meta = "Owner: " + warp.owner() + " · " + ClaimsState.friendlyWorldName(warp.world());
