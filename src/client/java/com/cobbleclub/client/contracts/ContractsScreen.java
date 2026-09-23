@@ -140,7 +140,7 @@ public final class ContractsScreen extends Screen {
 
     @Override
     public void render(DrawContext g, int mouseX, int mouseY, float delta) {
-        g.fill(0, 0, width, height, 0xB5000000);
+        g.fill(0, 0, width, height, 0x52000000);
         Starfield.draw(g, 0, 0, width, height, System.currentTimeMillis(), 48, 771129L, 0.34f);
 
         int x = left();
