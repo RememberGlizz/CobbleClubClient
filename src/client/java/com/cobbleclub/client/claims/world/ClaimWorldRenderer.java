@@ -67,17 +67,19 @@ public final class ClaimWorldRenderer {
          if (context.world().getRegistryKey().getValue().toString().equals(msg.getDimension())) {
             long elapsedTicks = (System.currentTimeMillis() - snapshotAtMillis) / 50L;
 
-            // AFTER_ENTITIES already gives us the world render matrix with the camera
-            // transform applied. Feed absolute world coordinates into that matrix.
-            // Subtracting the camera here a second time is what makes the claim box
-            // appear glued around the player.
+            // Keep claim geometry in absolute world coordinates. Apply the camera
+            // offset to the render matrix exactly once, matching Fabric's world
+            // overlay rendering pattern. Do not subtract camera position from the
+            // claim box itself.
             MatrixStack poseStack = context.matrixStack();
             VertexConsumerProvider consumers = context.consumers();
+            double cameraX = context.camera().getPos().x;
+            double cameraY = context.camera().getPos().y;
+            double cameraZ = context.camera().getPos().z;
             poseStack.push();
+            poseStack.translate(-cameraX, -cameraY, -cameraZ);
             VertexConsumer lines = consumers.getBuffer(BORDER_LINES);
             VertexConsumer quads = consumers.getBuffer(BORDER_BOX);
-            double cameraX = context.camera().getPos().x;
-            double cameraZ = context.camera().getPos().z;
 
             for(WorldBoxEntry entry : msg.getGroups()) {
                if (entry != null && entry.getBox() != null) {
