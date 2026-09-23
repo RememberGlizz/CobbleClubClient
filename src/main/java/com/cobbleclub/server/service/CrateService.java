@@ -222,6 +222,24 @@ public final class CrateService {
         CrateService.runCommand(player, template.replace("{player}", player.getGameProfile().getName()).replace("{species}", species == null ? "" : species).replace("{aspects}", aspects));
     }
 
+    public static void givePokemonReward(ServerPlayerEntity player, String species, List<String> aspects) {
+        if (player == null || species == null || species.isBlank()) {
+            return;
+        }
+        String template = CobbleClubServer.config().pokemonRewardCommand;
+        if (template == null || template.isBlank()) {
+            player.sendMessage((Text)Text.literal((String)"Pokémon reward command is not configured."), false);
+            return;
+        }
+        String aspectText = aspects == null || aspects.isEmpty() ? "" : String.join((CharSequence)",", aspects);
+        CrateService.runCommand(
+                player,
+                template.replace("{player}", player.getGameProfile().getName())
+                        .replace("{species}", species)
+                        .replace("{aspects}", aspectText)
+        );
+    }
+
     private static void runCommands(ServerPlayerEntity player, List<String> commands) {
         if (commands == null) {
             return;
