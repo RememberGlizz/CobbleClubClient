@@ -92,7 +92,7 @@ public final class ChestShopSelectScreen extends Screen {
                 0,
                 this.width,
                 this.height,
-                -452984832
+                0x52000000
         );
 
         Starfield.draw(
