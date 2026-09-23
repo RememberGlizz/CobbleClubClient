@@ -1,0 +1,38 @@
+{
+  "name": "Snowpoint Skier Luna",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.85,
+      "switchBias": 0.76,
+      "itemBias": 0.72,
+      "maxSelectMargin": 0.165
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "weavile",
+      "level": 96,
+      "moveset": [
+        "icepunch",
+        "nightslash",
+        "lowkick"
+      ]
+    },
+    {
+      "species": "abomasnow",
+      "level": 97,
+      "moveset": [
+        "blizzard",
+        "gigadrain",
+        "leechseed"
+      ]
+    }
+  ]
+}

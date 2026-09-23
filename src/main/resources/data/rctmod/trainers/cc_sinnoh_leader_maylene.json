@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Maylene",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.869,
+      "switchBias": 0.785,
+      "itemBias": 0.97,
+      "maxSelectMargin": 0.098
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "medicham",
+      "level": 94,
+      "moveset": [
+        "highjumpkick",
+        "zenheadbutt",
+        "icepunch",
+        "recover"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "machamp",
+      "level": 96,
+      "moveset": [
+        "dynamicpunch",
+        "stoneedge",
+        "knockoff",
+        "bulletpunch"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "lucario",
+      "level": 97,
+      "moveset": [
+        "closecombat",
+        "flashcannon",
+        "extremespeed",
+        "darkpulse"
+      ],
+      "nature": "hasty",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Oreburgh Worker Nia",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.67,
+      "switchBias": 0.52,
+      "itemBias": 0.72,
+      "maxSelectMargin": 0.315
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "machoke",
+      "level": 90,
+      "moveset": [
+        "brickbreak",
+        "rockslide",
+        "bulkup"
+      ]
+    },
+    {
+      "species": "graveler",
+      "level": 91,
+      "moveset": [
+        "rockblast",
+        "earthquake",
+        "rockpolish"
+      ]
+    }
+  ]
+}

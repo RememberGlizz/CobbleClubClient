@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Crasher Wake",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.892,
+      "switchBias": 0.8200000000000001,
+      "itemBias": 0.97,
+      "maxSelectMargin": 0.08400000000000002
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "gyarados",
+      "level": 95,
+      "moveset": [
+        "waterfall",
+        "icefang",
+        "crunch",
+        "dragondance"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "quagsire",
+      "level": 97,
+      "moveset": [
+        "earthquake",
+        "waterfall",
+        "toxic",
+        "recover"
+      ],
+      "nature": "careful"
+    },
+    {
+      "species": "floatzel",
+      "level": 98,
+      "moveset": [
+        "waterfall",
+        "icepunch",
+        "crunch",
+        "aquajet"
+      ],
+      "nature": "jolly",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

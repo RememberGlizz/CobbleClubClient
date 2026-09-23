@@ -1,0 +1,38 @@
+{
+  "name": "Oreburgh Hiker Liam",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.67,
+      "switchBias": 0.52,
+      "itemBias": 0.72,
+      "maxSelectMargin": 0.315
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "golem",
+      "level": 90,
+      "moveset": [
+        "rockslide",
+        "earthquake",
+        "defensecurl"
+      ]
+    },
+    {
+      "species": "onix",
+      "level": 91,
+      "moveset": [
+        "stoneedge",
+        "earthquake",
+        "screech"
+      ]
+    }
+  ]
+}

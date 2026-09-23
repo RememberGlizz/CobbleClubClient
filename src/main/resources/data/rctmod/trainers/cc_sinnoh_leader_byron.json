@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Byron",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.9380000000000001,
+      "switchBias": 0.8900000000000001,
+      "itemBias": 0.97,
+      "maxSelectMargin": 0.05600000000000001
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "magnezone",
+      "level": 97,
+      "moveset": [
+        "thunderbolt",
+        "flashcannon",
+        "voltswitch",
+        "thunderwave"
+      ],
+      "nature": "modest"
+    },
+    {
+      "species": "steelix",
+      "level": 99,
+      "moveset": [
+        "earthquake",
+        "ironhead",
+        "stoneedge",
+        "sandstorm"
+      ],
+      "nature": "impish"
+    },
+    {
+      "species": "bastiodon",
+      "level": 100,
+      "moveset": [
+        "flashcannon",
+        "stoneedge",
+        "metalburst",
+        "protect"
+      ],
+      "nature": "careful",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

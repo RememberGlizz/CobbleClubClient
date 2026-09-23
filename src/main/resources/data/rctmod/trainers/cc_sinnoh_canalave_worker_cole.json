@@ -1,0 +1,38 @@
+{
+  "name": "Canalave Worker Cole",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.8200000000000001,
+      "switchBias": 0.72,
+      "itemBias": 0.72,
+      "maxSelectMargin": 0.19
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "bronzong",
+      "level": 95,
+      "moveset": [
+        "psychic",
+        "flashcannon",
+        "reflect"
+      ]
+    },
+    {
+      "species": "steelix",
+      "level": 96,
+      "moveset": [
+        "earthquake",
+        "ironhead",
+        "rockslide"
+      ]
+    }
+  ]
+}

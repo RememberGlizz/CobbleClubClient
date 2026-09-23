@@ -1,0 +1,38 @@
+{
+  "name": "Pastoria Fisher Theo",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.76,
+      "switchBias": 0.64,
+      "itemBias": 0.72,
+      "maxSelectMargin": 0.24000000000000002
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "whiscash",
+      "level": 93,
+      "moveset": [
+        "earthquake",
+        "waterfall",
+        "icebeam"
+      ]
+    },
+    {
+      "species": "gyarados",
+      "level": 94,
+      "moveset": [
+        "waterfall",
+        "crunch",
+        "dragondance"
+      ]
+    }
+  ]
+}

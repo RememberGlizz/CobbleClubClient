@@ -1,0 +1,15 @@
+{
+  "criteria": {
+    "first_defeat": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "trainer_ids": [
+          "cc_sinnoh_leader_gardenia"
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "function": "cobbleclub:sinnoh/reward_gardenia"
+  }
+}

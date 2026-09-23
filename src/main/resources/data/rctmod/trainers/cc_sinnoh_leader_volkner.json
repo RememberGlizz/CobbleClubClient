@@ -1,0 +1,71 @@
+{
+  "name": "Gym Leader Volkner",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.984,
+      "switchBias": 0.96,
+      "itemBias": 0.97,
+      "maxSelectMargin": 0.02800000000000001
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 2
+    }
+  ],
+  "team": [
+    {
+      "species": "raichu",
+      "level": 99,
+      "moveset": [
+        "thunderbolt",
+        "focusblast",
+        "surf",
+        "nuzzle"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "luxray",
+      "level": 100,
+      "moveset": [
+        "wildcharge",
+        "crunch",
+        "icefang",
+        "voltswitch"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "electivire",
+      "level": 100,
+      "moveset": [
+        "wildcharge",
+        "icepunch",
+        "earthquake",
+        "crosschop"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "rotom",
+      "level": 100,
+      "moveset": [
+        "thunderbolt",
+        "shadowball",
+        "voltswitch",
+        "willowisp"
+      ],
+      "nature": "timid",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

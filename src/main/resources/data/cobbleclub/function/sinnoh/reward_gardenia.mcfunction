@@ -1,0 +1,2 @@
+tag @s add cc_rct_sinnoh_gardenia_pending
+cobbleclubrctinternal sinnoh gardenia

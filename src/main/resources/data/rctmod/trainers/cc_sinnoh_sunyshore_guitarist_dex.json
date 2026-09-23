@@ -1,0 +1,38 @@
+{
+  "name": "Sunyshore Guitarist Dex",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.88,
+      "switchBias": 0.8,
+      "itemBias": 0.72,
+      "maxSelectMargin": 0.14
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "luxray",
+      "level": 97,
+      "moveset": [
+        "wildcharge",
+        "crunch",
+        "icefang"
+      ]
+    },
+    {
+      "species": "raichu",
+      "level": 98,
+      "moveset": [
+        "thunderbolt",
+        "focusblast",
+        "nuzzle"
+      ]
+    }
+  ]
+}

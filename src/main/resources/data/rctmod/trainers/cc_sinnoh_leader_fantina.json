@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Fantina",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.915,
+      "switchBias": 0.8550000000000001,
+      "itemBias": 0.97,
+      "maxSelectMargin": 0.07
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "drifblim",
+      "level": 96,
+      "moveset": [
+        "shadowball",
+        "airslash",
+        "willowisp",
+        "calmmind"
+      ],
+      "nature": "modest"
+    },
+    {
+      "species": "gengar",
+      "level": 98,
+      "moveset": [
+        "shadowball",
+        "sludgebomb",
+        "focusblast",
+        "hypnosis"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "mismagius",
+      "level": 99,
+      "moveset": [
+        "shadowball",
+        "mysticalfire",
+        "powergem",
+        "calmmind"
+      ],
+      "nature": "timid",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Hearthome Psychic Eli",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.79,
+      "switchBias": 0.6799999999999999,
+      "itemBias": 0.72,
+      "maxSelectMargin": 0.21500000000000002
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "mismagius",
+      "level": 94,
+      "moveset": [
+        "shadowball",
+        "powergem",
+        "confuseray"
+      ]
+    },
+    {
+      "species": "alakazam",
+      "level": 95,
+      "moveset": [
+        "psychic",
+        "shadowball",
+        "recover"
+      ]
+    }
+  ]
+}

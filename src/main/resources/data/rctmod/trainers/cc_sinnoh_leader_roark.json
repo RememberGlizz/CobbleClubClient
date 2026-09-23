@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Roark",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.8230000000000001,
+      "switchBias": 0.7150000000000001,
+      "itemBias": 0.97,
+      "maxSelectMargin": 0.126
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "golem",
+      "level": 92,
+      "moveset": [
+        "rockslide",
+        "earthquake",
+        "stealthrock",
+        "brickbreak"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "rampardos",
+      "level": 94,
+      "moveset": [
+        "headsmash",
+        "earthquake",
+        "zenheadbutt",
+        "rockpolish"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "bastiodon",
+      "level": 95,
+      "moveset": [
+        "flashcannon",
+        "stoneedge",
+        "metalburst",
+        "protect"
+      ],
+      "nature": "careful",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

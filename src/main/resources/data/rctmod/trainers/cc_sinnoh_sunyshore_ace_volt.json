@@ -1,0 +1,38 @@
+{
+  "name": "Sunyshore Ace Volt",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.88,
+      "switchBias": 0.8,
+      "itemBias": 0.72,
+      "maxSelectMargin": 0.14
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "electivire",
+      "level": 97,
+      "moveset": [
+        "wildcharge",
+        "icepunch",
+        "earthquake"
+      ]
+    },
+    {
+      "species": "jolteon",
+      "level": 98,
+      "moveset": [
+        "thunderbolt",
+        "shadowball",
+        "voltswitch"
+      ]
+    }
+  ]
+}

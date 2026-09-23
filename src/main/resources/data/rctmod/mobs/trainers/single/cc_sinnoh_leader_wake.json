@@ -1,0 +1,27 @@
+{
+  "type": "leader",
+  "relativeLevelCap": 0,
+  "requiredDefeats": [
+    [
+      "cc_sinnoh_pastoria_tuber_finn"
+    ],
+    [
+      "cc_sinnoh_pastoria_fisher_theo"
+    ]
+  ],
+  "maxTrainerWins": -1,
+  "maxTrainerDefeats": 1,
+  "battleCooldownTicks": 100,
+  "series": [
+    "cobbleclub_sinnoh"
+  ],
+  "optional": false,
+  "spawnWeightFactor": 0.12,
+  "biomeTagWhitelist": [
+    "is_overworld"
+  ],
+  "biomeTagBlacklist": [
+    "is_nether",
+    "is_end"
+  ]
+}

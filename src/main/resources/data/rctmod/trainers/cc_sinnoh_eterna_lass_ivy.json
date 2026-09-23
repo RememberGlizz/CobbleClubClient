@@ -1,0 +1,38 @@
+{
+  "name": "Eterna Lass Ivy",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.7,
+      "switchBias": 0.5599999999999999,
+      "itemBias": 0.72,
+      "maxSelectMargin": 0.29000000000000004
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "torterra",
+      "level": 91,
+      "moveset": [
+        "seedbomb",
+        "earthquake",
+        "synthesis"
+      ]
+    },
+    {
+      "species": "roserade",
+      "level": 92,
+      "moveset": [
+        "gigadrain",
+        "toxic",
+        "shadowball"
+      ]
+    }
+  ]
+}

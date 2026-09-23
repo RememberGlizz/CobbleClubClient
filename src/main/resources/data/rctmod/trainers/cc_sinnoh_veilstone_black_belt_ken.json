@@ -1,0 +1,38 @@
+{
+  "name": "Veilstone Black Belt Ken",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.73,
+      "switchBias": 0.6,
+      "itemBias": 0.72,
+      "maxSelectMargin": 0.265
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "machamp",
+      "level": 92,
+      "moveset": [
+        "crosschop",
+        "rockslide",
+        "knockoff"
+      ]
+    },
+    {
+      "species": "medicham",
+      "level": 93,
+      "moveset": [
+        "drainpunch",
+        "zenheadbutt",
+        "icepunch"
+      ]
+    }
+  ]
+}

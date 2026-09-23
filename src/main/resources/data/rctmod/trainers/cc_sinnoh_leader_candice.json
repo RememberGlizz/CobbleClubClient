@@ -1,0 +1,71 @@
+{
+  "name": "Gym Leader Candice",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.9610000000000001,
+      "switchBias": 0.925,
+      "itemBias": 0.97,
+      "maxSelectMargin": 0.04200000000000001
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 2
+    }
+  ],
+  "team": [
+    {
+      "species": "weavile",
+      "level": 98,
+      "moveset": [
+        "iciclecrash",
+        "nightslash",
+        "lowkick",
+        "iceshard"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "mamoswine",
+      "level": 99,
+      "moveset": [
+        "earthquake",
+        "iciclecrash",
+        "stoneedge",
+        "iceshard"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "abomasnow",
+      "level": 100,
+      "moveset": [
+        "blizzard",
+        "gigadrain",
+        "earthpower",
+        "leechseed"
+      ],
+      "nature": "modest"
+    },
+    {
+      "species": "froslass",
+      "level": 100,
+      "moveset": [
+        "icebeam",
+        "shadowball",
+        "thunderbolt",
+        "destinybond"
+      ],
+      "nature": "timid",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}
