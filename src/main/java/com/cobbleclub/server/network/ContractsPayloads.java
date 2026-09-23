@@ -14,7 +14,7 @@ public final class ContractsPayloads {
     }
 
     public record Action(String json) implements CustomPayload {
-        public static final Id<Action> ID = new Id<>(id("contracts_action/v1"));
+        public static final CustomPayload.Id<Action> ID = new CustomPayload.Id<>(id("contracts_action/v1"));
         public static final PacketCodec<RegistryByteBuf, Action> CODEC =
                 PacketCodec.of(
                         (value, buf) -> buf.writeString(value.json == null ? "{}" : value.json, 4096),
@@ -22,13 +22,13 @@ public final class ContractsPayloads {
                 );
 
         @Override
-        public Id<? extends CustomPayload> getId() {
+        public CustomPayload.Id<? extends CustomPayload> getId() {
             return ID;
         }
     }
 
     public record State(String json) implements CustomPayload {
-        public static final Id<State> ID = new Id<>(id("contracts_state/v1"));
+        public static final CustomPayload.Id<State> ID = new CustomPayload.Id<>(id("contracts_state/v1"));
         public static final PacketCodec<RegistryByteBuf, State> CODEC =
                 PacketCodec.of(
                         (value, buf) -> buf.writeString(value.json == null ? "{}" : value.json, 65535),
@@ -36,13 +36,13 @@ public final class ContractsPayloads {
                 );
 
         @Override
-        public Id<? extends CustomPayload> getId() {
+        public CustomPayload.Id<? extends CustomPayload> getId() {
             return ID;
         }
     }
 
     public record Open(String json) implements CustomPayload {
-        public static final Id<Open> ID = new Id<>(id("contracts_open/v1"));
+        public static final CustomPayload.Id<Open> ID = new CustomPayload.Id<>(id("contracts_open/v1"));
         public static final PacketCodec<RegistryByteBuf, Open> CODEC =
                 PacketCodec.of(
                         (value, buf) -> buf.writeString(value.json == null ? "{}" : value.json, 65535),
@@ -50,7 +50,7 @@ public final class ContractsPayloads {
                 );
 
         @Override
-        public Id<? extends CustomPayload> getId() {
+        public CustomPayload.Id<? extends CustomPayload> getId() {
             return ID;
         }
     }
