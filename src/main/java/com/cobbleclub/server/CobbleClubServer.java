@@ -25,6 +25,7 @@ import com.cobbleclub.server.service.PermissionService;
 import com.cobbleclub.server.service.PondService;
 import com.cobbleclub.server.service.RtpService;
 import com.cobbleclub.server.service.StoreBridgeService;
+import com.cobbleclub.server.service.SpawnVitalsService;
 import com.cobbleclub.server.service.TagsService;
 import com.cobbleclub.server.service.VoteRewardService;
 import com.cobbleclub.server.service.WardrobeService;
@@ -111,6 +112,7 @@ public final class CobbleClubServer
             ClaimsService.syncWorldSnapshots(server);
             RtpService.tick(server);
             LaunchService.tick(server);
+            SpawnVitalsService.tick(server);
             PondService.tick(server);
             TagsService.tick(server);
             CosmeticVisualService.tick(server);
