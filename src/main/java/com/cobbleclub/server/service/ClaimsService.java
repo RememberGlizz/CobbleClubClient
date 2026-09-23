@@ -837,10 +837,20 @@ public final class ClaimsService {
         if (server == null) {
             return;
         }
+        long now = System.currentTimeMillis();
         for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
             String dim = ClaimsService.dimension(player.getServerWorld());
             WorldSnapshotState state = WORLD_SNAPSHOT_STATE.get(player.getUuid());
-            if (state != null && state.revision == revision && state.dimension.equals(dim)) continue;
+
+            // Revision/dimension changes still sync immediately. Re-send the same
+            // snapshot periodically as a reliability heartbeat so a missed packet,
+            // client resource reload, or renderer reset cannot leave borders gone.
+            if (state != null
+                    && state.revision == revision
+                    && state.dimension.equals(dim)
+                    && now - state.sentAtMillis < 5000L) {
+                continue;
+            }
             ClaimsService.sendWorld(player);
         }
     }
@@ -859,7 +869,7 @@ public final class ClaimsService {
         List<WorldBoxEntry> boxes = ClaimsStore.all().stream().filter(claim -> dimension.equals(claim.dimension)).map(claim -> new WorldBoxEntry(claim.ownerUuid.equals(player.getUuidAsString()) ? WorldBoxType.MAIN : WorldBoxType.OTHER, ClaimsService.box(claim), null)).toList();
         ClaimsWorldMsg message = new ClaimsWorldMsg(1, dimension, boxes);
         ServerPlayNetworking.send((ServerPlayerEntity)player, (CustomPayload)new Payloads.ClaimsWorld(ClaimsScreenProtocol.INSTANCE.encode((Object)message)));
-        WORLD_SNAPSHOT_STATE.put(player.getUuid(), new WorldSnapshotState(dimension, revision));
+        WORLD_SNAPSHOT_STATE.put(player.getUuid(), new WorldSnapshotState(dimension, revision, System.currentTimeMillis()));
     }
 
     private static List<ClaimDetailEntry> visibleDetails(ServerPlayerEntity player) {
@@ -1065,7 +1075,7 @@ public final class ClaimsService {
         }
     }
 
-    private record WorldSnapshotState(String dimension, int revision) {
+    private record WorldSnapshotState(String dimension, int revision, long sentAtMillis) {
     }
 }
 
