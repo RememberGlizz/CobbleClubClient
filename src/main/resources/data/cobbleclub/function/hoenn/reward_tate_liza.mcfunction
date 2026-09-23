@@ -1,0 +1,2 @@
+tag @s add cc_rct_hoenn_tate_liza_pending
+cobbleclubrctinternal hoenn tate_liza

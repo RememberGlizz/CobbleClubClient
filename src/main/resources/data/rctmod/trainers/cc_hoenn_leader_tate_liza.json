@@ -1,0 +1,71 @@
+{
+  "name": "Gym Leaders Tate & Liza",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.9359999999999999,
+      "switchBias": 0.86,
+      "itemBias": 0.94,
+      "maxSelectMargin": 0.06799999999999999
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 2
+    }
+  ],
+  "team": [
+    {
+      "species": "xatu",
+      "level": 92,
+      "moveset": [
+        "psychic",
+        "airslash",
+        "calmmind",
+        "roost"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "claydol",
+      "level": 93,
+      "moveset": [
+        "psychic",
+        "earthpower",
+        "icebeam",
+        "lightscreen"
+      ],
+      "nature": "modest"
+    },
+    {
+      "species": "solrock",
+      "level": 94,
+      "moveset": [
+        "rockslide",
+        "psychic",
+        "willowisp",
+        "morningsun"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "lunatone",
+      "level": 94,
+      "moveset": [
+        "psychic",
+        "powergem",
+        "icebeam",
+        "calmmind"
+      ],
+      "nature": "modest",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

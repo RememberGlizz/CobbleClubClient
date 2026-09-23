@@ -1,0 +1,71 @@
+{
+  "name": "Gym Leader Winona",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.908,
+      "switchBias": 0.82,
+      "itemBias": 0.94,
+      "maxSelectMargin": 0.08399999999999999
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "swellow",
+      "level": 90,
+      "moveset": [
+        "bravebird",
+        "facade",
+        "quickattack",
+        "roost"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "skarmory",
+      "level": 91,
+      "moveset": [
+        "bravebird",
+        "ironhead",
+        "spikes",
+        "roost"
+      ],
+      "nature": "impish"
+    },
+    {
+      "species": "altaria",
+      "level": 93,
+      "moveset": [
+        "dragonpulse",
+        "airslash",
+        "flamethrower",
+        "roost"
+      ],
+      "nature": "modest"
+    },
+    {
+      "species": "tropius",
+      "level": 92,
+      "moveset": [
+        "airslash",
+        "gigadrain",
+        "leechseed",
+        "synthesis"
+      ],
+      "nature": "calm",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

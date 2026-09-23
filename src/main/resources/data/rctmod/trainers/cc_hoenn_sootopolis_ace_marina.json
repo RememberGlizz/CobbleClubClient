@@ -1,0 +1,38 @@
+{
+  "name": "Sootopolis Ace Marina",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.8,
+      "switchBias": 0.7,
+      "itemBias": 0.68,
+      "maxSelectMargin": 0.19599999999999998
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "ludicolo",
+      "level": 92,
+      "moveset": [
+        "surf",
+        "gigadrain",
+        "icebeam"
+      ]
+    },
+    {
+      "species": "whiscash",
+      "level": 93,
+      "moveset": [
+        "earthquake",
+        "waterfall",
+        "icebeam"
+      ]
+    }
+  ]
+}

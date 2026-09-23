@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Roxanne",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.768,
+      "switchBias": 0.62,
+      "itemBias": 0.94,
+      "maxSelectMargin": 0.16399999999999998
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "golem",
+      "level": 80,
+      "moveset": [
+        "rockslide",
+        "earthquake",
+        "stealthrock",
+        "brickbreak"
+      ],
+      "nature": "impish"
+    },
+    {
+      "species": "aggron",
+      "level": 82,
+      "moveset": [
+        "ironhead",
+        "rockslide",
+        "earthquake",
+        "protect"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "probopass",
+      "level": 83,
+      "moveset": [
+        "powergem",
+        "flashcannon",
+        "thunderwave",
+        "earthpower"
+      ],
+      "nature": "calm",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

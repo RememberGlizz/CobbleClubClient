@@ -1,0 +1,9 @@
+{
+  "title": "CobbleClub · Hoenn Journey",
+  "description": "Eight Hoenn badges. Elite-level teams and a late-game regional challenge.",
+  "difficulty": 7,
+  "initialLevelCap": 82,
+  "relativeLevelCap": 0,
+  "requiredSeries": [],
+  "hideTrainerIdentities": false
+}

@@ -1,0 +1,27 @@
+{
+  "type": "leader",
+  "relativeLevelCap": 0,
+  "requiredDefeats": [
+    [
+      "cc_hoenn_petalburg_cooltrainer_iris"
+    ],
+    [
+      "cc_hoenn_petalburg_ace_nolan"
+    ]
+  ],
+  "maxTrainerWins": -1,
+  "maxTrainerDefeats": 1,
+  "battleCooldownTicks": 100,
+  "series": [
+    "cobbleclub_hoenn"
+  ],
+  "optional": false,
+  "spawnWeightFactor": 0.12,
+  "biomeTagWhitelist": [
+    "is_overworld"
+  ],
+  "biomeTagBlacklist": [
+    "is_nether",
+    "is_end"
+  ]
+}

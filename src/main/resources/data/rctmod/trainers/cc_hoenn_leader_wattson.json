@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Wattson",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.824,
+      "switchBias": 0.7,
+      "itemBias": 0.94,
+      "maxSelectMargin": 0.132
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "magneton",
+      "level": 84,
+      "moveset": [
+        "thunderbolt",
+        "flashcannon",
+        "thunderwave",
+        "triattack"
+      ],
+      "nature": "modest"
+    },
+    {
+      "species": "electrode",
+      "level": 86,
+      "moveset": [
+        "thunderbolt",
+        "voltswitch",
+        "lightscreen",
+        "explosion"
+      ],
+      "nature": "timid"
+    },
+    {
+      "species": "manectric",
+      "level": 87,
+      "moveset": [
+        "thunderbolt",
+        "flamethrower",
+        "voltswitch",
+        "snarl"
+      ],
+      "nature": "timid",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

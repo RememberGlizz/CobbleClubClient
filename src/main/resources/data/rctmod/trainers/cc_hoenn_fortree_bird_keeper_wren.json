@@ -1,0 +1,38 @@
+{
+  "name": "Fortree Bird Keeper Wren",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.74,
+      "switchBias": 0.62,
+      "itemBias": 0.68,
+      "maxSelectMargin": 0.252
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "swellow",
+      "level": 88,
+      "moveset": [
+        "aerialace",
+        "facade",
+        "quickattack"
+      ]
+    },
+    {
+      "species": "skarmory",
+      "level": 89,
+      "moveset": [
+        "steelwing",
+        "aerialace",
+        "spikes"
+      ]
+    }
+  ]
+}

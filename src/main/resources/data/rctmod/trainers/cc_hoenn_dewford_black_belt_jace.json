@@ -1,0 +1,38 @@
+{
+  "name": "Dewford Black Belt Jace",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.6200000000000001,
+      "switchBias": 0.46,
+      "itemBias": 0.68,
+      "maxSelectMargin": 0.364
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "machoke",
+      "level": 80,
+      "moveset": [
+        "brickbreak",
+        "rockslide",
+        "bulkup"
+      ]
+    },
+    {
+      "species": "hariyama",
+      "level": 81,
+      "moveset": [
+        "forcepalm",
+        "knockoff",
+        "fakeout"
+      ]
+    }
+  ]
+}

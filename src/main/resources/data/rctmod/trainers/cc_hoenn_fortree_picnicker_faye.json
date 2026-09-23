@@ -1,0 +1,38 @@
+{
+  "name": "Fortree Picnicker Faye",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.74,
+      "switchBias": 0.62,
+      "itemBias": 0.68,
+      "maxSelectMargin": 0.252
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "pelipper",
+      "level": 88,
+      "moveset": [
+        "surf",
+        "airslash",
+        "roost"
+      ]
+    },
+    {
+      "species": "tropius",
+      "level": 89,
+      "moveset": [
+        "airslash",
+        "gigadrain",
+        "synthesis"
+      ]
+    }
+  ]
+}

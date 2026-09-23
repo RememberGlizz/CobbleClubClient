@@ -1,0 +1,38 @@
+{
+  "name": "Mossdeep Hex Maniac Orla",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.77,
+      "switchBias": 0.66,
+      "itemBias": 0.68,
+      "maxSelectMargin": 0.22399999999999998
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "lunatone",
+      "level": 90,
+      "moveset": [
+        "psychic",
+        "powergem",
+        "icebeam"
+      ]
+    },
+    {
+      "species": "solrock",
+      "level": 91,
+      "moveset": [
+        "rockslide",
+        "psychic",
+        "willowisp"
+      ]
+    }
+  ]
+}

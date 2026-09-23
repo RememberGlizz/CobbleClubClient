@@ -1,0 +1,15 @@
+{
+  "criteria": {
+    "first_defeat": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "trainer_ids": [
+          "cc_hoenn_leader_tate_liza"
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "function": "cobbleclub:hoenn/reward_tate_liza"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Brawly",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.796,
+      "switchBias": 0.6599999999999999,
+      "itemBias": 0.94,
+      "maxSelectMargin": 0.148
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "machamp",
+      "level": 82,
+      "moveset": [
+        "dynamicpunch",
+        "rockslide",
+        "knockoff",
+        "bulkup"
+      ],
+      "nature": "adamant"
+    },
+    {
+      "species": "breloom",
+      "level": 84,
+      "moveset": [
+        "machpunch",
+        "seedbomb",
+        "spore",
+        "rocktomb"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "hariyama",
+      "level": 85,
+      "moveset": [
+        "closecombat",
+        "knockoff",
+        "bulletpunch",
+        "fakeout"
+      ],
+      "nature": "adamant",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Dewford Battle Girl Nia",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.6200000000000001,
+      "switchBias": 0.46,
+      "itemBias": 0.68,
+      "maxSelectMargin": 0.364
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "medicham",
+      "level": 80,
+      "moveset": [
+        "zenheadbutt",
+        "drainpunch",
+        "icepunch"
+      ]
+    },
+    {
+      "species": "breloom",
+      "level": 81,
+      "moveset": [
+        "machpunch",
+        "seedbomb",
+        "stunspore"
+      ]
+    }
+  ]
+}

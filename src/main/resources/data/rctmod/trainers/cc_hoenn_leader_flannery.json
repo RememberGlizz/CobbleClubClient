@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Flannery",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.852,
+      "switchBias": 0.74,
+      "itemBias": 0.94,
+      "maxSelectMargin": 0.11599999999999999
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "camerupt",
+      "level": 86,
+      "moveset": [
+        "earthpower",
+        "flamethrower",
+        "rockslide",
+        "yawn"
+      ],
+      "nature": "modest"
+    },
+    {
+      "species": "magcargo",
+      "level": 88,
+      "moveset": [
+        "lavaplume",
+        "powergem",
+        "recover",
+        "willowisp"
+      ],
+      "nature": "bold"
+    },
+    {
+      "species": "torkoal",
+      "level": 89,
+      "moveset": [
+        "overheat",
+        "bodyslam",
+        "willowisp",
+        "protect"
+      ],
+      "nature": "bold",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

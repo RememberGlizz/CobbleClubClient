@@ -1,0 +1,38 @@
+{
+  "name": "Rustboro Hiker Cole",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.5900000000000001,
+      "switchBias": 0.42,
+      "itemBias": 0.68,
+      "maxSelectMargin": 0.39199999999999996
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "golem",
+      "level": 78,
+      "moveset": [
+        "rockslide",
+        "earthquake",
+        "defensecurl"
+      ]
+    },
+    {
+      "species": "graveler",
+      "level": 79,
+      "moveset": [
+        "rockblast",
+        "bulldoze",
+        "rockpolish"
+      ]
+    }
+  ]
+}

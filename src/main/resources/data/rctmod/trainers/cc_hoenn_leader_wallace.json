@@ -1,0 +1,71 @@
+{
+  "name": "Gym Leader Wallace",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.964,
+      "switchBias": 0.8999999999999999,
+      "itemBias": 0.94,
+      "maxSelectMargin": 0.05199999999999999
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 2
+    }
+  ],
+  "team": [
+    {
+      "species": "ludicolo",
+      "level": 94,
+      "moveset": [
+        "surf",
+        "gigadrain",
+        "icebeam",
+        "raindance"
+      ],
+      "nature": "modest"
+    },
+    {
+      "species": "whiscash",
+      "level": 94,
+      "moveset": [
+        "earthquake",
+        "waterfall",
+        "icebeam",
+        "rest"
+      ],
+      "nature": "careful"
+    },
+    {
+      "species": "walrein",
+      "level": 95,
+      "moveset": [
+        "surf",
+        "icebeam",
+        "bodyslam",
+        "rest"
+      ],
+      "nature": "calm"
+    },
+    {
+      "species": "milotic",
+      "level": 96,
+      "moveset": [
+        "surf",
+        "icebeam",
+        "recover",
+        "toxic"
+      ],
+      "nature": "bold",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

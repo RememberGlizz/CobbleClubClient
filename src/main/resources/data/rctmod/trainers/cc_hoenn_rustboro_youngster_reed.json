@@ -1,0 +1,38 @@
+{
+  "name": "Rustboro Youngster Reed",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.5900000000000001,
+      "switchBias": 0.42,
+      "itemBias": 0.68,
+      "maxSelectMargin": 0.39199999999999996
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "aron",
+      "level": 78,
+      "moveset": [
+        "ironhead",
+        "rockslide",
+        "protect"
+      ]
+    },
+    {
+      "species": "nosepass",
+      "level": 79,
+      "moveset": [
+        "rockslide",
+        "thunderwave",
+        "rest"
+      ]
+    }
+  ]
+}

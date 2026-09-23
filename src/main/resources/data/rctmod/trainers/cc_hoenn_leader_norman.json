@@ -1,0 +1,60 @@
+{
+  "name": "Gym Leader Norman",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.88,
+      "switchBias": 0.78,
+      "itemBias": 0.94,
+      "maxSelectMargin": 0.09999999999999999
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 2,
+    "healPlayers": true
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "zangoose",
+      "level": 88,
+      "moveset": [
+        "slash",
+        "closecombat",
+        "shadowclaw",
+        "swordsdance"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "vigoroth",
+      "level": 90,
+      "moveset": [
+        "bodyslam",
+        "brickbreak",
+        "shadowclaw",
+        "encore"
+      ],
+      "nature": "jolly"
+    },
+    {
+      "species": "slaking",
+      "level": 91,
+      "moveset": [
+        "gigaimpact",
+        "earthquake",
+        "nightslash",
+        "slackoff"
+      ],
+      "nature": "adamant",
+      "heldItem": "sitrus_berry"
+    }
+  ]
+}

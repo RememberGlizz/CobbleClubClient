@@ -1,0 +1,38 @@
+{
+  "name": "Petalburg Cooltrainer Iris",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.7100000000000001,
+      "switchBias": 0.5800000000000001,
+      "itemBias": 0.68,
+      "maxSelectMargin": 0.27999999999999997
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "vigoroth",
+      "level": 86,
+      "moveset": [
+        "slash",
+        "brickbreak",
+        "encore"
+      ]
+    },
+    {
+      "species": "spinda",
+      "level": 87,
+      "moveset": [
+        "teeterdance",
+        "bodyslam",
+        "psychic"
+      ]
+    }
+  ]
+}

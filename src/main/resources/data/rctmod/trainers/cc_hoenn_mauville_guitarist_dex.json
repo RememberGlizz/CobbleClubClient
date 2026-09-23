@@ -1,0 +1,38 @@
+{
+  "name": "Mauville Guitarist Dex",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.65,
+      "switchBias": 0.5,
+      "itemBias": 0.68,
+      "maxSelectMargin": 0.33599999999999997
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "electrode",
+      "level": 82,
+      "moveset": [
+        "discharge",
+        "swift",
+        "lightscreen"
+      ]
+    },
+    {
+      "species": "electrike",
+      "level": 83,
+      "moveset": [
+        "thunderbolt",
+        "bite",
+        "quickattack"
+      ]
+    }
+  ]
+}

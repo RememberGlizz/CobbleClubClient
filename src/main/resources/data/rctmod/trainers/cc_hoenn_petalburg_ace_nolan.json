@@ -1,0 +1,38 @@
+{
+  "name": "Petalburg Ace Nolan",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.7100000000000001,
+      "switchBias": 0.5800000000000001,
+      "itemBias": 0.68,
+      "maxSelectMargin": 0.27999999999999997
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "linoone",
+      "level": 86,
+      "moveset": [
+        "extremespeed",
+        "slash",
+        "shadowclaw"
+      ]
+    },
+    {
+      "species": "zangoose",
+      "level": 87,
+      "moveset": [
+        "slash",
+        "closecombat",
+        "swordsdance"
+      ]
+    }
+  ]
+}

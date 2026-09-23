@@ -1,0 +1,38 @@
+{
+  "name": "Lavaridge Camper Lio",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1,
+      "statMoveBias": 0.68,
+      "switchBias": 0.54,
+      "itemBias": 0.68,
+      "maxSelectMargin": 0.308
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 1,
+    "healPlayers": true
+  },
+  "team": [
+    {
+      "species": "torkoal",
+      "level": 84,
+      "moveset": [
+        "flamethrower",
+        "bodyslam",
+        "smokescreen"
+      ]
+    },
+    {
+      "species": "camerupt",
+      "level": 85,
+      "moveset": [
+        "earthquake",
+        "fireblast",
+        "yawn"
+      ]
+    }
+  ]
+}
