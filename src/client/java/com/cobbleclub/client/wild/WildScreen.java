@@ -100,18 +100,18 @@ extends Screen {
     }
 
     public void render(DrawContext g, int mouseX, int mouseY, float delta) {
-        g.fill(0, 0, this.width, this.height, -418707439);
+        g.fill(0, 0, this.width, this.height, -452984832);
         Starfield.draw(g, 0, 0, this.width, this.height, System.currentTimeMillis(), 105, 202093036L, 0.52f);
-        g.fill(this.left, this.top, this.left + 402, this.top + 211, -216657888);
-        g.fill(this.left + 1, this.top + 1, this.left + 402 - 1, this.top + 2, -10337909);
-        g.drawBorder(this.left, this.top, 402, 211, -8628313);
-        g.fill(this.left + 14, this.top + 47, this.left + 402 - 14, this.top + 48, -12965298);
+        g.fill(this.left, this.top, this.left + 402, this.top + 211, -196589496);
+        g.fill(this.left + 1, this.top + 1, this.left + 402 - 1, this.top + 2, -7434610);
+        g.drawBorder(this.left, this.top, 402, 211, -15658735);
+        g.fill(this.left + 14, this.top + 47, this.left + 402 - 14, this.top + 48, -10461088);
         int count = this.worlds.size();
-        g.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)("\u2726 COBBLECLUB WILD WORLDS v5 \u2022 " + count + " \u2726")), this.left + 201, this.top + 16, -1582849);
+        g.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)("\u2726 COBBLECLUB WILD WORLDS v5 \u2022 " + count + " \u2726")), this.left + 201, this.top + 16, -723724);
         Object line = this.subtitle.isBlank() ? count + " managed wild worlds" : this.subtitle;
-        g.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)line), this.left + 201, this.top + 33, -5594696);
+        g.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)line), this.left + 201, this.top + 33, -5197648);
         String footer = this.worlds.isEmpty() ? "No managed wild worlds are currently advertised by the server" : "Pick a world \u2022 safe random teleport \u2022 3 second warmup";
-        g.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)footer), this.left + 201, this.top + 211 - 17, -7436902);
+        g.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)footer), this.left + 201, this.top + 211 - 17, -5197648);
         for (Element child : this.children()) {
             if (!(child instanceof Drawable)) continue;
             Drawable drawable = (Drawable)child;
@@ -182,10 +182,14 @@ extends Screen {
             int y0 = this.getY();
             int x1 = x0 + this.getWidth();
             int y1 = y0 + this.getHeight();
-            int base = hover ? WorldButton.lighten(this.fill) : this.fill;
-            g.fill(x0, y0, x1, y1, base);
-            g.fill(x0, y0, x1, y0 + 2, hover ? this.accent : WorldButton.darken(this.accent));
-            g.drawBorder(x0, y0, this.getWidth(), this.getHeight(), hover ? this.accent : WorldButton.darken(this.accent));
+            int base = hover ? 0xFF777777 : 0xFF666666;
+            int edge = hover ? 0xFFE0E0E0 : 0xFF171717;
+            g.fill(x0, y0, x1, y1, edge);
+            g.fill(x0 + 1, y0 + 1, x1 - 1, y1 - 1, base);
+            g.fill(x0 + 1, y0 + 1, x1 - 1, y0 + 2, 0xFFA8A8A8);
+            g.fill(x0 + 1, y0 + 1, x0 + 2, y1 - 1, 0xFFA8A8A8);
+            g.fill(x0 + 1, y1 - 2, x1 - 1, y1 - 1, 0xFF343434);
+            g.fill(x1 - 2, y0 + 1, x1 - 1, y1 - 1, 0xFF343434);
             g.fill(x0 + 7, y1 - 5, x1 - 7, y1 - 3, this.accent);
             g.drawItem(this.icon, x0 + 8, y0 + 10);
             g.drawTextWithShadow(MinecraftClient.getInstance().textRenderer, this.getMessage(), x0 + 29, y0 + 14, -1);
