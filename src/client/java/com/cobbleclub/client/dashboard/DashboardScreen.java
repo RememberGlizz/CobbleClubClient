@@ -80,12 +80,12 @@ extends Screen {
         int x = this.left();
         int y = this.top();
         g.fill(x - 3, y - 3, x + 400 + 3, y + 222 + 3, 0x55000000);
-        g.fillGradient(x, y, x + 400, y + 222, -199614136, -200601562);
-        g.drawBorder(x - 1, y - 1, 402, 224, -16447985);
-        g.drawBorder(x, y, 400, 222, -13747610);
-        g.fillGradient(x, y, x + 400, y + 21, -14405538, -15459782);
-        g.fill(x, y + 21, x + 400, y + 22, -6467875);
-        g.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)("CobbleClub \u00b7 " + this.state.playerName)), x + 200, y + 6, -2053377);
+        g.fillGradient(x, y, x + 400, y + 222, -196589496, -198036942);
+        g.drawBorder(x - 1, y - 1, 402, 224, -15658735);
+        g.drawBorder(x, y, 400, 222, -7434610);
+        g.fillGradient(x, y, x + 400, y + 21, -10855846, -12632257);
+        g.fill(x, y + 21, x + 400, y + 22, -4342339);
+        g.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)("CobbleClub \u00b7 " + this.state.playerName)), x + 200, y + 6, -723724);
         this.card(g, x + 8, y + 27, 188, 82, "CLAIM BLOCKS", true);
         this.card(g, x + 204, y + 27, 188, 82, "REWARDS & KEYS", false);
         for (Element child : this.children()) {
@@ -97,35 +97,35 @@ extends Screen {
             int color = this.state.error ? -2734768 : -12474273;
             g.drawCenteredTextWithShadow(this.textRenderer, this.state.notice, x + 200, y + 210, color);
         } else {
-            g.drawCenteredTextWithShadow(this.textRenderer, "Open this menu any time with /club", x + 200, y + 210, -7035976);
+            g.drawCenteredTextWithShadow(this.textRenderer, "Open this menu any time with /club", x + 200, y + 210, -5197648);
         }
     }
 
     private void card(DrawContext g, int x, int y, int w, int h, String title, boolean claims) {
-        g.fillGradient(x, y, x + w, y + h, -14998448, -16315880);
-        g.drawBorder(x, y, w, h, -13747610);
-        g.drawTextWithShadow(this.textRenderer, title, x + 8, y + 7, -6467875);
+        g.fillGradient(x, y, x + w, y + h, -13421773, -15198184);
+        g.drawBorder(x, y, w, h, -7434610);
+        g.drawTextWithShadow(this.textRenderer, title, x + 8, y + 7, -4342339);
         if (claims) {
             int availableColor = this.state.claimRemaining > 0 ? -12474273 : -2734768;
             g.drawTextWithShadow(this.textRenderer, "Available: " + DashboardState.count(this.state.claimRemaining), x + 8, y + 23, availableColor);
-            g.drawTextWithShadow(this.textRenderer, "Used: " + DashboardState.count(this.state.claimUsed), x + 8, y + 35, -2962968);
-            g.drawTextWithShadow(this.textRenderer, "Total: " + DashboardState.count(this.state.claimTotal), x + 8, y + 47, -2962968);
+            g.drawTextWithShadow(this.textRenderer, "Used: " + DashboardState.count(this.state.claimUsed), x + 8, y + 35, -1710619);
+            g.drawTextWithShadow(this.textRenderer, "Total: " + DashboardState.count(this.state.claimTotal), x + 8, y + 47, -1710619);
             long seconds = this.state.secondsToReward();
             String reward = seconds < 0L ? "Disabled" : "+" + DashboardState.count(this.state.playtimeRewardAmount) + " gems in " + DashboardScreen.time(seconds);
-            g.drawTextWithShadow(this.textRenderer, "Playtime: " + reward, x + 8, y + 59, -7035976);
+            g.drawTextWithShadow(this.textRenderer, "Playtime: " + reward, x + 8, y + 59, -5197648);
             String purchase = this.state.purchaseEnabled ? "+" + DashboardState.count(this.state.purchaseAmount) + " for " + this.state.purchasePriceText : "Purchases disabled";
-            g.drawTextWithShadow(this.textRenderer, "Buy: " + purchase, x + 8, y + 70, -7035976);
+            g.drawTextWithShadow(this.textRenderer, "Buy: " + purchase, x + 8, y + 70, -5197648);
         } else {
-            g.drawTextWithShadow(this.textRenderer, "Balance: " + this.state.balanceText, x + 8, y + 23, -2053377);
+            g.drawTextWithShadow(this.textRenderer, "Balance: " + this.state.balanceText, x + 8, y + 23, -723724);
             g.drawTextWithShadow(this.textRenderer, "Gems: " + this.state.gemsText, x + 8, y + 35, -12474273);
             String daily = !this.state.dailyEnabled ? "Disabled" : (this.state.dailyAvailable ? "READY TO CLAIM" : "Claimed today");
-            g.drawTextWithShadow(this.textRenderer, "Daily: " + daily, x + 8, y + 47, this.state.dailyAvailable ? -12474273 : -7035976);
+            g.drawTextWithShadow(this.textRenderer, "Daily: " + daily, x + 8, y + 47, this.state.dailyAvailable ? -12474273 : -5197648);
             String dailyReward = "Reward: " + this.state.dailyGems + "g + " + this.state.dailyMoneyText;
             if (this.state.dailyVoteKeys > 0) {
                 dailyReward = dailyReward + " + " + this.state.dailyVoteKeys + " key" + (this.state.dailyVoteKeys == 1 ? "" : "s");
             }
-            g.drawTextWithShadow(this.textRenderer, dailyReward, x + 8, y + 59, -2962968);
-            g.drawTextWithShadow(this.textRenderer, "Keys: V " + this.state.voteKeys + "  S " + this.state.shinyKeys + "  L " + this.state.legendaryKeys, x + 8, y + 70, -7035976);
+            g.drawTextWithShadow(this.textRenderer, dailyReward, x + 8, y + 59, -1710619);
+            g.drawTextWithShadow(this.textRenderer, "Keys: V " + this.state.voteKeys + "  S " + this.state.shinyKeys + "  L " + this.state.legendaryKeys, x + 8, y + 70, -5197648);
         }
     }
 
