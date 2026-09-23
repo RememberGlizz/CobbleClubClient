@@ -27,6 +27,7 @@ import com.cobbleclub.client.battle.BattleClientInit;
 import com.cobbleclub.client.claims.ClaimsNetworking;
 import com.cobbleclub.client.contracts.ContractsNetworking;
 import com.cobbleclub.client.hud.FeatherboardHud;
+import com.cobbleclub.client.hud.SpawnAdventureHud;
 import com.cobbleclub.client.crate.CratePreviewNetworking;
 import com.cobbleclub.client.dashboard.DashboardNetworking;
 import com.cobbleclub.client.gearpreview.GearPreviewNetworking;
@@ -89,6 +90,7 @@ implements ClientModInitializer {
         ClaimsNetworking.init();
         ContractsNetworking.init();
         FeatherboardHud.init();
+        SpawnAdventureHud.init();
         DashboardNetworking.init();
         KitsNetworking.init();
         ClientModHandshake.init();
