@@ -57,24 +57,24 @@ extends Screen {
     private static final int GRID_COLS = 3;
     private static final int CHIP_GAP = 2;
     private static final int SEARCH_W = 120;
-    private static final int PANEL_TOP = -199614136;
-    private static final int PANEL_BOTTOM = -200601562;
-    private static final int PANEL_BORDER_OUT = -16447985;
-    private static final int PANEL_BORDER_IN = -13747610;
-    private static final int HEADER_TOP = -14405538;
-    private static final int HEADER_BOTTOM = -15459782;
-    private static final int ACCENT = -6467875;
-    private static final int TITLE_COLOR = -2053377;
-    private static final int MUTED_TEXT = -7035976;
+    private static final int PANEL_TOP = -196589496;
+    private static final int PANEL_BOTTOM = -198036942;
+    private static final int PANEL_BORDER_OUT = -15658735;
+    private static final int PANEL_BORDER_IN = -7434610;
+    private static final int HEADER_TOP = -10855846;
+    private static final int HEADER_BOTTOM = -12632257;
+    private static final int ACCENT = -4342339;
+    private static final int TITLE_COLOR = -723724;
+    private static final int MUTED_TEXT = -5197648;
     private static final int SELECTED = -12474273;
-    private static final int CONTENT_BG = -15723477;
-    private static final int CHIP_BASE = -15064506;
-    private static final int CHIP_HOVER = -14405546;
+    private static final int CONTENT_BG = -14671840;
+    private static final int CHIP_BASE = -13421773;
+    private static final int CHIP_HOVER = -12105913;
     private static final int UNOWNED_DIM = -1727591912;
-    private static final int PREVIEW_TOP = -14998448;
-    private static final int PREVIEW_BOTTOM = -16315880;
-    private static final int SCROLL_TRACK = -15986650;
-    private static final int SCROLL_THUMB = -10862962;
+    private static final int PREVIEW_TOP = -13421773;
+    private static final int PREVIEW_BOTTOM = -15198184;
+    private static final int SCROLL_TRACK = -14671840;
+    private static final int SCROLL_THUMB = -8947849;
     private final Text titleComponent;
     private final boolean showUnsetButton;
     private final Text unsetLabel;
@@ -225,12 +225,12 @@ extends Screen {
         int left = this.panelLeft();
         int top = this.panelTop();
         guiGraphics.fill(left - 3, top - 3, left + 440 + 3, top + 240 + 3, 0x55000000);
-        guiGraphics.fillGradient(left, top, left + 440, top + 240, -199614136, -200601562);
-        guiGraphics.drawBorder(left - 1, top - 1, 442, 242, -16447985);
-        guiGraphics.drawBorder(left, top, 440, 240, -13747610);
-        guiGraphics.fillGradient(left, top, left + 440, top + 18, -14405538, -15459782);
-        guiGraphics.fill(left, top + 18, left + 440, top + 19, -6467875);
-        guiGraphics.drawCenteredTextWithShadow(this.textRenderer, this.titleComponent, left + 220, top + 5, -2053377);
+        guiGraphics.fillGradient(left, top, left + 440, top + 240, -196589496, -198036942);
+        guiGraphics.drawBorder(left - 1, top - 1, 442, 242, -15658735);
+        guiGraphics.drawBorder(left, top, 440, 240, -7434610);
+        guiGraphics.fillGradient(left, top, left + 440, top + 18, -10855846, -12632257);
+        guiGraphics.fill(left, top + 18, left + 440, top + 19, -4342339);
+        guiGraphics.drawCenteredTextWithShadow(this.textRenderer, this.titleComponent, left + 220, top + 5, -723724);
         TagRow hovered = this.hoveredRow(mouseX, mouseY);
         this.renderPreviewStrip(guiGraphics, hovered);
         this.renderGrid(guiGraphics, hovered);
@@ -248,8 +248,8 @@ extends Screen {
         PlayerEntity player;
         int x0 = this.panelLeft() + 8;
         int x1 = this.panelLeft() + 440 - 8 - 120 - 6;
-        guiGraphics.fillGradient(x0, this.previewY0(), x1, this.previewY1(), -14998448, -16315880);
-        guiGraphics.drawBorder(x0 - 1, this.previewY0() - 1, x1 - x0 + 2, this.previewY1() - this.previewY0() + 2, -13747610);
+        guiGraphics.fillGradient(x0, this.previewY0(), x1, this.previewY1(), -13421773, -15198184);
+        guiGraphics.drawBorder(x0 - 1, this.previewY0() - 1, x1 - x0 + 2, this.previewY1() - this.previewY0() + 2, -7434610);
         TagRow shown = hovered;
         if (hovered == null) {
             for (TagRow row : this.rows) {
@@ -275,10 +275,10 @@ extends Screen {
         int x1 = this.listX1();
         int y0 = this.listY0();
         int y1 = y0 + this.visibleRowCount() * 18;
-        guiGraphics.fill(x0 - 2, y0 - 2, x1 + 2, y1 + 2, -15723477);
-        guiGraphics.drawBorder(x0 - 2, y0 - 2, x1 - x0 + 4, y1 - y0 + 4, -13747610);
+        guiGraphics.fill(x0 - 2, y0 - 2, x1 + 2, y1 + 2, -14671840);
+        guiGraphics.drawBorder(x0 - 2, y0 - 2, x1 - x0 + 4, y1 - y0 + 4, -7434610);
         if (visible.isEmpty()) {
-            guiGraphics.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)"No tags to show"), (x0 + x1) / 2, (y0 + y1) / 2 - 4, -7035976);
+            guiGraphics.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)"No tags to show"), (x0 + x1) / 2, (y0 + y1) / 2 - 4, -5197648);
         } else {
             int first;
             int chipW = this.chipW();
@@ -287,7 +287,7 @@ extends Screen {
                 TagRow row = visible.get(i);
                 int chipX = x0 + (i - first) % 3 * (chipW + 2);
                 int chipY = y0 + (i - first) / 3 * 18;
-                guiGraphics.fill(chipX, chipY + 1, chipX + chipW, chipY + 18 - 1, row == hovered ? -14405546 : -15064506);
+                guiGraphics.fill(chipX, chipY + 1, chipX + chipW, chipY + 18 - 1, row == hovered ? -12105913 : -13421773);
                 guiGraphics.enableScissor(chipX + 1, chipY + 1, chipX + chipW - 1, chipY + 18 - 1);
                 guiGraphics.drawTextWithShadow(this.textRenderer, row.tag(), chipX + 5, chipY + 5, -1);
                 guiGraphics.disableScissor();
@@ -306,10 +306,10 @@ extends Screen {
             if (maxScroll > 0) {
                 int trackX = x1 + 4;
                 int trackH = y1 - y0;
-                guiGraphics.fill(trackX, y0, trackX + 4, y1, -15986650);
+                guiGraphics.fill(trackX, y0, trackX + 4, y1, -14671840);
                 int thumbH = Math.max(10, trackH * this.visibleRowCount() / (maxScroll + this.visibleRowCount()));
                 int thumbY = y0 + (trackH - thumbH) * this.scrollRow / maxScroll;
-                guiGraphics.fill(trackX, thumbY, trackX + 4, thumbY + thumbH, -10862962);
+                guiGraphics.fill(trackX, thumbY, trackX + 4, thumbY + thumbH, -8947849);
             }
         }
     }
