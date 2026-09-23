@@ -11,43 +11,12 @@ import net.minecraft.text.Text;
 public final class ThemedButton extends ButtonWidget {
     private Variant variant = Variant.DEFAULT;
 
-    public ThemedButton(
-            int x,
-            int y,
-            int w,
-            int h,
-            Text label,
-            ButtonWidget.PressAction onPress
-    ) {
-        super(
-                x,
-                y,
-                w,
-                h,
-                label,
-                onPress,
-                DEFAULT_NARRATION_SUPPLIER
-        );
+    public ThemedButton(int x, int y, int w, int h, Text label, ButtonWidget.PressAction onPress) {
+        super(x, y, w, h, label, onPress, DEFAULT_NARRATION_SUPPLIER);
     }
 
-    public ThemedButton(
-            int x,
-            int y,
-            int w,
-            int h,
-            Text label,
-            Variant variant,
-            ButtonWidget.PressAction onPress
-    ) {
-        this(
-                x,
-                y,
-                w,
-                h,
-                label,
-                onPress
-        );
-
+    public ThemedButton(int x, int y, int w, int h, Text label, Variant variant, ButtonWidget.PressAction onPress) {
+        this(x, y, w, h, label, onPress);
         this.variant = variant;
     }
 
@@ -56,122 +25,82 @@ public final class ThemedButton extends ButtonWidget {
     }
 
     @Override
-    protected void renderWidget(
-            DrawContext guiGraphics,
-            int mouseX,
-            int mouseY,
-            float partialTick
-    ) {
-        boolean hover =
-                this.isHovered()
-                        && this.active;
+    protected void renderWidget(DrawContext g, int mouseX, int mouseY, float partialTick) {
+        boolean hover = this.isHovered() && this.active;
 
         int x0 = this.getX();
         int y0 = this.getY();
         int x1 = x0 + this.getWidth();
         int y1 = y0 + this.getHeight();
 
-        int fill =
-                hover
-                        ? this.variant.fillHover
-                        : this.variant.fill;
+        int fill = hover ? this.variant.fillHover : this.variant.fill;
+        int outline = hover ? this.variant.outlineHover : this.variant.outline;
 
-        int outline =
-                hover
-                        ? this.variant.outlineHover
-                        : this.variant.outline;
+        if (!this.active) {
+            fill = dim(fill);
+            outline = dim(outline);
+        }
 
-        guiGraphics.fill(
-                x0,
-                y0,
-                x1,
-                y1,
-                this.active
-                        ? fill
-                        : ThemedButton.dim(fill)
-        );
+        // Vanilla-inspired 3D button: dark outer frame, raised light top/left,
+        // recessed dark bottom/right. Geometry is unchanged.
+        g.fill(x0, y0, x1, y1, outline);
+        if (this.getWidth() > 2 && this.getHeight() > 2) {
+            g.fill(x0 + 1, y0 + 1, x1 - 1, y1 - 1, fill);
+            g.fill(x0 + 1, y0 + 1, x1 - 1, y0 + 2, this.active ? this.variant.bevelTop : dim(this.variant.bevelTop));
+            g.fill(x0 + 1, y0 + 1, x0 + 2, y1 - 1, this.active ? this.variant.bevelTop : dim(this.variant.bevelTop));
+            g.fill(x0 + 1, y1 - 2, x1 - 1, y1 - 1, this.active ? this.variant.bevelBottom : dim(this.variant.bevelBottom));
+            g.fill(x1 - 2, y0 + 1, x1 - 1, y1 - 1, this.active ? this.variant.bevelBottom : dim(this.variant.bevelBottom));
+        }
 
-        guiGraphics.fill(
-                x0,
-                y0,
-                x1,
-                y0 + 1,
-                this.variant.bevelTop
-        );
+        int textColor = this.active ? (hover ? 0xFFFFFFFF : 0xFFE5E5E5) : 0xFF8A8A8A;
+        int textY = y0 + (this.getHeight() - 8) / 2;
 
-        guiGraphics.fill(
-                x0,
-                y1 - 1,
-                x1,
-                y1,
-                this.variant.bevelBottom
-        );
-
-        guiGraphics.drawBorder(
-                x0,
-                y0,
-                this.getWidth(),
-                this.getHeight(),
-                this.active
-                        ? outline
-                        : ThemedButton.dim(outline)
-        );
-
-        int textColor =
-                this.active
-                        ? (!hover
-                        && this.variant == Variant.DEFAULT
-                        ? -2962968
-                        : -1)
-                        : -9805184;
-
-        guiGraphics.drawCenteredTextWithShadow(
+        g.drawCenteredTextWithShadow(
                 MinecraftClient.getInstance().textRenderer,
                 this.getMessage(),
                 (x0 + x1) / 2,
-                y0 + (this.getHeight() - 8) / 2,
+                textY,
                 textColor
         );
     }
 
     private static int dim(int argb) {
-        return argb & 0xFF000000
-                | argb >> 1 & 0x7F7F7F;
+        return argb & 0xFF000000 | argb >> 1 & 0x7F7F7F;
     }
 
     @Environment(EnvType.CLIENT)
     public enum Variant {
         DEFAULT(
-                -15199710,
-                -13950142,
-                -13161134,
-                -16119790,
-                -16447985,
-                -9815394
+                0xFF6A6A6A,
+                0xFF7A7A7A,
+                0xFFA8A8A8,
+                0xFF343434,
+                0xFF151515,
+                0xFFE0E0E0
         ),
         GREEN(
-                -15452897,
-                -14791378,
-                -13997504,
-                -16313591,
-                -13726644,
-                -11351944
+                0xFF3F6D48,
+                0xFF4E8259,
+                0xFF79A880,
+                0xFF24412A,
+                0xFF17231A,
+                0xFF9DD5A7
         ),
         BLUE(
-                -15455926,
-                -14795410,
-                -14003057,
-                -16314854,
-                -12683326,
-                -10049038
+                0xFF45627A,
+                0xFF52738E,
+                0xFF7F9CB3,
+                0xFF273B4A,
+                0xFF17212A,
+                0xFFA9C8DF
         ),
         RED(
-                -12970725,
-                -11263960,
-                -9557452,
-                -15530231,
-                -5227962,
-                -2072211
+                0xFF75484B,
+                0xFF895457,
+                0xFFAF7A7D,
+                0xFF45292B,
+                0xFF291718,
+                0xFFD9A2A5
         );
 
         final int fill;
@@ -181,14 +110,7 @@ public final class ThemedButton extends ButtonWidget {
         final int outline;
         final int outlineHover;
 
-        Variant(
-                int fill,
-                int fillHover,
-                int bevelTop,
-                int bevelBottom,
-                int outline,
-                int outlineHover
-        ) {
+        Variant(int fill, int fillHover, int bevelTop, int bevelBottom, int outline, int outlineHover) {
             this.fill = fill;
             this.fillHover = fillHover;
             this.bevelTop = bevelTop;
@@ -198,5 +120,3 @@ public final class ThemedButton extends ButtonWidget {
         }
     }
 }
-
-
