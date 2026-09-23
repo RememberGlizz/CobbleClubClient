@@ -39,7 +39,7 @@ public final class KitsScreen extends Screen {
                     "32× Steak",
                     "1× PC",
                     "1× Healing Machine",
-                    "RTP Dex bonus: −10s at 50% · −20s complete"
+                    "RTP Bonus: −10s @ 50% Dex · −20s @ 100%"
             },
             "ace",
             new String[]{
@@ -49,8 +49,8 @@ public final class KitsScreen extends Screen {
                     "6× Ultra Balls",
                     "12× Quick Balls",
                     "50× XP Bottles",
-                    "RTP cooldown: −30 seconds",
-                    "Dex bonus: −10s at 50% · −20s complete"
+                    "RTP: −30s rank bonus",
+                    "Dex: −10s @ 50% · −20s @ 100%"
             },
             "champion",
             new String[]{
@@ -61,8 +61,8 @@ public final class KitsScreen extends Screen {
                     "8× Ultra Balls",
                     "16× Quick Balls",
                     "64× XP Bottles",
-                    "RTP cooldown: −60 seconds",
-                    "Dex bonus: −10s at 50% · −20s complete"
+                    "RTP: −60s rank bonus",
+                    "Dex: −10s @ 50% · −20s @ 100%"
             },
             "master",
             new String[]{
@@ -74,8 +74,8 @@ public final class KitsScreen extends Screen {
                     "16× Rare Candy",
                     "32× Quick Balls",
                     "96× XP Bottles",
-                    "RTP cooldown: −90 seconds",
-                    "Dex bonus: −10s at 50% · −20s complete"
+                    "RTP: −90s rank bonus",
+                    "Dex: −10s @ 50% · −20s @ 100%"
             },
             "legend",
             new String[]{
@@ -86,8 +86,8 @@ public final class KitsScreen extends Screen {
                     "46× Rare Candy",
                     "46× Quick Balls",
                     "178× XP Bottles",
-                    "RTP cooldown: −120 seconds",
-                    "Dex bonus: −10s at 50% · −20s complete"
+                    "RTP: −120s rank bonus",
+                    "Dex: −10s @ 50% · −20s @ 100%"
             }
     );
 
@@ -234,8 +234,8 @@ public final class KitsScreen extends Screen {
                 y,
                 x + PANEL_W,
                 y + PANEL_H,
-                -199614136,
-                -200601562
+                -196589496,
+                -198036942
         );
 
         g.drawBorder(
@@ -243,7 +243,7 @@ public final class KitsScreen extends Screen {
                 y - 1,
                 PANEL_W + 2,
                 PANEL_H + 2,
-                -16447985
+                -15658735
         );
 
         g.drawBorder(
@@ -251,7 +251,7 @@ public final class KitsScreen extends Screen {
                 y,
                 PANEL_W,
                 PANEL_H,
-                -13747610
+                -7434610
         );
 
         g.fillGradient(
@@ -259,8 +259,8 @@ public final class KitsScreen extends Screen {
                 y,
                 x + PANEL_W,
                 y + 22,
-                -14405538,
-                -15459782
+                -10855846,
+                -12632257
         );
 
         g.fill(
@@ -268,7 +268,7 @@ public final class KitsScreen extends Screen {
                 y + 21,
                 x + PANEL_W,
                 y + 22,
-                -6467875
+                -4342339
         );
 
         g.drawCenteredTextWithShadow(
@@ -276,7 +276,7 @@ public final class KitsScreen extends Screen {
                 Text.literal("CobbleClub · Kits"),
                 x + 208,
                 y + 7,
-                -2053377
+                -723724
         );
 
         KitsState.KitEntry kit =
@@ -298,7 +298,7 @@ public final class KitsScreen extends Screen {
                         ? -2734768
                         : remaining <= 0L
                                 ? -12474273
-                                : -2053377;
+                                : -723724;
 
         g.drawCenteredTextWithShadow(
                 this.textRenderer,
@@ -329,7 +329,7 @@ public final class KitsScreen extends Screen {
                 access,
                 (int) ((x + 208) / accessScale),
                 (int) ((y + 38) / accessScale),
-                -7035976
+                -5197648
         );
 
         g.getMatrices().pop();
@@ -347,8 +347,8 @@ public final class KitsScreen extends Screen {
                 boxY,
                 x + PANEL_W - 8,
                 y + 173,
-                -14998448,
-                -16315880
+                -13421773,
+                -15198184
         );
 
         g.drawBorder(
@@ -356,7 +356,7 @@ public final class KitsScreen extends Screen {
                 boxY,
                 400,
                 103,
-                -13747610
+                -7434610
         );
 
         g.drawTextWithShadow(
@@ -365,7 +365,7 @@ public final class KitsScreen extends Screen {
                         .toUpperCase(),
                 x + 19,
                 boxY + 9,
-                -6467875
+                -4342339
         );
 
         g.fill(
@@ -373,7 +373,7 @@ public final class KitsScreen extends Screen {
                 boxY + 24,
                 x + 209,
                 y + 166,
-                -13747610
+                -7434610
         );
 
         String[] items =
@@ -394,13 +394,31 @@ public final class KitsScreen extends Screen {
                             ? i
                             : i - split;
 
-            g.drawTextWithShadow(
-                    this.textRenderer,
-                    "• " + items[i],
-                    x + 16 + column * 200,
-                    boxY + 27 + row * ("newb".equals(this.selected) ? 13 : 15),
-                    -2962968
-            );
+            String line = "• " + items[i];
+            int lineX = x + 16 + column * 200;
+            int lineY = boxY + 27 + row * ("newb".equals(this.selected) ? 13 : 15);
+
+            if (items[i].startsWith("RTP") || items[i].startsWith("Dex")) {
+                float lineScale = 0.78f;
+                g.getMatrices().push();
+                g.getMatrices().scale(lineScale, lineScale, 1.0f);
+                g.drawTextWithShadow(
+                        this.textRenderer,
+                        line,
+                        (int)(lineX / lineScale),
+                        (int)(lineY / lineScale),
+                        -1710619
+                );
+                g.getMatrices().pop();
+            } else {
+                g.drawTextWithShadow(
+                        this.textRenderer,
+                        line,
+                        lineX,
+                        lineY,
+                        -1710619
+                );
+            }
         }
 
         for (Element child : this.children()) {
@@ -452,7 +470,7 @@ public final class KitsScreen extends Screen {
                     footer,
                     (int) ((x + 208) / footerScale),
                     (int) ((y + 211) / footerScale),
-                    -7035976
+                    -5197648
             );
 
             g.getMatrices().pop();
