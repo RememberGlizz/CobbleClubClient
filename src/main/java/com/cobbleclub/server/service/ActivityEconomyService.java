@@ -31,6 +31,7 @@ package com.cobbleclub.server.service;
 import com.cobbleclub.server.CobbleClubServer;
 import com.cobbleclub.server.data.PlayerDataStore;
 import com.cobbleclub.server.network.SellPayloads;
+import com.cobbleclub.server.network.ContractsPayloads;
 import com.cobbleclub.server.service.ActivityEconomyConfig;
 import com.cobbleclub.server.service.EconomyService;
 import com.cobblemon.mod.common.api.battles.model.actor.ActorType;
@@ -330,14 +331,76 @@ public final class ActivityEconomyService {
         if (!ActivityEconomyService.enabled(player)) {
             return 0;
         }
+        if (ServerPlayNetworking.canSend(player, ContractsPayloads.Open.ID)) {
+            ContractsService.open(player);
+            return 1;
+        }
+
+        // Compatibility fallback for clients without the CobbleClub contracts GUI.
         ContractProgress progress = ActivityEconomyService.progressFor(player);
         ContractSet set = ActivityEconomyService.contractSet(player.getUuid(), progress.cycle);
-        player.sendMessage(Text.literal("Trainer Contracts").formatted(Formatting.LIGHT_PURPLE, Formatting.BOLD).append(Text.literal(" \u2022 refresh in " + ActivityEconomyService.refreshText(progress.cycle)).formatted(Formatting.GRAY)), false);
-        ActivityEconomyService.sendContract(player, "Catch Pok\u00e9mon", progress.catches, set.catchTarget, set.catchReward, (progress.completedMask & 1) != 0);
+        player.sendMessage(Text.literal("Trainer Contracts").formatted(Formatting.WHITE, Formatting.BOLD)
+                .append(Text.literal(" · refresh in " + ActivityEconomyService.refreshText(progress.cycle)).formatted(Formatting.GRAY)), false);
+        ActivityEconomyService.sendContract(player, "Catch Pokémon", progress.catches, set.catchTarget, set.catchReward, (progress.completedMask & 1) != 0);
         ActivityEconomyService.sendContract(player, "Win PvE battles", progress.battles, set.battleTarget, set.battleReward, (progress.completedMask & 2) != 0);
         ActivityEconomyService.sendContract(player, "Sell items", progress.soldItems, set.sellTarget, set.sellReward, (progress.completedMask & 4) != 0);
         player.sendMessage(Text.literal("Contracts pay automatically when completed.").formatted(Formatting.DARK_GRAY), false);
         return 1;
+    }
+
+    public static String contractRefreshText(ServerPlayerEntity player) {
+        ContractProgress progress = ActivityEconomyService.progressFor(player);
+        return ActivityEconomyService.refreshText(progress.cycle);
+    }
+
+    public static JsonArray refreshingContractsJson(ServerPlayerEntity player) {
+        ContractProgress progress = ActivityEconomyService.progressFor(player);
+        ContractSet set = ActivityEconomyService.contractSet(player.getUuid(), progress.cycle);
+        JsonArray out = new JsonArray();
+        out.add(refreshingEntry("refresh:catch", "Catch Pokémon", "Refreshing Contract",
+                "Catch Pokémon before the current contract cycle ends.",
+                progress.catches, set.catchTarget, set.catchReward, (progress.completedMask & 1) != 0));
+        out.add(refreshingEntry("refresh:battle", "Win PvE Battles", "Refreshing Contract",
+                "Win battles against wild Pokémon or non-player opponents before refresh.",
+                progress.battles, set.battleTarget, set.battleReward, (progress.completedMask & 2) != 0));
+        out.add(refreshingEntry("refresh:sell", "Sell Items", "Refreshing Contract",
+                "Sell supported items through the CobbleClub sell system before refresh.",
+                progress.soldItems, set.sellTarget, set.sellReward, (progress.completedMask & 4) != 0));
+        return out;
+    }
+
+    private static JsonObject refreshingEntry(
+            String id,
+            String title,
+            String subtitle,
+            String description,
+            int progress,
+            int target,
+            long reward,
+            boolean complete
+    ) {
+        JsonObject entry = new JsonObject();
+        entry.addProperty("id", id);
+        entry.addProperty("title", title);
+        entry.addProperty("subtitle", subtitle);
+        entry.addProperty("description", description);
+        entry.addProperty("reward", EconomyService.format(reward));
+        entry.addProperty("status", complete ? "COMPLETE · PAID" : "IN PROGRESS");
+        entry.addProperty("progress", Math.min(progress, target));
+        entry.addProperty("target", target);
+        entry.addProperty("claimable", false);
+        entry.addProperty("claimed", complete);
+        entry.addProperty("locked", false);
+        entry.addProperty("autoReward", true);
+        JsonArray objectives = new JsonArray();
+        JsonObject objective = new JsonObject();
+        objective.addProperty("label", title);
+        objective.addProperty("current", Math.min(progress, target));
+        objective.addProperty("target", target);
+        objective.addProperty("complete", complete);
+        objectives.add(objective);
+        entry.add("objectives", objectives);
+        return entry;
     }
 
     public static void onPokemonCaptured(PokemonCapturedEvent event) {
@@ -472,7 +535,7 @@ public final class ActivityEconomyService {
             progress.completedMask |= bit;
             dirty = true;
             ActivityEconomyService.creditDeferred(player, reward);
-            player.sendMessage(Text.literal("Contract complete: +" + EconomyService.format(reward) + ".").formatted(Formatting.LIGHT_PURPLE, Formatting.BOLD), false);
+            player.sendMessage(Text.literal("✓ Contract complete · +" + EconomyService.format(reward)).formatted(Formatting.GREEN), false);
         }
     }
 
