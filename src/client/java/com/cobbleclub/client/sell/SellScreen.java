@@ -320,7 +320,7 @@ public final class SellScreen
         for (Tab tab : this.tabs()) {
             boolean active = tab.id.equals(this.category);
             boolean hover = PreviewUi.inRect(mouseX, mouseY, x, y, tab.width, 17);
-            g.fill(x, y, x + tab.width, y + 17, active ? -14410694 : (hover ? -14936272 : -15528414));
+            g.fill(x, y, x + tab.width, y + 17, active ? -11184811 : (hover ? -12105913 : -13290187));
             if (active) {
                 g.fill(x, y + 16, x + tab.width, y + 17, -4342339);
             }
