@@ -100,7 +100,7 @@ extends Screen {
     }
 
     public void render(DrawContext g, int mouseX, int mouseY, float delta) {
-        g.fill(0, 0, this.width, this.height, -452984832);
+        g.fill(0, 0, this.width, this.height, 0x52000000);
         Starfield.draw(g, 0, 0, this.width, this.height, System.currentTimeMillis(), 105, 202093036L, 0.52f);
         g.fill(this.left, this.top, this.left + 402, this.top + 211, -196589496);
         g.fill(this.left + 1, this.top + 1, this.left + 402 - 1, this.top + 2, -7434610);
