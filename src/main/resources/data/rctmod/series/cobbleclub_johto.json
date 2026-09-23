@@ -4,6 +4,8 @@
   "difficulty": 6,
   "initialLevelCap": 60,
   "relativeLevelCap": 0,
-  "requiredSeries": [],
+  "requiredSeries": [
+    "cobbleclub_kanto"
+  ],
   "hideTrainerIdentities": false
 }
