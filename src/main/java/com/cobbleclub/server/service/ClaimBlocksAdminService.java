@@ -113,7 +113,7 @@ public final class ClaimBlocksAdminService {
                 true
         );
 
-        ServerPlayerEntity operator = source.getPlayer();
+        ServerPlayerEntity operator = source.getEntity() instanceof ServerPlayerEntity p ? p : null;
         if (operator != target) {
             target.sendMessage(
                     Text.literal("Your claim block allowance was adjusted by an administrator. ")
