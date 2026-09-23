@@ -65,22 +65,22 @@ extends Screen {
     private static final int MAX_ROWS = 6;
     private static final int TAB_H = 18;
     private static final float ICON_SCALE = 1.35f;
-    private static final int PANEL_TOP = -199614136;
-    private static final int PANEL_BOTTOM = -200601562;
-    private static final int PANEL_BORDER_OUT = -16447985;
-    private static final int PANEL_BORDER_IN = -13747610;
-    private static final int HEADER_TOP = -14405538;
-    private static final int HEADER_BOTTOM = -15459782;
-    private static final int ACCENT = -6467875;
-    private static final int TITLE_COLOR = -2053377;
-    private static final int MUTED_TEXT = -7035976;
+    private static final int PANEL_TOP = -196589496;
+    private static final int PANEL_BOTTOM = -198036942;
+    private static final int PANEL_BORDER_OUT = -15658735;
+    private static final int PANEL_BORDER_IN = -7434610;
+    private static final int HEADER_TOP = -10855846;
+    private static final int HEADER_BOTTOM = -12632257;
+    private static final int ACCENT = -4342339;
+    private static final int TITLE_COLOR = -723724;
+    private static final int MUTED_TEXT = -5197648;
     private static final int SELECTED = -12474273;
-    private static final int CONTENT_BG = -15723477;
-    private static final int SLOT_BASE = -15064506;
-    private static final int PREVIEW_TOP = -14998448;
-    private static final int PREVIEW_BOTTOM = -16315880;
-    private static final int SCROLL_TRACK = -15986650;
-    private static final int SCROLL_THUMB = -10862962;
+    private static final int CONTENT_BG = -14671840;
+    private static final int SLOT_BASE = -13421773;
+    private static final int PREVIEW_TOP = -13421773;
+    private static final int PREVIEW_BOTTOM = -15198184;
+    private static final int SCROLL_TRACK = -14671840;
+    private static final int SCROLL_THUMB = -8947849;
     private static final float MIN_ZOOM = 0.5f;
     private static final float MAX_ZOOM = 2.6f;
     private static final float ZOOM_STEP = 1.12f;
@@ -247,19 +247,19 @@ extends Screen {
         int left = this.panelLeft();
         int top = this.panelTop();
         guiGraphics.fill(left - 3, top - 3, left + 456 + 3, top + 252 + 3, 0x55000000);
-        guiGraphics.fillGradient(left, top, left + 456, top + 252, -199614136, -200601562);
-        guiGraphics.drawBorder(left - 1, top - 1, 458, 254, -16447985);
-        guiGraphics.drawBorder(left, top, 456, 252, -13747610);
-        guiGraphics.fillGradient(left, top, left + 456, top + 18, -14405538, -15459782);
-        guiGraphics.fill(left, top + 18, left + 456, top + 19, -6467875);
-        guiGraphics.drawCenteredTextWithShadow(this.textRenderer, this.getTitle(), left + 228, top + 5, -2053377);
+        guiGraphics.fillGradient(left, top, left + 456, top + 252, -196589496, -198036942);
+        guiGraphics.drawBorder(left - 1, top - 1, 458, 254, -15658735);
+        guiGraphics.drawBorder(left, top, 456, 252, -7434610);
+        guiGraphics.fillGradient(left, top, left + 456, top + 18, -10855846, -12632257);
+        guiGraphics.fill(left, top + 18, left + 456, top + 19, -4342339);
+        guiGraphics.drawCenteredTextWithShadow(this.textRenderer, this.getTitle(), left + 228, top + 5, -723724);
         int px0 = this.previewX0();
         int py0 = this.previewY0();
         int px1 = this.previewX1();
         int py1 = this.previewY1();
-        guiGraphics.fillGradient(px0, py0, px1, py1, -14998448, -16315880);
+        guiGraphics.fillGradient(px0, py0, px1, py1, -13421773, -15198184);
         Starfield.draw(guiGraphics, px0, py0, px1, py1, now, 34, 91L, 0.85f);
-        guiGraphics.drawBorder(px0 - 1, py0 - 1, px1 - px0 + 2, py1 - py0 + 2, -13747610);
+        guiGraphics.drawBorder(px0 - 1, py0 - 1, px1 - px0 + 2, py1 - py0 + 2, -7434610);
         if (this.hidePlayer) {
             ItemStack focus;
             ItemStack stackTmp = focus = this.hovered != null ? this.hovered : this.focusItem;
@@ -273,7 +273,7 @@ extends Screen {
             if (!focus.isEmpty()) {
                 GearPreviewRenderer.renderItem3D(guiGraphics, px0, py0, px1, py1, this.itemOrientation, this.zoom, focus);
             } else {
-                guiGraphics.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)"Select an item"), (px0 + px1) / 2, (py0 + py1) / 2 - 4, -7035976);
+                guiGraphics.drawCenteredTextWithShadow(this.textRenderer, (Text)Text.literal((String)"Select an item"), (px0 + px1) / 2, (py0 + py1) / 2 - 4, -5197648);
             }
         } else {
             this.preview.render(guiGraphics, px0, py0, px1, py1, this.yaw, this.pitch, this.zoom, this.resolvedEquipment());
@@ -299,9 +299,9 @@ extends Screen {
             boolean hover = mouseX >= tab.x() && mouseX < tab.x() + tab.w() && mouseY >= tab.y() && mouseY < tab.y() + 16;
             guiGraphics.fill(tab.x(), tab.y(), tab.x() + tab.w(), tab.y() + 16, isActive ? -14410694 : (hover ? -14936272 : -15528414));
             if (isActive) {
-                guiGraphics.fill(tab.x(), tab.y() + 15, tab.x() + tab.w(), tab.y() + 16, -6467875);
+                guiGraphics.fill(tab.x(), tab.y() + 15, tab.x() + tab.w(), tab.y() + 16, -4342339);
             }
-            int tint = isActive ? -1 : (hover ? -2962968 : -7035976);
+            int tint = isActive ? -1 : (hover ? -1710619 : -5197648);
             guiGraphics.drawText(this.textRenderer, this.tabLabels.get(tab.index()), tab.x() + 5, tab.y() + 4, tint, false);
         }
     }
@@ -314,15 +314,15 @@ extends Screen {
         int rows = this.visibleRows();
         int gridW = 234;
         int gridH = rows * 26;
-        guiGraphics.fill(x - 2, y - 2, x + gridW + 2, y + gridH + 2, -15723477);
-        guiGraphics.drawBorder(x - 2, y - 2, gridW + 4, gridH + 4, -13747610);
+        guiGraphics.fill(x - 2, y - 2, x + gridW + 2, y + gridH + 2, -14671840);
+        guiGraphics.drawBorder(x - 2, y - 2, gridW + 4, gridH + 4, -7434610);
         guiGraphics.enableScissor(x, y, x + gridW, y + gridH);
         for (int i = first = this.scrollRow * 9; i < items.size() && i < first + 9 * rows; ++i) {
             boolean selected;
             ItemStack stack = items.get(i);
             int cellX = x + (i - first) % 9 * 26;
             int cellY = y + (i - first) / 9 * 26;
-            guiGraphics.fill(cellX + 1, cellY + 1, cellX + 26 - 1, cellY + 26 - 1, -15064506);
+            guiGraphics.fill(cellX + 1, cellY + 1, cellX + 26 - 1, cellY + 26 - 1, -13421773);
             PreviewUi.renderScaledItem(guiGraphics, stack, cellX + 13 - 8, cellY + 13 - 8, 1.35f);
             boolean bl = selected = this.overrides.get(GearPreviewScreen.slotFor(stack)) == stack;
             if (selected) {
@@ -335,10 +335,10 @@ extends Screen {
         int maxScroll = this.maxScrollRow();
         if (maxScroll > 0) {
             int trackX = x + gridW + 2;
-            guiGraphics.fill(trackX, y, trackX + 4, y + gridH, -15986650);
+            guiGraphics.fill(trackX, y, trackX + 4, y + gridH, -14671840);
             int thumbH = Math.max(10, gridH * rows / (maxScroll + rows));
             int thumbY = y + (gridH - thumbH) * this.scrollRow / maxScroll;
-            guiGraphics.fill(trackX, thumbY, trackX + 4, thumbY + thumbH, -10862962);
+            guiGraphics.fill(trackX, thumbY, trackX + 4, thumbY + thumbH, -8947849);
         }
     }
 
