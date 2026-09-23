@@ -18,6 +18,7 @@ import com.cobbleclub.server.service.EconomyService;
 import com.cobbleclub.server.service.FeatherboardService;
 import com.cobbleclub.server.service.KitsService;
 import com.cobbleclub.server.service.KantoRctService;
+import com.cobbleclub.server.service.RegionalRctService;
 import com.cobbleclub.server.service.LaunchService;
 import com.cobbleclub.server.service.LeaderboardService;
 import com.cobbleclub.server.service.PermissionService;
@@ -116,6 +117,7 @@ public final class CobbleClubServer
             StoreBridgeService.tick(server);
             FeatherboardService.tick(server);
             KantoRctService.tick(server);
+            RegionalRctService.tick(server);
         });
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             CobbleClubServer.safeJoinStep(handler.player, "economy", () -> EconomyService.data(handler.player));
@@ -193,6 +195,27 @@ public final class CobbleClubServer
                             .then(CommandManager.argument("milestone", StringArgumentType.word())
                                     .executes(context -> KantoRctService.handleReward(
                                             ((ServerCommandSource)context.getSource()).getPlayer(),
+                                            StringArgumentType.getString(context, "milestone")
+                                    ))))
+                    .then(CommandManager.literal("johto")
+                            .then(CommandManager.argument("milestone", StringArgumentType.word())
+                                    .executes(context -> RegionalRctService.handleReward(
+                                            ((ServerCommandSource)context.getSource()).getPlayer(),
+                                            "johto",
+                                            StringArgumentType.getString(context, "milestone")
+                                    ))))
+                    .then(CommandManager.literal("hoenn")
+                            .then(CommandManager.argument("milestone", StringArgumentType.word())
+                                    .executes(context -> RegionalRctService.handleReward(
+                                            ((ServerCommandSource)context.getSource()).getPlayer(),
+                                            "hoenn",
+                                            StringArgumentType.getString(context, "milestone")
+                                    ))))
+                    .then(CommandManager.literal("sinnoh")
+                            .then(CommandManager.argument("milestone", StringArgumentType.word())
+                                    .executes(context -> RegionalRctService.handleReward(
+                                            ((ServerCommandSource)context.getSource()).getPlayer(),
+                                            "sinnoh",
                                             StringArgumentType.getString(context, "milestone")
                                     )))));
             dispatcher.register((CommandManager.literal("club").requires(source -> PermissionService.has(source, "cobbleclub.command.club", true))).executes(context -> {
