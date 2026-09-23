@@ -14,7 +14,6 @@ public final class SpawnAdventureHud {
     private static final String LEFT_TEXT = "type /wild to find a world";
     private static final String RIGHT_TEXT = "and start your adventure";
     private static final float SCALE = 0.55F;
-    private static final int XP_GAP = 12;
 
     private SpawnAdventureHud() {
     }
@@ -40,10 +39,13 @@ public final class SpawnAdventureHud {
         float leftVisualW = font.getWidth(LEFT_TEXT) * SCALE;
         int y = screenH - 36;
 
-        // The vanilla XP level stays untouched in the center. The two phrases
-        // are independently centered against either side of that number.
-        float leftX = centerX - XP_GAP - leftVisualW;
-        float rightX = centerX + XP_GAP;
+        // The vanilla XP level stays untouched in the center. Grow the inner
+        // gap automatically for 2/3/4 digit levels so the prompt can never
+        // crowd the player's level number.
+        int xpWidth = font.getWidth(Integer.toString(client.player.experienceLevel));
+        float innerGap = Math.max(10.0F, xpWidth / 2.0F + 7.0F);
+        float leftX = centerX - innerGap - leftVisualW;
+        float rightX = centerX + innerGap;
 
         drawGradient(
                 g,
