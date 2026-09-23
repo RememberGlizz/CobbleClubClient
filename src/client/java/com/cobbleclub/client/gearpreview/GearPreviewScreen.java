@@ -297,7 +297,7 @@ extends Screen {
         for (TabRect tab : this.tabRects) {
             boolean isActive = tab.index() == this.activeSet;
             boolean hover = mouseX >= tab.x() && mouseX < tab.x() + tab.w() && mouseY >= tab.y() && mouseY < tab.y() + 16;
-            guiGraphics.fill(tab.x(), tab.y(), tab.x() + tab.w(), tab.y() + 16, isActive ? -14410694 : (hover ? -14936272 : -15528414));
+            guiGraphics.fill(tab.x(), tab.y(), tab.x() + tab.w(), tab.y() + 16, isActive ? -11184811 : (hover ? -12105913 : -13290187));
             if (isActive) {
                 guiGraphics.fill(tab.x(), tab.y() + 15, tab.x() + tab.w(), tab.y() + 16, -4342339);
             }
