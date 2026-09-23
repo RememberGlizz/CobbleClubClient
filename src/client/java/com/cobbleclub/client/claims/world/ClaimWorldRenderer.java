@@ -63,21 +63,20 @@ public final class ClaimWorldRenderer {
       if (!enabled) {
          return;
       }
-      if (msg != null && context.world() != null && context.consumers() != null) {
+      if (msg != null && context.world() != null && context.matrixStack() != null && context.consumers() != null) {
          if (context.world().getRegistryKey().getValue().toString().equals(msg.getDimension())) {
             long elapsedTicks = (System.currentTimeMillis() - snapshotAtMillis) / 50L;
 
-            // IMPORTANT: do not reuse WorldRenderer's live MatrixStack here. At AFTER_ENTITIES
-            // it already contains vanilla camera/view transforms, which caused our previous
-            // camera-relative AABB to be transformed a second time and visually follow the
-            // player. A fresh identity stack plus one camera subtraction gives stable,
-            // absolute world placement.
-            MatrixStack poseStack = new MatrixStack();
+            // AFTER_ENTITIES already gives us the world render matrix with the camera
+            // transform applied. Feed absolute world coordinates into that matrix.
+            // Subtracting the camera here a second time is what makes the claim box
+            // appear glued around the player.
+            MatrixStack poseStack = context.matrixStack();
             VertexConsumerProvider consumers = context.consumers();
+            poseStack.push();
             VertexConsumer lines = consumers.getBuffer(BORDER_LINES);
             VertexConsumer quads = consumers.getBuffer(BORDER_BOX);
             double cameraX = context.camera().getPos().x;
-            double cameraY = context.camera().getPos().y;
             double cameraZ = context.camera().getPos().z;
 
             for(WorldBoxEntry entry : msg.getGroups()) {
@@ -113,22 +112,21 @@ public final class ClaimWorldRenderer {
                      continue;
                   }
 
-                  Box renderBox = new Box(
-                        worldBox.minX - cameraX,
-                        worldBox.minY - cameraY,
-                        worldBox.minZ - cameraZ,
-                        worldBox.maxX - cameraX,
-                        worldBox.maxY - cameraY,
-                        worldBox.maxZ - cameraZ);
-
                   float[] rgb = colorFor(type);
                   float pulse = type == WorldBoxType.DENIAL ? 0.75F + 0.25F * (float)Math.sin((double)System.currentTimeMillis() / (double)120.0F) : 1.0F;
                   float fillAlpha = type == WorldBoxType.MAIN ? 0.10F : 0.060F;
-                  WorldRenderer.renderFilledBox(poseStack, quads, renderBox.minX, renderBox.minY, renderBox.minZ, renderBox.maxX, renderBox.maxY, renderBox.maxZ, rgb[0], rgb[1], rgb[2], fillAlpha * alphaScale * pulse);
-                  WorldRenderer.drawBox(poseStack, lines, renderBox, rgb[0], rgb[1], rgb[2], 1.0F * alphaScale * pulse);
+                  WorldRenderer.renderFilledBox(
+                        poseStack, quads,
+                        worldBox.minX, worldBox.minY, worldBox.minZ,
+                        worldBox.maxX, worldBox.maxY, worldBox.maxZ,
+                        rgb[0], rgb[1], rgb[2], fillAlpha * alphaScale * pulse);
+                  WorldRenderer.drawBox(
+                        poseStack, lines, worldBox,
+                        rgb[0], rgb[1], rgb[2], 1.0F * alphaScale * pulse);
                }
             }
 
+            poseStack.pop();
          }
       }
    }
