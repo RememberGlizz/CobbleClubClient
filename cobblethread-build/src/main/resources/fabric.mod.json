@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "cobblethread",
+  "version": "${version}",
+  "name": "CobbleThread Runtime",
+  "description": "World-owned parallel server simulation for CobbleClub on Fabric 1.21.1.",
+  "authors": ["CobbleClub"],
+  "license": "LGPL-3.0-only",
+  "environment": "server",
+  "entrypoints": {
+    "main": ["com.cobbleclub.cobblethread.CobbleThread"]
+  },
+  "mixins": ["cobblethread.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.16.9",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
