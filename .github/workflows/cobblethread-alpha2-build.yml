@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - "milestone/cobblethread-alpha2-build"
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
