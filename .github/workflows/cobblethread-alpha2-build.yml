@@ -1,0 +1,28 @@
+name: Build CobbleThread Alpha 2
+
+on:
+  push:
+    branches:
+      - "milestone/cobblethread-alpha2-build"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cobblethread-build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.10.2"
+      - name: Build production Fabric jar
+        run: gradle clean build --stacktrace --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cobblethread-runtime-alpha2
+          path: cobblethread-build/build/libs/cobblethread-runtime-0.1.0-alpha.2.jar
