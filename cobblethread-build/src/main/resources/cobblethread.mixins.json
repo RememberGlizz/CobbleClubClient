@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.cobbleclub.cobblethread.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "EntityTransferMixin",
+    "LevelThreadAccess",
+    "MinecraftServerMixin",
+    "ServerChunkCacheThreadAccess",
+    "ServerPlayerTransferMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
