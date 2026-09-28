@@ -150,13 +150,13 @@ public final class ClaimWorldRenderer {
    }
 
    static {
-      BORDER_BOX = RenderLayer.of("cobbleclub_claim_border", VertexFormats.POSITION_COLOR, DrawMode.TRIANGLE_STRIP, 1536, MultiPhaseParameters.builder().program(RenderPhase.COLOR_PROGRAM).cull(RenderPhase.DISABLE_CULLING).writeMaskState(RenderPhase.COLOR_MASK).transparency(RenderPhase.TRANSLUCENT_TRANSPARENCY).depthTest(RenderPhase.ALWAYS_DEPTH_TEST).build(false));
+      BORDER_BOX = RenderLayer.of("cobbleclub_claim_border", VertexFormats.POSITION_COLOR, DrawMode.TRIANGLE_STRIP, 1536, MultiPhaseParameters.builder().program(RenderPhase.COLOR_PROGRAM).cull(RenderPhase.DISABLE_CULLING).writeMaskState(RenderPhase.COLOR_MASK).transparency(RenderPhase.TRANSLUCENT_TRANSPARENCY).depthTest(RenderPhase.LEQUAL_DEPTH_TEST).build(false));
       BORDER_LINES = RenderLayer.of("cobbleclub_claim_border_lines", VertexFormats.LINES, DrawMode.LINES, 512, MultiPhaseParameters.builder()
             .program(RenderPhase.LINES_PROGRAM)
             .lineWidth(RenderPhase.FULL_LINE_WIDTH)
             .layering(RenderPhase.VIEW_OFFSET_Z_LAYERING)
             .transparency(RenderPhase.TRANSLUCENT_TRANSPARENCY)
-            .depthTest(RenderPhase.ALWAYS_DEPTH_TEST)
+            .depthTest(RenderPhase.LEQUAL_DEPTH_TEST)
             .cull(RenderPhase.DISABLE_CULLING)
             .writeMaskState(RenderPhase.COLOR_MASK)
             .build(false));
