@@ -116,7 +116,7 @@ public final class ClaimWorldRenderer {
 
                   float[] rgb = colorFor(type);
                   float pulse = type == WorldBoxType.DENIAL ? 0.75F + 0.25F * (float)Math.sin((double)System.currentTimeMillis() / (double)120.0F) : 1.0F;
-                  float fillAlpha = type == WorldBoxType.MAIN ? 0.10F : 0.060F;
+                  float fillAlpha = type == WorldBoxType.MAIN ? 0.08F : 0.060F;
                   WorldRenderer.renderFilledBox(
                         poseStack, quads,
                         worldBox.minX, worldBox.minY, worldBox.minZ,
@@ -150,7 +150,7 @@ public final class ClaimWorldRenderer {
    }
 
    static {
-      BORDER_BOX = RenderLayer.of("cobbleclub_claim_border", VertexFormats.POSITION_COLOR, DrawMode.TRIANGLE_STRIP, 1536, MultiPhaseParameters.builder().program(RenderPhase.COLOR_PROGRAM).cull(RenderPhase.DISABLE_CULLING).writeMaskState(RenderPhase.COLOR_MASK).transparency(RenderPhase.TRANSLUCENT_TRANSPARENCY).depthTest(RenderPhase.LEQUAL_DEPTH_TEST).build(false));
+      BORDER_BOX = RenderLayer.of("cobbleclub_claim_border", VertexFormats.POSITION_COLOR, DrawMode.TRIANGLE_STRIP, 1536, MultiPhaseParameters.builder().program(RenderPhase.COLOR_PROGRAM).cull(RenderPhase.ENABLE_CULLING).writeMaskState(RenderPhase.COLOR_MASK).transparency(RenderPhase.TRANSLUCENT_TRANSPARENCY).depthTest(RenderPhase.LEQUAL_DEPTH_TEST).build(false));
       BORDER_LINES = RenderLayer.of("cobbleclub_claim_border_lines", VertexFormats.LINES, DrawMode.LINES, 512, MultiPhaseParameters.builder()
             .program(RenderPhase.LINES_PROGRAM)
             .lineWidth(RenderPhase.FULL_LINE_WIDTH)
@@ -160,7 +160,7 @@ public final class ClaimWorldRenderer {
             .cull(RenderPhase.DISABLE_CULLING)
             .writeMaskState(RenderPhase.COLOR_MASK)
             .build(false));
-      MAIN_RGB = new float[]{1.0F, 0.78F, 0.24F};
+      MAIN_RGB = new float[]{0.4F, 0.7F, 1.0F};
       OTHER_RGB = new float[]{0.14F, 0.54F, 0.78F};
       SUB_RGB = new float[]{0.78F, 0.8F, 0.83F};
       EDIT_RGB = new float[]{0.24F, 0.4F, 0.86F};
