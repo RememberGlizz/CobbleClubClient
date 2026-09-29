@@ -12,6 +12,7 @@ THANKS FOR YOUR SUPPORT <3 Have Fun!
 
 
 
-<img width="1600" height="815" alt="Big Banner CobbleClub(1)" src="https://github.com/user-attachments/assets/3331f8ab-44c3-4ddb-828f-fd6205d246b6" />
+<img width="1023" height="197" alt="image_49ef3a2" src="https://github.com/user-attachments/assets/5e5cf94a-872b-4bcf-86b7-90c74d36bed7" />
+
 
 
